@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Accessibility training playground</title>
+<style>
+:root { color-scheme: light; }
+body { margin: 0; padding: 32px 16px 48px; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #111827; background: #f4f5f7; }
+main { max-width: 720px; margin: 0 auto; background: #fff; padding: 32px; border: 1px solid #d1d5db; border-radius: 12px; }
+h1 { font-size: 1.8rem; margin: 0 0 8px; }
+h2 { font-size: 1.2rem; margin: 28px 0 8px; }
+a { color: #1d4ed8; }
+:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.versions { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 12px; }
+.versions li { padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; }
+.versions a { font-size: 1.1rem; font-weight: 600; }
+ol li, ul li { margin: 4px 0; }
+.note { padding: 12px 16px; background: #fef3c7; border-left: 4px solid #d97706; border-radius: 4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Accessibility training playground</h1>
+  <p>A small fake application for practising accessibility checks. It exists in two versions that look the same.</p>
+  <ul class="versions">
+    <li><a href="accessible/">Accessible version</a><br>The reference: native HTML first, ARIA only where it adds something.</li>
+    <li><a href="broken/">Seeded version</a><br>The same screens with deliberate accessibility bugs. Find them with the keyboard, the browser's accessibility tools, bookmarklets, axe DevTools or a screen reader. Fix one by editing the DOM in the developer tools, then check again. Reloading the page restores the bugs.</li>
+  </ul>
+
+  <h2>The mission: create an Agent without a mouse</h2>
+  <ol>
+    <li>Load the page and press Tab once. What received focus first?</li>
+    <li>Reach the "New project" button in the sidebar and press Enter. Where did the focus land?</li>
+    <li>Within the dialog, Tab through it, then press Esc. Where does focus return?</li>
+    <li>Open the dialog again, enter a project name and start an empty project. Where did the focus go after the page changed? What does the browser tab say?</li>
+    <li>Reach the "Add Agent" button and trigger it. Can you see the focus indicator?</li>
+    <li>Fill in the required fields and Tab through the rest of the form to reach the Save button. Could you see the focus indicator at every Tab stop?</li>
+    <li>Save the new Agent and navigate backwards with Shift+Tab to reach the Back button.</li>
+    <li>Trigger the Back button with Enter. Where did the focus land?</li>
+  </ol>
+  <p class="note">In the seeded version you may get stuck without a mouse. That is a finding, not a fault of the playground: note where it happened, use the mouse to continue, and carry on.</p>
+
+  <h2>What to compare</h2>
+  <p>Open both versions side by side and compare what the developer tools show for the same control: its name, its role and its state. Then compare what a screen reader says about it.</p>
+  <p>Nothing you enter is saved. The source is on <a href="https://github.com/sushmi21/accessibility-training-playground">GitHub</a>.</p>
+</main>
+</body>
+</html>
