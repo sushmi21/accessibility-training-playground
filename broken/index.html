@@ -13,8 +13,8 @@
   --primary: #1d4ed8; --primary-dark: #1e40af; --topbar: #1f2937; --ring: #1d4ed8; --ring-on-dark: #fbbf24;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; }
-body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); display: flex; flex-direction: column; min-height: 100vh; }
+html, body { margin: 0; height: 100%; }
+body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
 :focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
 .topbar :focus-visible { outline-color: var(--ring-on-dark); }
 main:focus-visible { outline-offset: -3px; }
@@ -38,14 +38,13 @@ input:focus, select:focus, textarea:focus, .btn-primary:focus, .switch:focus { o
 .icon-btn:hover { background: rgba(0, 0, 0, .08); }
 .topbar .icon-btn:hover { background: rgba(255, 255, 255, .12); }
 .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.layout { display: flex; flex: 1; }
-.sidebar { width: 240px; flex: none; padding: 16px; background: var(--panel); border-right: 1px solid var(--border); }
-.sidebar .btn { width: 100%; justify-content: center; margin-bottom: 16px; }
+.layout { display: flex; flex: 1; min-height: 0; }
+.sidebar { width: 240px; flex: none; padding: 16px; overflow-y: auto; background: var(--panel); border-right: 1px solid var(--border); }
 .nav { list-style: none; margin: 0; padding: 0; }
 .nav a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
 .nav a:hover { background: #f3f4f6; }
 .nav a[aria-current="page"] { background: #e0e7ff; color: var(--primary-dark); font-weight: 600; }
-main { flex: 1; padding: 24px 32px; max-width: 900px; }
+main { position: relative; flex: 1; min-width: 0; padding: 24px 32px; overflow-y: auto; }
 .view-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
 h1 { font-size: 1.6rem; margin: 0; }
 h2 { font-size: 1.2rem; margin: 0; }
@@ -70,6 +69,42 @@ p { margin: 8px 0; }
 .popover button:hover { background: #f3f4f6; }
 .popover .danger { color: #b91c1c; }
 .empty { padding: 24px; margin: 16px 0; background: var(--panel); border: 1px dashed #9ca3af; border-radius: 8px; }
+.toolbar, .project-list { max-width: 1200px; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.toolbar-end { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.segmented { display: inline-flex; gap: 2px; margin: 0; padding: 4px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+.segmented label, .segmented button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--text); font: inherit; font-weight: 600; line-height: 1.25; cursor: pointer; }
+.segmented label:hover, .segmented button:hover { background: #f3f4f6; }
+.segmented input:checked + label, .segmented .selected { background: #e0e7ff; border-color: var(--primary); color: var(--primary-dark); }
+.segmented input:focus-visible + label { outline: 3px solid var(--ring); outline-offset: 2px; }
+.search { position: relative; display: block; }
+.search .icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.search input { width: 300px; max-width: 100%; box-sizing: border-box; padding-left: 38px; }
+.project-list.card-view .cards { max-width: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.table-wrap { margin: 16px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
+.table { width: 100%; min-width: 720px; border-collapse: collapse; table-layout: fixed; font-size: 15px; }
+.table th, .table td { padding: 12px 16px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border); }
+.table thead th { background: #f3f4f6; font-weight: 600; white-space: nowrap; }
+.table tbody tr:last-child td { border-bottom: 0; }
+.table tbody tr { cursor: pointer; }
+.table tbody tr:hover { background: #f9fafb; }
+.table .num { text-align: right; }
+.col-name { width: 28%; }
+.col-agents { width: 96px; }
+.col-edited { width: 230px; }
+.col-actions { width: 64px; }
+.sort { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 600; cursor: pointer; }
+.sort .icon { width: 16px; height: 16px; }
+.table th.sorted .sort { color: var(--primary-dark); }
+.name-wrap { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.table .avatar { width: 36px; height: 36px; border-radius: 8px; font-size: 14px; }
+.row-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-weight: 700; text-decoration: none; }
+a.row-title:hover { text-decoration: underline; }
+.cell-desc { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+.cell-edited { color: var(--muted); white-space: nowrap; }
+.cell-actions { text-align: right; }
+.cell-actions .card-actions { display: inline-block; margin: -6px 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 .field { display: flex; flex-direction: column; gap: 6px; margin: 16px 0; max-width: 420px; }
 .label, label { font-weight: 600; }
 .req { font-weight: 400; color: var(--muted); }
@@ -91,7 +126,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (max-width: 720px) {
   .layout { flex-direction: column; }
-  .sidebar { width: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+  .sidebar { width: auto; padding: 8px 16px; border-right: 0; border-bottom: 1px solid var(--border); }
+  .nav { display: flex; flex-wrap: wrap; gap: 4px; }
   main { padding: 16px; }
 }
 </style>
@@ -109,10 +145,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 </header>
 <div class="layout">
   <aside class="sidebar">
-    <button type="button" class="btn btn-primary" id="new-project">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      New project
-    </button>
     <nav aria-label="Main">
       <ul class="nav" id="main-nav">
         <li><a href="#/projects">Projects</a></li>
@@ -124,6 +156,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   </aside>
   <main id="main">
     <div id="view"></div>
+
   </main>
 </div>
 <div class="dialog-backdrop" id="new-project-dialog" hidden>
@@ -153,12 +186,15 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   var APP_NAME = 'Agent Studio playground';
 
   var state = {
-    nextProjectId: 3,
-    nextAgentId: 2,
+    nextProjectId: 9,
+    nextAgentId: 5,
+    view: 'card',
+    query: '',
+    sort: null,
     projects: [
       { id: 1, name: 'Customer support bot',
         description: 'Answers customer questions about orders, returns and delivery times, and hands over to a human agent when it cannot help.',
-        editedAgo: '4 months ago', editedBy: 'Alex_Dev',
+        editedDaysAgo: 120, editedAgo: '4 months ago', editedBy: 'Alex_Dev',
         agents: [
           { id: 1, name: 'Order status helper', language: 'English', enabled: true,
             description: 'Answers questions about the status of an order. Asks for the order number first and never guesses.',
@@ -166,18 +202,54 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         ] },
       { id: 2, name: 'Internal IT helpdesk',
         description: 'Resets passwords, unlocks accounts and creates tickets for everything else. Used by all employees from the intranet.',
-        editedAgo: '2 days ago', editedBy: 'Jamie_Ops', agents: [] }
+        editedDaysAgo: 2, editedAgo: '2 days ago', editedBy: 'Jamie_Ops', agents: [] },
+      { id: 3, name: 'Returns and refunds',
+        description: 'Guides customers through returning an item and checks whether they qualify for a refund or a replacement.',
+        editedDaysAgo: 21, editedAgo: '3 weeks ago', editedBy: 'Priya_CX',
+        agents: [
+          { id: 2, name: 'Refund eligibility check', language: 'English', enabled: true,
+            description: 'Checks the purchase date against the return policy before promising anything.',
+            editedAgo: '3 weeks ago', editedBy: 'Priya_CX' },
+          { id: 3, name: 'Return label sender', language: 'English', enabled: false,
+            description: 'Emails a prepaid return label once the return has been approved.',
+            editedAgo: '1 month ago', editedBy: 'Priya_CX' }
+        ] },
+      { id: 4, name: 'HR onboarding assistant',
+        description: 'Welcomes new employees, explains the first-week schedule and answers questions about benefits and holidays.',
+        editedDaysAgo: 7, editedAgo: '1 week ago', editedBy: 'Morgan_HR', agents: [] },
+      { id: 5, name: 'Booking helper',
+        description: 'Books, changes and cancels appointments for the service centres and sends a confirmation by text message.',
+        editedDaysAgo: 5, editedAgo: '5 days ago', editedBy: 'Sam_Field',
+        agents: [
+          { id: 4, name: 'Appointment scheduler', language: 'German', enabled: true,
+            description: 'Finds the next free slot at the chosen service centre.',
+            editedAgo: '5 days ago', editedBy: 'Sam_Field' }
+        ] },
+      { id: 6, name: 'Sales lead qualifier',
+        description: 'Chats with website visitors, asks a few qualifying questions and passes promising leads to the sales team.',
+        editedDaysAgo: 1, editedAgo: 'yesterday', editedBy: 'Chris_Sales', agents: [] },
+      { id: 7, name: 'Billing questions',
+        description: 'Explains invoice lines, payment methods and due dates. Escalates disputes to the finance team.',
+        editedDaysAgo: 60, editedAgo: '2 months ago', editedBy: 'Alex_Dev', agents: [] },
+      { id: 8, name: 'Store locator',
+        description: 'Finds the nearest store, shows opening hours and tells customers whether an item is in stock there.',
+        editedDaysAgo: 6, editedAgo: '6 days ago', editedBy: 'Jamie_Ops', agents: [] }
     ]
   };
 
   var ICON_BACK = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"/></svg>';
   var ICON_PLUS = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   var ICON_REFRESH = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>';
+  var ICON_GRID = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
+  var ICON_LIST = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>';
+  var ICON_SEARCH = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+  var ICON_SORT = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/></svg>';
+  var ICON_SORT_UP = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20V4M6 10l6-6 6 6"/></svg>';
+  var ICON_SORT_DOWN = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16M6 14l6 6 6-6"/></svg>';
   var ICON_MORE = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="5" r="2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="2" fill="currentColor" stroke="none"/></svg>';
 
   var viewEl = document.getElementById('view');
   var dialog = document.getElementById('new-project-dialog');
-  var newProjectButton = document.getElementById('new-project');
   var newProjectForm = document.getElementById('new-project-form');
   var projectNameInput = document.getElementById('project-name');
   var openPopover = null;
@@ -208,8 +280,19 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     return '<button type="button" class="btn-back" data-route="' + to + '">' + ICON_BACK + 'Back</button>';
   }
 
-  function cardInner(item) {
+  function actionsMenu(item) {
     var panelId = 'actions-' + item.key.replace(/:/g, '-');
+    return '<div class="card-actions">' +
+      
+      '<button type="button" class="icon-btn" data-actions="' + item.key + '" aria-label="More actions">' + ICON_MORE + '</button>' +
+      
+      '<div class="popover" id="' + panelId + '" hidden>' +
+      '<button type="button" data-rename="' + item.key + '">Rename</button>' +
+      '<button type="button" class="danger" data-delete="' + item.key + '">Delete</button>' +
+      '</div>' +
+      '</div>';
+  }
+  function cardInner(item) {
     return '<div class="card-body">' +
       '<span class="avatar" aria-hidden="true">' + esc(initials(item.name)) + '</span>' +
       '<div class="card-text">' +
@@ -218,15 +301,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       
       '<p class="card-desc">' + esc(item.description) + '</p>' +
       '</div>' +
-      '<div class="card-actions">' +
-      
-      '<button type="button" class="icon-btn" data-actions="' + item.key + '" aria-label="More actions">' + ICON_MORE + '</button>' +
-      
-      '<div class="popover" id="' + panelId + '" hidden>' +
-      '<button type="button" data-rename="' + item.key + '">Rename</button>' +
-      '<button type="button" class="danger" data-delete="' + item.key + '">Delete</button>' +
-      '</div>' +
-      '</div>' +
+      actionsMenu(item) +
       '</div>' +
       '<div class="card-footer">' + esc(item.footer) + '</div>';
   }
@@ -236,12 +311,95 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return '<a class="card" href="' + item.href + '">' + cardInner(item) + '</a>';
     }).join('') + '</ul>';
   }
-  function projectCards() {
-    return cardList(state.projects.map(function (p) {
+  function filteredProjects() {
+    var q = state.query.trim().toLowerCase();
+    var list = !q ? state.projects : state.projects.filter(function (p) {
+      return (p.name + ' ' + p.description).toLowerCase().indexOf(q) !== -1;
+    });
+    var sort = state.sort;
+    if (!sort) return list;
+    return list.slice().sort(function (a, b) {
+      var result = sort.key === 'name' ? a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }) : b.editedDaysAgo - a.editedDaysAgo;
+      return sort.dir === 'asc' ? result : -result;
+    });
+  }
+  function projectCards(projects) {
+    return cardList(projects.map(function (p) {
       return { key: 'project:' + p.id, href: '#/projects/' + p.id, name: p.name, description: p.description,
         footer: (p.agents.length === 1 ? '1 agent' : p.agents.length + ' agents') + ' · Last edited ' + p.editedAgo + ' by ' + p.editedBy };
     }));
   }
+  function sortHeader(key, label, cls) {
+    var active = state.sort && state.sort.key === key;
+    var icon = !active ? ICON_SORT : (state.sort.dir === 'asc' ? ICON_SORT_UP : ICON_SORT_DOWN);
+    return '<th scope="col" class="' + cls + (active ? ' sorted' : '') + '"' +
+
+      '><button type="button" class="sort" data-sort="' + key + '">' + label + icon + '</button></th>';
+  }
+  function projectRow(p) {
+    var key = 'project:' + p.id, href = '#/projects/' + p.id;
+    return (
+      
+      '<tr role="link" tabindex="0" data-route="' + href + '">' +
+      '<td class="cell-name"><span class="name-wrap"><span class="avatar" aria-hidden="true">' + esc(initials(p.name)) + '</span>' +
+      '<span class="row-title">' + esc(p.name) + '</span></span></td>' +
+      
+      '<td class="cell-desc">' + esc(p.description) + '</td>' +
+      '<td class="num">' + p.agents.length + '</td>' +
+      '<td class="cell-edited">' + esc(p.editedAgo + ' by ' + p.editedBy) + '</td>' +
+      '<td class="cell-actions">' + actionsMenu({ key: key, name: p.name }) + '</td>' +
+      '</tr>');
+  }
+  function projectTable(projects) {
+    return '<div class="table-wrap"><table class="table">' +
+      '<caption class="visually-hidden">Projects</caption>' +
+      '<thead><tr>' +
+      sortHeader('name', 'Name', 'col-name') +
+      '<th scope="col" class="col-desc">Description</th>' +
+      '<th scope="col" class="col-agents num">Agents</th>' +
+      sortHeader('edited', 'Last edited', 'col-edited') +
+      '<th scope="col" class="col-actions"><span class="visually-hidden">Actions</span></th>' +
+      '</tr></thead><tbody>' +
+      projects.map(projectRow).join('') +
+      '</tbody></table></div>';
+  }
+  function projectListInner() {
+    var projects = filteredProjects();
+    if (!projects.length) return '<div class="empty"><p>No projects match “' + esc(state.query.trim()) + '”.</p></div>';
+    return state.view === 'list' ? projectTable(projects) : projectCards(projects);
+  }
+  function projectList() {
+    return '<div id="project-list" class="project-list ' + state.view + '-view">' + projectListInner() + '</div>';
+  }
+  function renderProjectList() {
+    var wrapper = document.getElementById('project-list');
+    if (!wrapper) return;
+    openPopover = null;
+    wrapper.className = 'project-list ' + state.view + '-view';
+    wrapper.innerHTML = projectListInner();
+  }
+  function setView(view) {
+    state.view = view;
+    renderProjectList();
+    
+    var buttons = viewEl.querySelectorAll('[data-view]');
+    for (var i = 0; i < buttons.length; i++) buttons[i].classList.toggle('selected', buttons[i].getAttribute('data-view') === view);
+  }
+  function setSort(key) {
+    var dir = state.sort && state.sort.key === key ? (state.sort.dir === 'asc' ? 'desc' : 'asc') : (key === 'edited' ? 'desc' : 'asc');
+    state.sort = { key: key, dir: dir };
+    renderProjectList();
+    var button = viewEl.querySelector('[data-sort="' + key + '"]');
+    if (button) button.focus();
+  }
+  function searchStatus() {
+    var q = state.query.trim();
+    var count = filteredProjects().length;
+    if (!q) return 'Showing all ' + count + (count === 1 ? ' project' : ' projects');
+    if (!count) return 'No projects match \u201c' + q + '\u201d';
+    return count === 1 ? '1 project matches' : count + ' projects match';
+  }
+
   function agentCards(p) {
     return cardList(p.agents.map(function (a) {
       return { key: 'agent:' + p.id + ':' + a.id, href: '#/projects/' + p.id + '/agents/' + a.id, name: a.name, description: a.description || 'No description yet.',
@@ -255,7 +413,21 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         '<div class="view-header"><h1>Projects</h1>' +
         '<button type="button" class="icon-btn" data-refresh>' + ICON_REFRESH + '</button></div>' +
         '<p class="muted">Pick a project or create a new one.</p>' +
-        projectCards() };
+        '<div class="toolbar">' +
+        
+        '<div class="segmented">' +
+        '<button type="button"' + (state.view === 'card' ? ' class="selected"' : '') + ' data-view="card">' + ICON_GRID + 'Card</button>' +
+        '<button type="button"' + (state.view === 'list' ? ' class="selected"' : '') + ' data-view="list">' + ICON_LIST + 'List</button>' +
+        '</div>' +
+        
+        '<div class="toolbar-end">' +
+        '<search class="search">' + ICON_SEARCH +
+        '<label for="project-search" class="visually-hidden">Search projects</label>' +
+        '<input type="search" id="project-search" placeholder="Search projects" autocomplete="off" value="' + esc(state.query) + '">' +
+        '</search>' +
+        '<button type="button" class="btn btn-primary" data-new-project>' + ICON_PLUS + 'New project</button>' +
+        '</div></div>' +
+        projectList() };
     },
     project: function (p) {
       var agents = p.agents.length ? agentCards(p) : '<div class="empty"><p>No agents yet. Add the first one.</p></div>';
@@ -397,6 +569,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     found.item.name = name.trim();
+    found.item.editedDaysAgo = 0;
     found.item.editedAgo = 'just now';
     found.item.editedBy = 'You';
     closePopover(false);
@@ -405,8 +578,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function deleteItem(key) {
     var found = findItem(key);
     if (!found) return;
-    var index = found.list.indexOf(found.item);
-    found.list.splice(index, 1);
+
+    found.list.splice(found.list.indexOf(found.item), 1);
     closePopover(false);
     render(false);
   }
@@ -431,6 +604,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     if (openPopover) closePopover(false);
+    var sortButton = e.target.closest('[data-sort]');
+    if (sortButton) {
+      setSort(sortButton.getAttribute('data-sort'));
+      return;
+    }
+
     var routed = e.target.closest('[data-route]');
     if (routed) {
       e.preventDefault();
@@ -438,10 +617,20 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     if (e.target.closest('[data-refresh]')) {
-      var list = viewEl.querySelector('.cards');
-      if (list) list.outerHTML = projectCards();
+      renderProjectList();
       return;
     }
+    if (e.target.closest('[data-new-project]')) {
+      openDialog();
+      return;
+    }
+    
+    var viewButton = e.target.closest('[data-view]');
+    if (viewButton) {
+      setView(viewButton.getAttribute('data-view'));
+      return;
+    }
+    
     var sw = e.target.closest('.switch');
     if (sw) {
       toggleSwitch(sw);
@@ -457,6 +646,13 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     }
     
     if (e.key === 'Escape' && !dialog.hidden) closeDialog();
+    if (e.key === 'Enter' && e.target.matches('tr[data-route]')) location.hash = e.target.getAttribute('data-route');
+  });
+
+  viewEl.addEventListener('input', function (e) {
+    if (e.target.id !== 'project-search') return;
+    state.query = e.target.value;
+    renderProjectList();
   });
 
   viewEl.addEventListener('submit', function (e) {
@@ -480,14 +676,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
   newProjectForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    var project = { id: state.nextProjectId++, name: projectNameInput.value.trim(), description: 'No description yet.', editedAgo: 'just now', editedBy: 'You', agents: [] };
+    var project = { id: state.nextProjectId++, name: projectNameInput.value.trim(), description: 'No description yet.', editedDaysAgo: 0, editedAgo: 'just now', editedBy: 'You', agents: [] };
     state.projects.push(project);
     newProjectForm.reset();
     closeDialog();
     location.hash = '#/projects/' + project.id;
   });
-
-  newProjectButton.addEventListener('click', openDialog);
 
   window.addEventListener('hashchange', function () { render(true); });
   render(false);

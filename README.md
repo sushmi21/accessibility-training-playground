@@ -20,6 +20,6 @@ Open `index.html` for the landing page with the mission steps.
 
 The playground covers name, role and state (WCAG 4.1.2), ARIA overriding native
 semantics, text alternatives, keyboard access, bypass blocks (2.4.1), page titles
-(2.4.2), focus order (2.4.3) and focus visibility (2.4.7).
+(2.4.2), focus order (2.4.3), focus visibility (2.4.7) and status messages (4.1.3).
 
 The list of seeded bugs is deliberately not in this repository.
