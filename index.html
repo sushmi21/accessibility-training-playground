@@ -16,8 +16,6 @@ a { color: #1d4ed8; }
 .versions { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 12px; }
 .versions li { padding: 16px; border: 1px solid #d1d5db; border-radius: 8px; }
 .versions a { font-size: 1.1rem; font-weight: 600; }
-ol li, ul li { margin: 4px 0; }
-.note { padding: 12px 16px; background: #fef3c7; border-left: 4px solid #d97706; border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -28,30 +26,8 @@ ol li, ul li { margin: 4px 0; }
     <li><a href="accessible/">Accessible version</a><br>The reference: native HTML first, ARIA only where it adds something.</li>
     <li><a href="broken/">Seeded version</a><br>The same screens with deliberate accessibility bugs. Find them with the keyboard, the browser's accessibility tools, bookmarklets, axe DevTools or a screen reader. Fix one by editing the DOM in the developer tools, then check again. Reloading the page restores the bugs.</li>
   </ul>
-
-  <h2>The mission: create an Agent without a mouse</h2>
-  <ol>
-    <li>Load the page and press Tab once. What received focus first?</li>
-    <li>Reach the "New agent" button on the Agents page and press Enter. Where did the focus land?</li>
-    <li>Fill in the required field and Tab through the rest of the form to reach the Create agent button. Could you see the focus indicator at every Tab stop?</li>
-    <li>Create the agent. Where did the focus go after the page changed? What does the browser tab say?</li>
-    <li>On the new agent's page, Tab to the Persona cards and try to choose a persona with the keyboard. Did it work, and could you see the focus indicator?</li>
-    <li>Navigate backwards with Shift+Tab to reach the Back button and trigger it with Enter. Where did the focus land?</li>
-    <li>Open the More actions menu of the agent you created and choose Rename. Where did the focus land? Tab through the dialog, then press Esc. Where does focus return?</li>
-    <li>Open the menu again, choose Delete and confirm it. Where did the focus go after the card disappeared?</li>
-  </ol>
-  <p class="note">In the seeded version you may get stuck without a mouse. That is a finding, not a fault of the playground: note where it happened, use the mouse to continue, and carry on.</p>
-
-  <h2>Then try the Agents toolbar</h2>
-  <ol>
-    <li>Back on the Agents page, start a screen reader and type part of a name into the search box. What is announced when the list changes? Now type something that matches nothing.</li>
-    <li>Move to the Card and List controls. What does the screen reader call them, and can you tell which view is active without looking?</li>
-    <li>Switch to List. Use the screen reader's table commands to move along a row, then try to open one of them without the mouse. Sort by Name: what is announced?</li>
-    <li>Open one of the agents and move to the Persona cards with the screen reader running. Does it say which persona is selected, and does what it reports change when you pick another one?</li>
-  </ol>
-
-  <h2>What to compare</h2>
-  <p>Open both versions side by side and compare what the developer tools show for the same control: its name, its role and its state. Then compare what a screen reader says about it.</p>
+  <h2>Sessions</h2>
+  <p>The session plans and the missions are in the <a href="documentation/">documentation</a>.</p>
   <p>Nothing you enter is saved. The source is on <a href="https://github.com/sushmi21/accessibility-training-playground">GitHub</a>.</p>
 </main>
 </body>

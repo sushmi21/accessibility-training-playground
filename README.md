@@ -16,7 +16,8 @@ identical. Edit the template, then run:
 python3 build.py
 ```
 
-Open `index.html` for the landing page with the mission steps.
+Open `index.html` for the home page and `documentation/index.html` for the session
+plans and missions. Both are plain HTML and are not generated.
 
 The playground covers name, role and state (WCAG 4.1.2), ARIA overriding native
 semantics, text alternatives, keyboard access, bypass blocks (2.4.1), page titles
