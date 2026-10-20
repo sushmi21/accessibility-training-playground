@@ -147,7 +147,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   <aside class="sidebar">
     <nav aria-label="Main">
       <ul class="nav" id="main-nav">
-        <li><a href="#/projects">Projects</a></li>
+        <li><a href="#/agents">Agents</a></li>
         <li><a href="#/knowledge">Knowledge</a></li>
         <li><a href="#/endpoints">Endpoints</a></li>
         <li><a href="#/settings">Settings</a></li>
@@ -162,19 +162,19 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 </div>
 <dialog id="new-project-dialog" aria-labelledby="new-project-title">
     <div class="dialog-header">
-      <h2 id="new-project-title">New project</h2>
+      <h2 id="new-project-title">New agent</h2>
       <button type="button" class="icon-btn" data-close aria-label="Close">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
       </button>
     </div>
     <form id="new-project-form">
       <div class="field">
-        <label for="project-name">Project name <span class="req">(required)</span></label>
+        <label for="project-name">Agent name <span class="req">(required)</span></label>
         <input id="project-name" name="name" type="text" required autocomplete="off" autofocus>
       </div>
       <div class="actions">
         <button type="button" class="btn" data-close>Cancel</button>
-        <button type="submit" class="btn btn-primary">Start empty project</button>
+        <button type="submit" class="btn btn-primary">Create agent</button>
       </div>
     </form>
 </dialog>
@@ -328,7 +328,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
   function projectCards(projects) {
     return cardList(projects.map(function (p) {
-      return { key: 'project:' + p.id, href: '#/projects/' + p.id, name: p.name, description: p.description,
+      return { key: 'project:' + p.id, href: '#/agents/' + p.id, name: p.name, description: p.description,
         footer: (p.agents.length === 1 ? '1 agent' : p.agents.length + ' agents') + ' · Last edited ' + p.editedAgo + ' by ' + p.editedBy };
     }));
   }
@@ -342,7 +342,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       '><button type="button" class="sort" data-sort="' + key + '">' + label + icon + '</button></th>';
   }
   function projectRow(p) {
-    var key = 'project:' + p.id, href = '#/projects/' + p.id;
+    var key = 'project:' + p.id, href = '#/agents/' + p.id;
     return (
       
       '<tr data-project="' + p.id + '" data-item>' +
@@ -379,7 +379,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function renderProjectList() {
     var wrapper = document.getElementById('project-list');
     if (!wrapper) return;
-    openPopover = null;
+    closePopover(false);
     wrapper.className = 'project-list ' + state.view + '-view';
     wrapper.innerHTML = projectListInner();
   }
@@ -412,15 +412,15 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   
   function agentCards(p) {
     return cardList(p.agents.map(function (a) {
-      return { key: 'agent:' + p.id + ':' + a.id, href: '#/projects/' + p.id + '/agents/' + a.id, name: a.name, description: a.description || 'No description yet.',
+      return { key: 'agent:' + p.id + ':' + a.id, href: '#/agents/' + p.id + '/agents/' + a.id, name: a.name, description: a.description || 'No description yet.',
         footer: a.language + ' · ' + (a.enabled ? 'Enabled' : 'Disabled') + ' · Last edited ' + a.editedAgo + ' by ' + a.editedBy };
     }));
   }
 
   var views = {
     projects: function () {
-      return { title: 'Projects', html:
-        '<div class="view-header"><h1>Projects</h1>' +
+      return { title: 'Agents', html:
+        '<div class="view-header"><h1>Agents</h1>' +
         '<button type="button" class="icon-btn" data-refresh aria-label="Refresh project list">' + ICON_REFRESH + '</button></div>' +
         '<p class="muted">Pick a project or create a new one.</p>' +
         '<div class="toolbar">' +
@@ -437,15 +437,15 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         '<label for="project-search" class="visually-hidden">Search projects</label>' +
         '<input type="search" id="project-search" placeholder="Search projects" autocomplete="off" value="' + esc(state.query) + '">' +
         '</search>' +
-        '<button type="button" class="btn btn-primary" data-new-project>' + ICON_PLUS + 'New project</button>' +
+        '<button type="button" class="btn btn-primary" data-new-project>' + ICON_PLUS + 'New agent</button>' +
         '</div></div>' +
         projectList() };
     },
     project: function (p) {
       var agents = p.agents.length ? agentCards(p) : '<div class="empty"><p>No agents yet. Add the first one.</p></div>';
-      var addRoute = '#/projects/' + p.id + '/agents/new';
+      var addRoute = '#/agents/' + p.id + '/agents/new';
       return { title: p.name, html:
-        backButton('#/projects') +
+        backButton('#/agents') +
         '<div class="view-header"><h1>' + esc(p.name) + '</h1></div>' +
         '<p class="muted">Agents in this project</p>' +
         agents +
@@ -455,7 +455,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     },
     newAgent: function (p) {
       return { title: 'Add Agent', html:
-        backButton('#/projects/' + p.id) +
+        backButton('#/agents/' + p.id) +
         '<div class="view-header"><h1>Add Agent</h1></div>' +
         '<form id="add-agent-form" data-project="' + p.id + '">' +
         '<div class="field">' +
@@ -475,13 +475,13 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         
         '</div>' +
         '<div class="actions">' +
-        '<button type="button" class="btn" data-route="#/projects/' + p.id + '">Cancel</button>' +
+        '<button type="button" class="btn" data-route="#/agents/' + p.id + '">Cancel</button>' +
         '<button type="submit" class="btn btn-primary">Save</button>' +
         '</div></form>' };
     },
     agent: function (p, a) {
       return { title: a.name, html:
-        backButton('#/projects/' + p.id) +
+        backButton('#/agents/' + p.id) +
         '<div class="view-header"><h1>' + esc(a.name) + '</h1></div>' +
         '<p class="muted">Agent in ' + esc(p.name) + '</p>' +
         '<dl><dt>Language</dt><dd>' + esc(a.language) + '</dd>' +
@@ -493,14 +493,15 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     }
   };
 
+  var PAGES = { knowledge: 'Knowledge', endpoints: 'Endpoints', settings: 'Settings' };
   function parseHash() {
-    var hash = location.hash || '#/projects';
+    var hash = location.hash || '#/agents';
     if (hash.indexOf('#/') !== 0) return null;
     return hash.slice(2).split('/').filter(Boolean);
   }
   function resolve(parts) {
     var section = parts[0];
-    if (section === 'projects') {
+    if (section === 'agents') {
       if (parts.length === 1) return views.projects();
       var project = findProject(parts[1]);
       if (!project) return views.simple('Not found', 'That project does not exist.');
@@ -515,8 +516,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (section === 'help') {
       return views.simple('Help', 'This is a training playground: a small fake application for practising accessibility checks with the keyboard, the browser developer tools, bookmarklets, axe DevTools and a screen reader. Nothing you enter here is saved.');
     }
-    if (section === 'knowledge' || section === 'endpoints' || section === 'settings') {
-      return views.simple(section.charAt(0).toUpperCase() + section.slice(1), 'Nothing to configure here. This area exists so that the sidebar has somewhere to go.');
+    if (PAGES[section]) {
+      return views.simple(PAGES[section], 'Nothing to configure here. This area exists so that the sidebar has somewhere to go.');
     }
     return views.simple('Not found', 'That page does not exist.');
   }
@@ -531,7 +532,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     var parts = parseHash();
     if (!parts) return;
     var result = resolve(parts);
-    openPopover = null;
+    closePopover(false);
     viewEl.innerHTML = result.html;
     updateNav(parts[0]);
     
@@ -584,7 +585,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     openPopover = { panel: panel, button: button };
     
     button.setAttribute('aria-expanded', 'true');
-    panel.querySelector('button').focus();
+    panel.querySelector('button, a').focus();
   }
   function renameItem(key) {
     var found = findItem(key);
@@ -720,7 +721,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       editedBy: 'You'
     };
     project.agents.push(agent);
-    location.hash = '#/projects/' + project.id + '/agents/' + agent.id;
+    location.hash = '#/agents/' + project.id + '/agents/' + agent.id;
   });
 
   newProjectForm.addEventListener('submit', function (e) {
@@ -729,7 +730,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     state.projects.push(project);
     newProjectForm.reset();
     closeDialog();
-    location.hash = '#/projects/' + project.id;
+    location.hash = '#/agents/' + project.id;
   });
 
   document.getElementById('skip-link').addEventListener('click', function (e) {
