@@ -30,6 +30,14 @@ input:focus, select:focus, textarea:focus, .btn-primary:focus, .switch:focus { o
 .btn:hover { background: #f3f4f6; }
 .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
 .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+.btn[aria-disabled="true"], .btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn-primary[aria-disabled="true"]:hover { background: var(--primary); border-color: var(--primary); }
+.tip-wrap { position: relative; display: inline-flex; }
+.tip { position: absolute; top: 100%; right: 0; z-index: 20; display: none; width: max-content; max-width: 260px; margin-top: 8px; padding: 8px 10px; border-radius: 6px; background: #111827; color: #fff; font-size: 14px; font-weight: 400; line-height: 1.4; }
+.tip::before { content: ""; position: absolute; top: -5px; right: 18px; width: 10px; height: 10px; background: #111827; transform: rotate(45deg); }
+.tip::after { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 8px; }
+.tip-wrap:hover .tip, .tip-wrap:focus-within .tip { display: block; }
+.tip-wrap.tip-dismissed .tip { display: none; }
 .btn-ghost { background: transparent; border-color: transparent; color: inherit; }
 .btn-ghost:hover { background: rgba(255, 255, 255, .12); }
 .btn-danger { background: #b91c1c; border-color: #b91c1c; color: #fff; }
@@ -345,6 +353,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     view: 'card',
     query: '',
     sort: null,
+    canCreate: false,
     projects: [
       { id: 1, name: 'Customer support bot',
         description: 'Answers customer questions about orders, returns and delivery times, and hands over to a human agent when it cannot help.',
@@ -573,7 +582,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         '<label for="project-search" class="visually-hidden">Search projects</label>' +
         '<input type="search" id="project-search" placeholder="Search projects" autocomplete="off" value="' + esc(state.query) + '">' +
         '</search>' +
-        '<a class="btn btn-primary" href="#/agents/new">' + ICON_PLUS + 'New agent</a>' +
+        
+        (state.canCreate ? '<a class="btn btn-primary" href="#/agents/new">' + ICON_PLUS + 'New agent</a>'
+          : '<button type="button" class="btn btn-primary" disabled title="You do not have permissions at the moment.">' + ICON_PLUS + 'New agent</button>') +
+        
         '</div></div>' +
         projectList() };
     },
@@ -750,6 +762,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
 
   document.addEventListener('click', function (e) {
+    if (e.target.closest('a[aria-disabled="true"]')) {
+      e.preventDefault();
+      return;
+    }
     var actions = e.target.closest('[data-actions]');
     if (actions) {
       e.preventDefault();
@@ -817,7 +833,17 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (project) project.persona = card.getAttribute('data-persona');
   }
   
+  function rearmTip(e) {
+    var wrap = e.target.closest ? e.target.closest('.tip-wrap') : null;
+    if (wrap && !wrap.contains(e.relatedTarget)) wrap.classList.remove('tip-dismissed');
+  }
+  viewEl.addEventListener('mouseout', rearmTip);
+  viewEl.addEventListener('focusout', rearmTip);
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var tips = document.querySelectorAll('.tip-wrap:hover, .tip-wrap:focus-within');
+      for (var t = 0; t < tips.length; t++) tips[t].classList.add('tip-dismissed');
+    }
     if (e.key === 'Escape' && openPopover) {
       closePopover(true);
       return;
