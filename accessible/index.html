@@ -50,8 +50,7 @@ p { margin: 8px 0; }
 .muted { color: var(--muted); }
 .cards { list-style: none; margin: 16px 0; padding: 0; display: grid; gap: 12px; max-width: 560px; }
 .card { position: relative; display: block; padding: 16px 20px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; color: inherit; text-decoration: none; }
-.card:hover { border-color: #9ca3af; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
-.card:hover .card-title { text-decoration: underline; }
+.card:hover { border-color: #9ca3af; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); background: rgba(29, 78, 216, .06); }
 .card:has(.card-title:focus-visible) { outline: 3px solid var(--ring); outline-offset: 2px; }
 .card-title:focus-visible { outline: none; }
 .card-body { display: flex; align-items: flex-start; gap: 16px; }
@@ -66,6 +65,27 @@ p { margin: 8px 0; }
 .popover button { display: block; width: 100%; padding: 8px 10px; border: 0; border-radius: 6px; background: none; color: var(--text); font: inherit; text-align: left; cursor: pointer; }
 .popover button:hover { background: #f3f4f6; }
 .popover .danger { color: #b91c1c; }
+.personas { margin: 28px 0 0; padding: 0; border: 0; min-width: 0; }
+.personas legend { padding: 0; }
+.persona-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; margin-top: 12px; max-width: 960px; }
+.persona-card { position: relative; padding: 16px; background: var(--panel); border: 2px solid var(--border); border-radius: 12px; cursor: pointer; }
+.persona-card:hover { background: rgba(29, 78, 216, .06); }
+.persona-card:has(input:checked), .persona-card.selected { border-color: var(--primary); }
+.persona-card:has(input:focus-visible), .persona-card:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.persona-name::after { content: ""; position: absolute; inset: 0; }
+.persona-head { display: flex; align-items: flex-start; gap: 12px; }
+.persona-avatar { flex: none; width: 48px; height: 48px; border-radius: 10px; }
+.persona-title { flex: 1; min-width: 0; }
+.persona-name { display: block; font-size: 18px; font-weight: 700; }
+.persona-desc { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+.persona-radio { flex: none; width: 18px; height: 18px; margin-top: 4px; border: 2px solid #6b7280; border-radius: 50%; background: #fff; }
+.persona-card:has(input:checked) .persona-radio, .persona-card.selected .persona-radio { border-color: var(--primary); background: var(--primary); box-shadow: inset 0 0 0 3px #fff; }
+.persona-sub { margin: 14px 0 6px; font-size: 13px; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.chip { display: inline-block; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 999px; background: #eff6ff; color: var(--primary-dark); font-size: 13px; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.stat strong { display: block; font-size: 24px; line-height: 1.2; }
+.stat span { font-size: 14px; color: var(--muted); }
 .empty { padding: 24px; margin: 16px 0; background: var(--panel); border: 1px dashed #9ca3af; border-radius: 8px; }
 .toolbar, .project-list { max-width: 1200px; }
 .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
@@ -85,10 +105,9 @@ p { margin: 8px 0; }
 .table thead th { background: #f3f4f6; font-weight: 600; white-space: nowrap; }
 .table tbody tr:last-child td { border-bottom: 0; }
 .table tbody tr { cursor: pointer; }
-.table tbody tr:hover { background: #f9fafb; }
+.table tbody tr:hover { background: rgba(29, 78, 216, .06); }
 .table .num { text-align: right; }
 .col-name { width: 28%; }
-.col-agents { width: 96px; }
 .col-edited { width: 230px; }
 .col-actions { width: 64px; }
 .sort { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 600; cursor: pointer; }
@@ -107,15 +126,7 @@ a.row-title:hover { text-decoration: underline; }
 .label, label { font-weight: 600; }
 .req { font-weight: 400; color: var(--muted); }
 input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #6b7280; border-radius: 6px; background: #fff; color: var(--text); }
-.field-switch { flex-direction: row; align-items: center; justify-content: space-between; }
-.switch { position: relative; display: inline-block; width: 44px; height: 24px; padding: 0; border: 0; border-radius: 12px; background: #6b7280; cursor: pointer; vertical-align: middle; }
-.switch.on { background: var(--primary); }
-.switch-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left .15s; }
-.switch.on .switch-thumb { left: 22px; }
 .actions { display: flex; gap: 12px; margin-top: 8px; }
-dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 16px 0; }
-dt { font-weight: 600; }
-dd { margin: 0; }
 dialog, .dialog { width: min(480px, 90vw); margin: auto; border: 1px solid var(--border); border-radius: 10px; padding: 24px; background: #fff; color: var(--text); box-shadow: 0 10px 30px rgba(0, 0, 0, .2); }
 dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .dialog-backdrop { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
@@ -186,53 +197,39 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
   var state = {
     nextProjectId: 9,
-    nextAgentId: 5,
+    personas: [
+      { id: 'sarah', name: 'Sarah', color: '#2563eb', description: 'Warm and patient. Explains things step by step and never rushes the customer.', voice: 'ElevenLabs', language: 'English', agents: 12, scenarios: 4 },
+      { id: 'marcus', name: 'Marcus', color: '#7c3aed', description: 'Direct and concise. Gets to the point and confirms the next step.', voice: 'Azure Neural', language: 'English', agents: 7, scenarios: 2 },
+      { id: 'lena', name: 'Lena', color: '#0f766e', description: 'Formal and precise. Suited to billing and contract questions.', voice: 'ElevenLabs', language: 'German', agents: 3, scenarios: 5 }
+    ],
     view: 'card',
     query: '',
     sort: null,
     projects: [
       { id: 1, name: 'Customer support bot',
         description: 'Answers customer questions about orders, returns and delivery times, and hands over to a human agent when it cannot help.',
-        editedDaysAgo: 120, editedAgo: '4 months ago', editedBy: 'Alex_Dev',
-        agents: [
-          { id: 1, name: 'Order status helper', language: 'English', enabled: true,
-            description: 'Answers questions about the status of an order. Asks for the order number first and never guesses.',
-            editedAgo: '4 months ago', editedBy: 'Alex_Dev' }
-        ] },
+        persona: 'sarah', editedDaysAgo: 120, editedAgo: '4 months ago', editedBy: 'Alex_Dev' },
       { id: 2, name: 'Internal IT helpdesk',
         description: 'Resets passwords, unlocks accounts and creates tickets for everything else. Used by all employees from the intranet.',
-        editedDaysAgo: 2, editedAgo: '2 days ago', editedBy: 'Jamie_Ops', agents: [] },
+        editedDaysAgo: 2, editedAgo: '2 days ago', editedBy: 'Jamie_Ops' },
       { id: 3, name: 'Returns and refunds',
         description: 'Guides customers through returning an item and checks whether they qualify for a refund or a replacement.',
-        editedDaysAgo: 21, editedAgo: '3 weeks ago', editedBy: 'Priya_CX',
-        agents: [
-          { id: 2, name: 'Refund eligibility check', language: 'English', enabled: true,
-            description: 'Checks the purchase date against the return policy before promising anything.',
-            editedAgo: '3 weeks ago', editedBy: 'Priya_CX' },
-          { id: 3, name: 'Return label sender', language: 'English', enabled: false,
-            description: 'Emails a prepaid return label once the return has been approved.',
-            editedAgo: '1 month ago', editedBy: 'Priya_CX' }
-        ] },
+        persona: 'lena', editedDaysAgo: 21, editedAgo: '3 weeks ago', editedBy: 'Priya_CX' },
       { id: 4, name: 'HR onboarding assistant',
         description: 'Welcomes new employees, explains the first-week schedule and answers questions about benefits and holidays.',
-        editedDaysAgo: 7, editedAgo: '1 week ago', editedBy: 'Morgan_HR', agents: [] },
+        editedDaysAgo: 7, editedAgo: '1 week ago', editedBy: 'Morgan_HR' },
       { id: 5, name: 'Booking helper',
         description: 'Books, changes and cancels appointments for the service centres and sends a confirmation by text message.',
-        editedDaysAgo: 5, editedAgo: '5 days ago', editedBy: 'Sam_Field',
-        agents: [
-          { id: 4, name: 'Appointment scheduler', language: 'German', enabled: true,
-            description: 'Finds the next free slot at the chosen service centre.',
-            editedAgo: '5 days ago', editedBy: 'Sam_Field' }
-        ] },
+        persona: 'marcus', editedDaysAgo: 5, editedAgo: '5 days ago', editedBy: 'Sam_Field' },
       { id: 6, name: 'Sales lead qualifier',
         description: 'Chats with website visitors, asks a few qualifying questions and passes promising leads to the sales team.',
-        editedDaysAgo: 1, editedAgo: 'yesterday', editedBy: 'Chris_Sales', agents: [] },
+        editedDaysAgo: 1, editedAgo: 'yesterday', editedBy: 'Chris_Sales' },
       { id: 7, name: 'Billing questions',
         description: 'Explains invoice lines, payment methods and due dates. Escalates disputes to the finance team.',
-        editedDaysAgo: 60, editedAgo: '2 months ago', editedBy: 'Alex_Dev', agents: [] },
+        editedDaysAgo: 60, editedAgo: '2 months ago', editedBy: 'Alex_Dev' },
       { id: 8, name: 'Store locator',
         description: 'Finds the nearest store, shows opening hours and tells customers whether an item is in stock there.',
-        editedDaysAgo: 6, editedAgo: '6 days ago', editedBy: 'Jamie_Ops', agents: [] }
+        editedDaysAgo: 6, editedAgo: '6 days ago', editedBy: 'Jamie_Ops' }
     ]
   };
 
@@ -265,16 +262,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function findProject(id) {
     return state.projects.filter(function (p) { return String(p.id) === String(id); })[0];
   }
-  function findAgent(project, id) {
-    return project.agents.filter(function (a) { return String(a.id) === String(id); })[0];
-  }
   function findItem(key) {
-    var parts = key.split(':');
-    var project = findProject(parts[1]);
-    if (!project) return null;
-    if (parts[0] === 'project') return { item: project, list: state.projects };
-    var agent = findAgent(project, parts[2]);
-    return agent ? { item: agent, list: project.agents } : null;
+    var project = findProject(key.split(':')[1]);
+    return project ? { item: project, list: state.projects } : null;
   }
   function initials(name) {
     return name.split(/\s+/).filter(Boolean).slice(0, 2).map(function (word) { return word.charAt(0).toUpperCase(); }).join('');
@@ -329,7 +319,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function projectCards(projects) {
     return cardList(projects.map(function (p) {
       return { key: 'project:' + p.id, href: '#/agents/' + p.id, name: p.name, description: p.description,
-        footer: (p.agents.length === 1 ? '1 agent' : p.agents.length + ' agents') + ' · Last edited ' + p.editedAgo + ' by ' + p.editedBy };
+        footer: 'Last edited ' + p.editedAgo + ' by ' + p.editedBy };
     }));
   }
   function sortHeader(key, label, cls) {
@@ -350,7 +340,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       '<a class="row-title" data-title href="' + href + '">' + esc(p.name) + '</a></span></td>' +
       
       '<td class="cell-desc">' + esc(p.description) + '</td>' +
-      '<td class="num">' + p.agents.length + '</td>' +
       '<td class="cell-edited">' + esc(p.editedAgo + ' by ' + p.editedBy) + '</td>' +
       '<td class="cell-actions">' + actionsMenu({ key: key, name: p.name }) + '</td>' +
       '</tr>');
@@ -361,7 +350,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       '<thead><tr>' +
       sortHeader('name', 'Name', 'col-name') +
       '<th scope="col" class="col-desc">Description</th>' +
-      '<th scope="col" class="col-agents num">Agents</th>' +
       sortHeader('edited', 'Last edited', 'col-edited') +
       '<th scope="col" class="col-actions"><span class="visually-hidden">Actions</span></th>' +
       '</tr></thead><tbody>' +
@@ -410,11 +398,31 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     statusEl.textContent = text;
   }
   
-  function agentCards(p) {
-    return cardList(p.agents.map(function (a) {
-      return { key: 'agent:' + p.id + ':' + a.id, href: '#/agents/' + p.id + '/agents/' + a.id, name: a.name, description: a.description || 'No description yet.',
-        footer: a.language + ' · ' + (a.enabled ? 'Enabled' : 'Disabled') + ' · Last edited ' + a.editedAgo + ' by ' + a.editedBy };
-    }));
+  function avatarSrc(persona) {
+    return 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="' + persona.color + '"/><text x="24" y="30" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">' + initials(persona.name) + '</text></svg>');
+  }
+  function personaCard(project, persona, index) {
+    var id = 'persona-' + persona.id;
+    var checked = project.persona === persona.id;
+    var details = '<div class="persona-details" id="' + id + '-details">' +
+      '<p class="persona-sub">Speaking style</p>' +
+      '<p class="chips"><span class="chip">Voice: ' + esc(persona.voice) + '</span><span class="chip">Language: ' + esc(persona.language) + '</span></p>' +
+      '<div class="stats"><div class="stat"><strong>' + persona.agents + '</strong><span>Agents using this persona</span></div>' +
+      '<div class="stat"><strong>' + persona.scenarios + '</strong><span>Active test scenarios</span></div></div></div>';
+    
+    return '<div class="persona-card">' +
+      '<input type="radio" class="visually-hidden" name="persona" id="' + id + '" value="' + persona.id + '" aria-describedby="' + id + '-desc ' + id + '-details"' + (checked ? ' checked' : '') + '>' +
+      '<div class="persona-head"><img class="persona-avatar" src="' + avatarSrc(persona) + '" alt="" width="48" height="48">' +
+      '<div class="persona-title"><label class="persona-name" for="' + id + '">' + esc(persona.name) + '</label>' +
+      '<p class="persona-desc" id="' + id + '-desc">' + esc(persona.description) + '</p></div>' +
+      '<span class="persona-radio" aria-hidden="true"></span></div>' + details + '</div>';
+  }
+  function personaSection(project) {
+    var cards = state.personas.map(function (persona, index) { return personaCard(project, persona, index); }).join('');
+    
+    return '<fieldset class="personas"><legend><h2>Persona</h2></legend>' +
+      '<p class="muted">Choose the persona this agent speaks with. One persona per agent.</p>' +
+      '<div class="persona-grid">' + cards + '</div></fieldset>';
   }
 
   var views = {
@@ -442,51 +450,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         projectList() };
     },
     project: function (p) {
-      var agents = p.agents.length ? agentCards(p) : '<div class="empty"><p>No agents yet. Add the first one.</p></div>';
-      var addRoute = '#/agents/' + p.id + '/agents/new';
       return { title: p.name, html:
         backButton('#/agents') +
         '<div class="view-header"><h1>' + esc(p.name) + '</h1></div>' +
-        '<p class="muted">Agents in this project</p>' +
-        agents +
-        
-        '<button type="button" class="btn btn-primary" data-route="' + addRoute + '">' + ICON_PLUS + 'Add Agent</button>'
-      };
-    },
-    newAgent: function (p) {
-      return { title: 'Add Agent', html:
-        backButton('#/agents/' + p.id) +
-        '<div class="view-header"><h1>Add Agent</h1></div>' +
-        '<form id="add-agent-form" data-project="' + p.id + '">' +
-        '<div class="field">' +
-        
-        '<label for="agent-name">Agent name <span class="req">(required)</span></label>' +
-        '<input id="agent-name" name="agent-name" type="text" required autocomplete="off">' +
-        
-        '</div>' +
-        '<div class="field"><label for="agent-language">Language</label>' +
-        '<select id="agent-language" name="agent-language"><option>English</option><option>German</option><option>French</option><option>Spanish</option></select></div>' +
-        '<div class="field"><label for="agent-description">Description</label>' +
-        '<textarea id="agent-description" name="agent-description" rows="3"></textarea></div>' +
-        '<div class="field field-switch">' +
-        
-        '<label for="enable-agent">Enable agent</label>' +
-        '<button type="button" id="enable-agent" class="switch" role="switch" aria-checked="false"><span class="switch-thumb"></span></button>' +
-        
-        '</div>' +
-        '<div class="actions">' +
-        '<button type="button" class="btn" data-route="#/agents/' + p.id + '">Cancel</button>' +
-        '<button type="submit" class="btn btn-primary">Save</button>' +
-        '</div></form>' };
-    },
-    agent: function (p, a) {
-      return { title: a.name, html:
-        backButton('#/agents/' + p.id) +
-        '<div class="view-header"><h1>' + esc(a.name) + '</h1></div>' +
-        '<p class="muted">Agent in ' + esc(p.name) + '</p>' +
-        '<dl><dt>Language</dt><dd>' + esc(a.language) + '</dd>' +
-        '<dt>Description</dt><dd>' + (a.description ? esc(a.description) : '<span class="muted">None</span>') + '</dd>' +
-        '<dt>Enabled</dt><dd>' + (a.enabled ? 'Yes' : 'No') + '</dd></dl>' };
+        '<p class="muted">' + esc(p.description) + '</p>' +
+        personaSection(p) };
     },
     simple: function (title, text) {
       return { title: title, html: '<div class="view-header"><h1>' + esc(title) + '</h1></div><p>' + text + '</p>' };
@@ -506,11 +474,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       var project = findProject(parts[1]);
       if (!project) return views.simple('Not found', 'That project does not exist.');
       if (parts.length === 2) return views.project(project);
-      if (parts[2] === 'agents' && parts[3] === 'new') return views.newAgent(project);
-      if (parts[2] === 'agents') {
-        var agent = findAgent(project, parts[3]);
-        if (agent) return views.agent(project, agent);
-      }
       return views.simple('Not found', 'That page does not exist.');
     }
     if (section === 'help') {
@@ -558,13 +521,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     
     dialog.close();
   }
-  function toggleSwitch(sw) {
-    var on = !sw.classList.contains('on');
-    sw.classList.toggle('on', on);
-    
-    sw.setAttribute('aria-checked', on ? 'true' : 'false');
-  }
-
   function closePopover(returnFocus) {
     if (!openPopover) return;
     var current = openPopover;
@@ -653,7 +609,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       row.querySelector('[data-title]').click();
       return;
     }
-    
+
     var routed = e.target.closest('[data-route]');
     if (routed) {
       e.preventDefault();
@@ -669,11 +625,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     
-    var sw = e.target.closest('.switch');
-    if (sw) {
-      toggleSwitch(sw);
-      return;
-    }
     if (e.target.closest('[data-close]')) closeDialog();
   });
 
@@ -703,30 +654,15 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   
   viewEl.addEventListener('change', function (e) {
     if (e.target.name === 'view') setView(e.target.value);
-  });
-
-  viewEl.addEventListener('submit', function (e) {
-    if (e.target.id !== 'add-agent-form') return;
-    e.preventDefault();
-    var form = e.target;
-    var project = findProject(form.getAttribute('data-project'));
-    if (!project) return;
-    var agent = {
-      id: state.nextAgentId++,
-      name: form.elements['agent-name'].value.trim(),
-      language: form.elements['agent-language'].value,
-      description: form.elements['agent-description'].value.trim(),
-      enabled: form.querySelector('.switch').classList.contains('on'),
-      editedAgo: 'just now',
-      editedBy: 'You'
-    };
-    project.agents.push(agent);
-    location.hash = '#/agents/' + project.id + '/agents/' + agent.id;
+    if (e.target.name === 'persona') {
+      var project = findProject(parseHash()[1]);
+      if (project) project.persona = e.target.value;
+    }
   });
 
   newProjectForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    var project = { id: state.nextProjectId++, name: projectNameInput.value.trim(), description: 'No description yet.', editedDaysAgo: 0, editedAgo: 'just now', editedBy: 'You', agents: [] };
+    var project = { id: state.nextProjectId++, name: projectNameInput.value.trim(), description: 'No description yet.', editedDaysAgo: 0, editedAgo: 'just now', editedBy: 'You' };
     state.projects.push(project);
     newProjectForm.reset();
     closeDialog();
