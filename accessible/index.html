@@ -88,15 +88,19 @@ p { margin: 8px 0; }
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
 .stat strong { display: block; font-size: 24px; line-height: 1.2; }
 .stat span { font-size: 14px; color: var(--muted); }
-.prose { max-width: 760px; }
+.home { display: flex; align-items: flex-start; gap: 32px; max-width: 1040px; }
+.prose { flex: 1; min-width: 0; max-width: 760px; }
 .prose h2 { margin: 28px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 1.25rem; }
 .prose h3 { margin: 18px 0 6px; font-size: 1.05rem; }
 .prose ul { padding-left: 22px; }
 .prose li { margin: 4px 0; }
 .prose code { padding: 1px 5px; border-radius: 4px; background: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95em; }
-.contents { margin: 16px 0 0; padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; }
-.contents p { margin: 0 0 4px; font-weight: 600; }
-.contents ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.contents { flex: none; position: sticky; top: 0; width: 220px; margin: 0; padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; }
+.contents p { margin: 0 0 6px; font-weight: 600; }
+.contents ul { list-style: none; margin: 0; padding: 0; }
+.contents li { margin: 6px 0; }
+.contents a { color: var(--text); text-decoration: none; }
+.contents a:hover { text-decoration: underline; }
 .sc { color: var(--muted); }
 .ext { width: 14px; height: 14px; margin-left: 3px; vertical-align: -1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .empty { padding: 24px; margin: 16px 0; background: var(--panel); border: 1px dashed #9ca3af; border-radius: 8px; }
@@ -151,6 +155,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .dialog-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (max-width: 960px) {
+  .home { display: block; }
+  .contents { position: static; width: auto; margin: 16px 0 0; }
+  .contents ul { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+  .contents li { margin: 0; }
+}
 @media (max-width: 720px) {
   .layout { flex-direction: column; }
   .sidebar { width: auto; padding: 8px 16px; border-right: 0; border-bottom: 1px solid var(--border); }
@@ -192,20 +202,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 </div>
 
 <template id="home-content">
+  <div class="home">
   <div class="prose">
     <div class="view-header"><h1>Accessibility training playground</h1></div>
     <p>Agent Studio is a small fake application for practising accessibility checks. This page explains what the playground is, gives a short primer on WCAG, lists the mistakes we see most often, and points to the material worth reading.</p>
-    <nav class="contents" aria-label="Contents">
-      <p>Contents</p>
-      <ul>
-        <li><a href="#about">What this playground is</a></li>
-        <li><a href="#wcag">WCAG in five minutes</a></li>
-        <li><a href="#mistakes">Common mistakes</a></li>
-        <li><a href="#reading">Where to learn more</a></li>
-        <li><a href="#toolkit">Testing toolkit</a></li>
-        <li><a href="#sessions">Sessions</a></li>
-      </ul>
-    </nav>
 
     <h2 id="about">What this playground is</h2>
     <p>Agent Studio pretends to be a product for building chat agents. It has an agent list with search, a card and a table view, a form to create an agent, a persona chooser, and dialogs for renaming and deleting. It exists in two versions that look the same but are built differently.</p>
@@ -285,6 +285,18 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
     <h2 id="sessions">Sessions</h2>
     <p>The plan for each session and the mission participants get are in the <a href="../documentation/">documentation</a>.</p>
+  </div>
+    <nav class="contents" aria-label="On this page">
+      <p>On this page</p>
+      <ul>
+        <li><a href="#about">What this playground is</a></li>
+        <li><a href="#wcag">WCAG in five minutes</a></li>
+        <li><a href="#mistakes">Common mistakes</a></li>
+        <li><a href="#reading">Where to learn more</a></li>
+        <li><a href="#toolkit">Testing toolkit</a></li>
+        <li><a href="#sessions">Sessions</a></li>
+      </ul>
+    </nav>
   </div>
 </template>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
@@ -619,7 +631,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
   var PAGES = { knowledge: 'Knowledge', endpoints: 'Endpoints', settings: 'Settings' };
   function parseHash() {
-    var hash = location.hash || '#/agents';
+    var hash = location.hash || '#/home';
     if (hash.indexOf('#/') !== 0) return null;
     return hash.slice(2).split('/').filter(Boolean);
   }
@@ -651,14 +663,17 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
   function render(moveFocus) {
     var parts = parseHash();
+    var anchor = null;
     if (!parts) {
       if (viewEl.children.length) return;
-      parts = ['agents'];
+      parts = ['home'];
+      anchor = location.hash.slice(1);
     }
     var result = resolve(parts);
     closePopover(false);
     viewEl.innerHTML = result.html;
     updateNav(parts[0]);
+    if (anchor && document.getElementById(anchor)) document.getElementById(anchor).scrollIntoView();
     
     clearTimeout(announceTimer);
     lastAnnounced = '';
