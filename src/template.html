@@ -29,8 +29,8 @@ input:focus, select:focus, textarea:focus, .btn-primary:focus, .switch:focus { o
 .btn:hover { background: #f3f4f6; }
 .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
 .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
-.btn[aria-disabled="true"], .btn:disabled { opacity: .55; cursor: not-allowed; }
-.btn-primary[aria-disabled="true"]:hover { background: var(--primary); border-color: var(--primary); }
+.btn[aria-disabled="true"], .btn:disabled { cursor: not-allowed; }
+.btn-primary[aria-disabled="true"], .btn-primary:disabled, .btn-primary[aria-disabled="true"]:hover { background: #839eea; border-color: #839eea; color: #fff; }
 .tip-wrap { position: relative; display: inline-flex; }
 .tip { position: absolute; top: 100%; right: 0; z-index: 20; display: none; width: max-content; max-width: 260px; margin-top: 8px; padding: 8px 10px; border-radius: 6px; background: #111827; color: #fff; font-size: 14px; font-weight: 400; line-height: 1.4; }
 .tip::before { content: ""; position: absolute; top: -5px; right: 18px; width: 10px; height: 10px; background: #111827; transform: rotate(45deg); }
