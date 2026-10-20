@@ -19,7 +19,7 @@ body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; 
 .topbar :focus-visible { outline-color: var(--ring-on-dark); }
 main:focus-visible { outline-offset: -3px; }
 
-input:focus, select:focus, textarea:focus, .btn-primary:focus { outline: none; }
+input:focus, select:focus, textarea:focus, .btn-primary:focus, .switch:focus { outline: none; }
 
 .skip-link { position: absolute; left: 8px; top: 8px; z-index: 100; padding: 8px 12px; background: #fff; color: var(--primary); border: 2px solid var(--primary); border-radius: 6px; font-weight: 600; transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
@@ -32,6 +32,8 @@ input:focus, select:focus, textarea:focus, .btn-primary:focus { outline: none; }
 .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
 .btn-ghost { background: transparent; border-color: transparent; color: inherit; }
 .btn-ghost:hover { background: rgba(255, 255, 255, .12); }
+.btn-danger { background: #b91c1c; border-color: #b91c1c; color: #fff; }
+.btn-danger:hover { background: #991b1b; border-color: #991b1b; }
 .btn-back { display: inline-flex; align-items: center; gap: 4px; margin-bottom: 12px; padding: 6px 10px 6px 6px; border: 0; border-radius: 6px; background: transparent; color: var(--primary); font: inherit; font-weight: 600; cursor: pointer; }
 .btn-back:hover { background: #e5e7eb; }
 .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
@@ -128,6 +130,11 @@ a.row-title:hover { text-decoration: underline; }
 .label, label { font-weight: 600; }
 .req { font-weight: 400; color: var(--muted); }
 input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #6b7280; border-radius: 6px; background: #fff; color: var(--text); }
+.field-switch { flex-direction: row; align-items: center; justify-content: space-between; }
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; padding: 0; border: 0; border-radius: 12px; background: #6b7280; cursor: pointer; vertical-align: middle; }
+.switch.on { background: var(--primary); }
+.switch-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left .15s; }
+.switch.on .switch-thumb { left: 22px; }
 .actions { display: flex; gap: 12px; margin-top: 8px; }
 dialog, .dialog { width: min(480px, 90vw); margin: auto; border: 1px solid var(--border); border-radius: 10px; padding: 24px; background: #fff; color: var(--text); box-shadow: 0 10px 30px rgba(0, 0, 0, .2); }
 dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
@@ -170,22 +177,33 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
   </main>
 </div>
-<div class="dialog-backdrop" id="new-project-dialog" hidden>
-  <div class="dialog" role="dialog" aria-labelledby="new-project-title">
+<div class="dialog-backdrop" id="confirm-dialog" hidden>
+  <div class="dialog" role="dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
     <div class="dialog-header">
-      <h2 id="new-project-title">New agent</h2>
-      <button type="button" class="icon-btn" data-close aria-label="Close">
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-      </button>
+      <h2 id="confirm-title">Delete agent?</h2>
+      <button type="button" class="icon-btn" data-dialog-close aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
     </div>
-    <form id="new-project-form">
+    <p id="confirm-text">This removes <strong id="confirm-name"></strong>. It cannot be undone.</p>
+    <div class="actions">
+      <button type="button" class="btn" data-dialog-close>Cancel</button>
+      <button type="button" class="btn btn-danger" data-confirm-delete>Delete</button>
+    </div>
+  </div>
+</div>
+<div class="dialog-backdrop" id="rename-dialog" hidden>
+  <div class="dialog" role="dialog" aria-labelledby="rename-title">
+    <div class="dialog-header">
+      <h2 id="rename-title">Rename agent</h2>
+      <button type="button" class="icon-btn" data-dialog-close aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
+    </div>
+    <form id="rename-form">
       <div class="field">
-        <label for="project-name">Agent name <span class="req">(required)</span></label>
-        <input id="project-name" name="name" type="text" required autocomplete="off">
+        <label for="rename-name">Agent name <span class="req">(required)</span></label>
+        <input id="rename-name" name="name" type="text" required autocomplete="off">
       </div>
       <div class="actions">
-        <button type="button" class="btn" data-close>Cancel</button>
-        <button type="submit" class="btn btn-primary">Create agent</button>
+        <button type="button" class="btn" data-dialog-close>Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
       </div>
     </form>
   </div>
@@ -246,10 +264,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   var ICON_MORE = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="5" r="2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="2" fill="currentColor" stroke="none"/></svg>';
 
   var viewEl = document.getElementById('view');
-  var dialog = document.getElementById('new-project-dialog');
-  var newProjectForm = document.getElementById('new-project-form');
-  var projectNameInput = document.getElementById('project-name');
   var openPopover = null;
+  var confirmDialog = document.getElementById('confirm-dialog');
+  var renameDialog = document.getElementById('rename-dialog');
+  var renameForm = document.getElementById('rename-form');
+  var renameInput = document.getElementById('rename-name');
+  var pending = null;
 
   function esc(value) {
     return String(value).replace(/[&<>"']/g, function (c) {
@@ -432,7 +452,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         '<label for="project-search" class="visually-hidden">Search projects</label>' +
         '<input type="search" id="project-search" placeholder="Search projects" autocomplete="off" value="' + esc(state.query) + '">' +
         '</search>' +
-        '<button type="button" class="btn btn-primary" data-new-project>' + ICON_PLUS + 'New agent</button>' +
+        '<a class="btn btn-primary" href="#/agents/new">' + ICON_PLUS + 'New agent</a>' +
         '</div></div>' +
         projectList() };
     },
@@ -442,6 +462,32 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         '<div class="view-header"><h1>' + esc(p.name) + '</h1></div>' +
         '<p class="muted">' + esc(p.description) + '</p>' +
         personaSection(p) };
+    },
+    newAgent: function () {
+      return { title: 'New agent', html:
+        backButton('#/agents') +
+        '<div class="view-header"><h1>New agent</h1></div>' +
+        '<form id="new-agent-form">' +
+        '<div class="field">' +
+        
+        '<span class="label">Agent name <span class="req">(required)</span></span>' +
+        '<input name="agent-name" type="text" required autocomplete="off">' +
+        
+        '</div>' +
+        '<div class="field"><label for="agent-description">Description</label>' +
+        '<textarea id="agent-description" name="agent-description" rows="3"></textarea></div>' +
+        '<div class="field"><label for="agent-language">Language</label>' +
+        '<select id="agent-language" name="agent-language"><option>English</option><option>German</option><option>French</option><option>Spanish</option></select></div>' +
+        '<div class="field field-switch">' +
+        
+        '<span class="label" id="enable-label">Enable agent</span>' +
+        '<span class="switch" role="switch" tabindex="0" aria-labelledby="enable-label"><span class="switch-thumb"></span></span>' +
+        
+        '</div>' +
+        '<div class="actions">' +
+        '<button type="button" class="btn" data-route="#/agents">Cancel</button>' +
+        '<button type="submit" class="btn btn-primary" aria-label="Close" tabindex="1">Create agent</button>' +
+        '</div></form>' };
     },
     simple: function (title, text) {
       return { title: title, html: '<div class="view-header"><h1>' + esc(title) + '</h1></div><p>' + text + '</p>' };
@@ -458,6 +504,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     var section = parts[0];
     if (section === 'agents') {
       if (parts.length === 1) return views.projects();
+      if (parts[1] === 'new' && parts.length === 2) return views.newAgent();
       var project = findProject(parts[1]);
       if (!project) return views.simple('Not found', 'That project does not exist.');
       if (parts.length === 2) return views.project(project);
@@ -494,13 +541,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     }
   }
 
-  function openDialog() {
-    
-    dialog.hidden = false;
-  }
-  function closeDialog() {
-    
-    dialog.hidden = true;
+  function toggleSwitch(sw) {
+    var on = !sw.classList.contains('on');
+    sw.classList.toggle('on', on);
   }
   function closePopover(returnFocus) {
     if (!openPopover) return;
@@ -518,15 +561,48 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     panel.hidden = false;
     openPopover = { panel: panel, button: button };
   }
-  function renameItem(key) {
+  function openModal(dialogEl, key) {
+    var found = findItem(key);
+    if (!found) return null;
+    pending = { key: key, trigger: openPopover ? openPopover.button : null, dialog: dialogEl };
+    closePopover(false);
+    
+    dialogEl.hidden = false;
+    
+    return found.item;
+  }
+  function closeModal() {
+    if (!pending) return;
+    var current = pending;
+    
+    pending = null;
+    current.dialog.hidden = true;
+  }
+  function finishModal() {
+    var current = pending;
+    pending = null;
+    
+    current.dialog.hidden = true;
+  }
+  function askDelete(key) {
+    var item = openModal(confirmDialog, key);
+    if (item) document.getElementById('confirm-name').textContent = item.name;
+  }
+  function askRename(key) {
+    var item = openModal(renameDialog, key);
+    if (!item) return;
+    renameInput.value = item.name;
+  }
+  function confirmDelete() {
+    if (!pending) return;
+    var key = pending.key;
+    finishModal();
+    deleteItem(key);
+  }
+  function renameItem(key, name) {
     var found = findItem(key);
     if (!found) return;
-    var name = window.prompt('New name', found.item.name);
-    if (!name || !name.trim()) {
-      closePopover(true);
-      return;
-    }
-    found.item.name = name.trim();
+    found.item.name = name;
     found.item.editedDaysAgo = 0;
     found.item.editedAgo = 'just now';
     found.item.editedBy = 'You';
@@ -552,13 +628,21 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     var rename = e.target.closest('[data-rename]');
     if (rename) {
       e.preventDefault();
-      renameItem(rename.getAttribute('data-rename'));
+      askRename(rename.getAttribute('data-rename'));
       return;
     }
     var remove = e.target.closest('[data-delete]');
     if (remove) {
       e.preventDefault();
-      deleteItem(remove.getAttribute('data-delete'));
+      askDelete(remove.getAttribute('data-delete'));
+      return;
+    }
+    if (e.target.closest('[data-dialog-close]')) {
+      closeModal();
+      return;
+    }
+    if (e.target.closest('[data-confirm-delete]')) {
+      confirmDelete();
       return;
     }
     if (openPopover) closePopover(false);
@@ -584,10 +668,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       renderProjectList();
       return;
     }
-    if (e.target.closest('[data-new-project]')) {
-      openDialog();
-      return;
-    }
     
     var viewButton = e.target.closest('[data-view]');
     if (viewButton) {
@@ -595,7 +675,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     
-    if (e.target.closest('[data-close]')) closeDialog();
+    var sw = e.target.closest('.switch');
+    if (sw) toggleSwitch(sw);
   });
 
   function selectPersona(card) {
@@ -611,8 +692,17 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     
-    if (e.key === 'Escape' && !dialog.hidden) closeDialog();
+    if (e.key === 'Escape' && pending) closeModal();
     if (e.key === 'Enter' && e.target.matches('tr[data-route]')) location.hash = e.target.getAttribute('data-route');
+  });
+
+  renameForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!pending) return;
+    var key = pending.key, name = renameInput.value.trim();
+    if (!name) return;
+    finishModal();
+    renameItem(key, name);
   });
 
   viewEl.addEventListener('input', function (e) {
@@ -621,12 +711,19 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     renderProjectList();
   });
 
-  newProjectForm.addEventListener('submit', function (e) {
+  viewEl.addEventListener('submit', function (e) {
+    if (e.target.id !== 'new-agent-form') return;
     e.preventDefault();
-    var project = { id: state.nextProjectId++, name: projectNameInput.value.trim(), description: 'No description yet.', editedDaysAgo: 0, editedAgo: 'just now', editedBy: 'You' };
+    var form = e.target;
+    var project = {
+      id: state.nextProjectId++,
+      name: form.elements['agent-name'].value.trim(),
+      description: form.elements['agent-description'].value.trim() || 'No description yet.',
+      language: form.elements['agent-language'].value,
+      enabled: form.querySelector('.switch').classList.contains('on'),
+      editedDaysAgo: 0, editedAgo: 'just now', editedBy: 'You'
+    };
     state.projects.push(project);
-    newProjectForm.reset();
-    closeDialog();
     location.hash = '#/agents/' + project.id;
   });
 
