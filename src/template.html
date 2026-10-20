@@ -89,6 +89,17 @@ p { margin: 8px 0; }
 .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
 .stat strong { display: block; font-size: 24px; line-height: 1.2; }
 .stat span { font-size: 14px; color: var(--muted); }
+.prose { max-width: 760px; }
+.prose h2 { margin: 28px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 1.25rem; }
+.prose h3 { margin: 18px 0 6px; font-size: 1.05rem; }
+.prose ul { padding-left: 22px; }
+.prose li { margin: 4px 0; }
+.prose code { padding: 1px 5px; border-radius: 4px; background: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95em; }
+.contents { margin: 16px 0 0; padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; }
+.contents p { margin: 0 0 4px; font-weight: 600; }
+.contents ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.sc { color: var(--muted); }
+.ext { width: 14px; height: 14px; margin-left: 3px; vertical-align: -1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .empty { padding: 24px; margin: 16px 0; background: var(--panel); border: 1px dashed #9ca3af; border-radius: 8px; }
 .toolbar, .project-list { max-width: 1200px; }
 .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
@@ -167,6 +178,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   <aside class="sidebar">
     <nav aria-label="Main">
       <ul class="nav" id="main-nav">
+        <li><a href="#/home">Home</a></li>
         <li><a href="#/agents">Agents</a></li>
         <li><a href="#/knowledge">Knowledge</a></li>
         <li><a href="#/endpoints">Endpoints</a></li>
@@ -182,6 +194,103 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 <!--ENDIF-->
   </main>
 </div>
+
+<template id="home-content">
+  <div class="prose">
+    <div class="view-header"><h1>Accessibility training playground</h1></div>
+    <p>Agent Studio is a small fake application for practising accessibility checks. This page explains what the playground is, gives a short primer on WCAG, lists the mistakes we see most often, and points to the material worth reading.</p>
+    <nav class="contents" aria-label="Contents">
+      <p>Contents</p>
+      <ul>
+        <li><a href="#about">What this playground is</a></li>
+        <li><a href="#wcag">WCAG in five minutes</a></li>
+        <li><a href="#mistakes">Common mistakes</a></li>
+        <li><a href="#reading">Where to learn more</a></li>
+        <li><a href="#toolkit">Testing toolkit</a></li>
+        <li><a href="#sessions">Sessions</a></li>
+      </ul>
+    </nav>
+
+    <h2 id="about">What this playground is</h2>
+    <p>Agent Studio pretends to be a product for building chat agents. It has an agent list with search, a card and a table view, a form to create an agent, a persona chooser, and dialogs for renaming and deleting. It exists in two versions that look the same but are built differently.</p>
+    <p>The <a href="../accessible/">accessible version</a> is the reference: native HTML first, ARIA only where it adds something. The <a href="../broken/">seeded version</a> has deliberate accessibility bugs in the same screens. Nothing you enter is saved, and reloading a page restores the bugs. Fix one by editing the DOM in the developer tools, then check again. The plan for each session is in the <a href="../documentation/">documentation</a>.</p>
+
+    <h2 id="wcag">WCAG in five minutes</h2>
+    <p>The Web Content Accessibility Guidelines are the standard most laws and contracts point at. They are organised as four principles, each with guidelines, each with testable success criteria.</p>
+    <h3>The four principles</h3>
+    <ul>
+      <li><strong>Perceivable.</strong> People can take the content in: images have text alternatives, colour is not the only signal, text has enough contrast.</li>
+      <li><strong>Operable.</strong> People can work the interface: everything works with a keyboard, focus is visible and goes somewhere sensible, pages have titles.</li>
+      <li><strong>Understandable.</strong> People can make sense of it: the language is set, controls are labelled, errors say what went wrong.</li>
+      <li><strong>Robust.</strong> Assistive technology can read it: every control exposes a name, a role and a state.</li>
+    </ul>
+    <h3>Levels and versions</h3>
+    <p>Each success criterion has a level. A is the minimum, AA is what is usually required, AAA is the stretch. WCAG 2.2 is the current version; 2.1 and 2.0 are subsets of it, so meeting 2.2 AA covers the older ones too.</p>
+    <h3>Where to read it</h3>
+    <ul>
+      <li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a> is the standard itself. Dense, but authoritative.</li>
+      <li><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">The Quick Reference<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a> lets you filter the criteria by level and tag.</li>
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/" target="_blank" rel="noopener">The Understanding documents<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a> explain the intent of each criterion with examples and techniques. Start here when a criterion is unclear.</li>
+    </ul>
+
+    <h2 id="mistakes">Common mistakes developers make</h2>
+    <p>These are the problems that turn up most often, taken from two published sources: the failures WebAIM finds year after year across the top million home pages, and the failure techniques the W3C documents under WCAG. The wording here is ours. In brackets are the success criterion each one fails and, where the W3C has written it up, the failure technique.</p>
+    <h3>Semantics</h3>
+    <ul>
+      <li>A clickable <code>div</code> or <code>span</code> where a button or a link belongs. <span class="sc">(4.1.2, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F59">F59</a>)</span></li>
+      <li>A link faked with script instead of a real link. <span class="sc">(2.1.1, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F42">F42</a>)</span></li>
+      <li>An icon button, or an empty button, with no accessible name. <span class="sc">(4.1.2, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F68">F68</a>)</span></li>
+      <li>A link that holds only an image with no alt text, so the link has no name either. <span class="sc">(2.4.4, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F89">F89</a>)</span></li>
+      <li>A form field with no label at all. <span class="sc">(3.3.2, 4.1.2, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F68">F68</a>)</span></li>
+      <li>A field with visible label text that is not connected to the field. <span class="sc">(1.3.1, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F111">F111</a>)</span></li>
+      <li>Table headers marked up as ordinary cells. <span class="sc">(1.3.1, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F91">F91</a>)</span></li>
+    </ul>
+    <h3>Keyboard and focus</h3>
+    <ul>
+      <li>Controls that only react to mouse or touch events. <span class="sc">(2.1.1, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F54">F54</a>)</span></li>
+      <li>The focus outline removed and nothing put in its place. <span class="sc">(2.4.7, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F78">F78</a>)</span></li>
+      <li>Script that throws focus away as soon as a control receives it. <span class="sc">(2.1.1, 2.4.7, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F55">F55</a>)</span></li>
+      <li>A positive <code>tabindex</code> that pulls one control out of the natural order. <span class="sc">(2.4.3, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F44">F44</a>)</span></li>
+      <li>A dialog or menu that is not next to its trigger in the focus order. <span class="sc">(2.4.3, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F85">F85</a>)</span></li>
+    </ul>
+    <h3>Colour and contrast</h3>
+    <ul>
+      <li>Text with too little contrast against its background. <span class="sc">(1.4.3)</span></li>
+      <li>Links told apart from the surrounding text by colour alone. <span class="sc">(1.4.1, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F73">F73</a>)</span></li>
+      <li>Required or error fields marked by colour alone. <span class="sc">(1.4.1, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F81">F81</a>)</span></li>
+    </ul>
+    <h3>Content and feedback</h3>
+    <ul>
+      <li>Images with no alternative text. <span class="sc">(1.1.1, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F65">F65</a>)</span></li>
+      <li>Link text such as “click here” or “more” that says nothing on its own. <span class="sc">(2.4.4, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F84">F84</a>)</span></li>
+      <li>A page title that does not say what the page is. <span class="sc">(2.4.2, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F25">F25</a>)</span></li>
+      <li>The page language not set, so screen readers guess the pronunciation. <span class="sc">(3.1.1)</span></li>
+      <li>A new window or tab opened without the user asking for it. <span class="sc">(3.2.5, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F22">F22</a>)</span></li>
+      <li>Search results, filters or saves that change the page without telling screen reader users. <span class="sc">(4.1.3, <a href="https://www.w3.org/WAI/WCAG22/Techniques/failures/F103">F103</a>)</span></li>
+    </ul>
+    <p>Sources: <a href="https://webaim.org/projects/million/" target="_blank" rel="noopener">The WebAIM Million<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a> and the Failures section of <a href="https://www.w3.org/WAI/WCAG22/Techniques/#failures" target="_blank" rel="noopener">WCAG 2.2 Techniques<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a>.</p>
+
+    <h2 id="reading">Where to learn more</h2>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener">The ARIA Authoring Practices Guide<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a> shows how to build common widgets with the right roles, states and keyboard behaviour. Read its "Read me first" page before copying a pattern.</li>
+      <li><a href="https://www.w3.org/TR/html-aria/">ARIA in HTML</a> says which ARIA roles and attributes are allowed on which HTML elements.</li>
+      <li><a href="https://www.w3.org/WAI/tutorials/" target="_blank" rel="noopener">The WAI tutorials<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a> walk through images, forms, tables, menus and carousels.</li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility">MDN's accessibility section</a> is a good general reference for the HTML side.</li>
+    </ul>
+
+    <h2 id="toolkit">Testing toolkit</h2>
+    <ul>
+      <li><strong>Keyboard.</strong> Tab, Shift+Tab, Enter, Space, the arrows and Escape. The cheapest test and the one that finds the most.</li>
+      <li><strong>Chrome DevTools.</strong> The <a href="https://developer.chrome.com/docs/devtools/accessibility/reference">Accessibility pane</a> in the Elements panel shows the name, the role and the state of the selected element, and how the name was computed.</li>
+      <li><strong>axe DevTools.</strong> The <a href="https://www.deque.com/axe/devtools/">browser extension</a> finds the issues a machine can find. It will not find a clickable row with no keyboard path.</li>
+      <li><strong>Bookmarklets.</strong> <a href="https://pauljadam.com/bookmarklets/">Paul J. Adam's bookmarklets</a> outline headings, landmarks and more without leaving the page.</li>
+      <li><strong>Screen readers.</strong> <a href="https://www.nvaccess.org/download/">NVDA</a> on Windows and <a href="https://support.apple.com/guide/voiceover/welcome/mac">VoiceOver</a> on macOS. Listen to a control in both versions and compare.</li>
+    </ul>
+
+    <h2 id="sessions">Sessions</h2>
+    <p>The plan for each session and the mission participants get are in the <a href="../documentation/">documentation</a>.</p>
+  </div>
+</template>
 
 <!--IF BROKEN-->
 <div class="dialog-backdrop" id="confirm-dialog" hidden>
@@ -571,6 +680,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         '<button type="submit" class="btn btn-primary" {{broken:aria-label="Close" tabindex="1"|accessible:}}>Create agent</button>' +
         '</div></form>' };
     },
+    home: function () {
+      return { title: 'Home', html: document.getElementById('home-content').innerHTML };
+    },
     simple: function (title, text) {
       return { title: title, html: '<div class="view-header"><h1>' + esc(title) + '</h1></div><p>' + text + '</p>' };
     }
@@ -584,6 +696,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
   function resolve(parts) {
     var section = parts[0];
+    if (section === 'home') return views.home();
     if (section === 'agents') {
       if (parts.length === 1) return views.projects();
       if (parts[1] === 'new' && parts.length === 2) return views.newAgent();
@@ -609,7 +722,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
   function render(moveFocus) {
     var parts = parseHash();
-    if (!parts) return;
+    if (!parts) {
+      if (viewEl.children.length) return;
+      parts = ['agents'];
+    }
     var result = resolve(parts);
     closePopover(false);
     viewEl.innerHTML = result.html;
