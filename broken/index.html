@@ -767,7 +767,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     
     var fakeLink = e.target.closest('[role="link"][data-href]');
     if (fakeLink) {
-      location.href = fakeLink.getAttribute('data-href');
+      window.open(fakeLink.getAttribute('data-href'), '_blank', 'noopener');
       return;
     }
     
@@ -854,7 +854,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     
-    if (e.key === 'Enter' && e.target.matches('[role="link"][data-href]')) location.href = e.target.getAttribute('data-href');
+    if (e.key === 'Enter' && e.target.matches('[role="link"][data-href]')) window.open(e.target.getAttribute('data-href'), '_blank', 'noopener');
     if (e.key === 'Escape' && pending) closeModal();
     if (e.key === 'Enter' && e.target.matches('tr[data-route]')) location.hash = e.target.getAttribute('data-route');
   });
