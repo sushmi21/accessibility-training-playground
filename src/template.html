@@ -52,7 +52,7 @@ main:focus-visible { outline-offset: -3px; }
 .nav a[aria-current="page"] { background: #e0e7ff; color: var(--primary-dark); font-weight: 600; }
 main { position: relative; flex: 1; min-width: 0; padding: 24px 32px; overflow-y: auto; }
 .view-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
-h1 { font-size: 1.6rem; margin: 0; }
+h1, .h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
 h2 { font-size: 1.2rem; margin: 0; }
 p { margin: 8px 0; }
 .muted { color: var(--muted); }
@@ -75,11 +75,19 @@ p { margin: 8px 0; }
 .popover .danger { color: #b91c1c; }
 .home { display: flex; align-items: flex-start; gap: 32px; max-width: 1040px; }
 .prose { flex: 1; min-width: 0; max-width: 760px; }
-.prose h2 { margin: 28px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 1.25rem; }
-.prose h3 { margin: 18px 0 6px; font-size: 1.05rem; }
+.prose h2, .prose .h2 { margin: 28px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 1.25rem; font-weight: 700; }
+.prose h3, .prose h4 { margin: 18px 0 6px; font-size: 1.05rem; }
 .prose ul { padding-left: 22px; }
 .prose li { margin: 4px 0; }
 .prose code { padding: 1px 5px; border-radius: 4px; background: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95em; }
+.profile-head { display: flex; align-items: center; gap: 12px; margin: 12px 0 4px; }
+.field .hint { margin: 0; }
+.checks { margin: 16px 0; padding: 0; border: 0; min-width: 0; }
+.checks legend { margin: 0 0 4px; padding: 0; font-weight: 600; }
+.check { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+.check input { width: 20px; height: 20px; margin: 0; padding: 0; accent-color: var(--primary); }
+.check label { font-weight: 400; }
+.news-frame { display: block; width: 100%; height: 240px; margin: 12px 0; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
 .contents { flex: none; position: sticky; top: 0; width: 220px; margin: 0; padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; }
 .contents p { margin: 0 0 6px; font-weight: 600; }
 .contents ul { list-style: none; margin: 0; padding: 0; }
@@ -289,6 +297,111 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         <li><a href="#reading">Where to learn more</a></li>
         <li><a href="#toolkit">Testing toolkit</a></li>
         <li><a href="#sessions">Sessions</a></li>
+      </ul>
+    </nav>
+  </div>
+</template>
+
+<template id="settings-content">
+  <div class="home">
+  <div class="prose" >
+
+    <div class="view-header"><h1>Settings</h1></div>
+
+    <p class="muted">Your profile, preferences, notifications and security. Changes are not saved in the playground.</p>
+
+    <h2 id="profile">Profile</h2>
+    <div class="profile-head">
+      <span class="avatar" aria-hidden="true">AN</span>
+      <p class="muted">Your avatar shows your initials.</p>
+    </div>
+    <div class="field">
+      <label for="display-name">Display name</label>
+      <input id="display-name" name="display-name" type="text" value="Ada Nair" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" value="ada.nair@example.com" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="job-title">Job title</label>
+      <input id="job-title" name="job-title" type="text" value="Conversation designer" autocomplete="organization-title">
+    </div>
+
+
+    <h2 id="preferences">Preferences</h2>
+
+    <div class="field">
+      <label for="time-zone">Time zone</label>
+      <select id="time-zone" name="time-zone">
+        <option>Europe/Berlin</option>
+        <option>Europe/London</option>
+        <option>America/New_York</option>
+        <option>Asia/Kolkata</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="date-format">Date format</label>
+      <select id="date-format" name="date-format">
+        <option>DD.MM.YYYY</option>
+        <option>MM/DD/YYYY</option>
+        <option>YYYY-MM-DD</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="email-language">Email language</label>
+      <select id="email-language" name="email-language" aria-describedby="email-language-hint">
+        <option value="en">English</option>
+        <option value="de" selected>Deutsch</option>
+        <option value="fr">Français</option>
+      </select>
+      <p class="muted hint" id="email-language-hint">Notification emails are sent in this language.</p>
+      <p class="hint">Preview: <span id="email-preview" lang="de">Ihr Agent Support wurde veröffentlicht.</span></p>
+    </div>
+
+    <h2 id="notifications">Notifications</h2>
+    <fieldset class="checks">
+      <legend>Email me when</legend>
+      <div class="check"><input type="checkbox" id="notify-published" name="notify-published" checked><label for="notify-published">An agent is published</label></div>
+      <div class="check"><input type="checkbox" id="notify-errors" name="notify-errors" checked><label for="notify-errors">A flow has errors</label></div>
+      <div class="check"><input type="checkbox" id="notify-digest" name="notify-digest"><label for="notify-digest">Weekly usage digest</label></div>
+    </fieldset>
+
+    <h2 id="security">Security</h2>
+    <p>Password last changed three months ago. <a href="#/settings/password">Change password</a></p>
+
+    <h3>Active sessions</h3>
+
+    <ul>
+      <li>Chrome on Windows, Berlin. Active now, this device.</li>
+      <li>Safari on iPhone, Berlin. Last active 2 hours ago.</li>
+      <li>Firefox on Linux, Hamburg. Last active 3 days ago.</li>
+    </ul>
+    <h3>Recommendations</h3>
+    <p>Two-factor authentication is off.</p>
+    <p><a href="#/settings/two-factor">Learn more<span class="visually-hidden"> about two-factor authentication</span></a></p>
+    <p>Your session timeout is 8 hours.</p>
+    <p><a href="#/settings/session-timeout">Learn more<span class="visually-hidden"> about session timeouts</span></a></p>
+    <p>You have two active API keys.</p>
+    <p><a href="#/settings/api-keys">Learn more<span class="visually-hidden"> about API keys</span></a></p>
+
+    <h2 id="whats-new">What's new</h2>
+    <p>Release notes and session plans, straight from the documentation site.</p>
+    <iframe class="news-frame" title="Product news" src="../documentation/"></iframe>
+
+    <h2 id="danger">Danger zone</h2>
+    <p>Deleting your account removes your agents and cannot be undone.</p>
+    <button type="button" class="btn btn-danger">Delete account</button>
+  </div>
+    <nav class="contents" aria-label="On this page">
+      <p>On this page</p>
+      <ul>
+        <li><a href="#profile">Profile</a></li>
+        <li><a href="#preferences">Preferences</a></li>
+        <li><a href="#notifications">Notifications</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#whats-new">What's new</a></li>
+        <li><a href="#danger">Danger zone</a></li>
       </ul>
     </nav>
   </div>
@@ -651,12 +764,22 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     home: function () {
       return { title: 'Home', html: document.getElementById('home-content').innerHTML };
     },
-    simple: function (title, text) {
-      return { title: title, html: '<div class="view-header"><h1>' + esc(title) + '</h1></div><p>' + text + '</p>' };
+    settings: function () {
+      return { title: 'Settings', html: document.getElementById('settings-content').innerHTML };
+    },
+    simple: function (title, text, back) {
+      return { title: title, html: (back ? backButton(back) : '') + '<div class="view-header"><h1>' + esc(title) + '</h1></div><p>' + text + '</p>' };
     }
   };
 
-  var PAGES = { knowledge: 'Knowledge', endpoints: 'Endpoints', settings: 'Settings' };
+  var PAGES = { knowledge: 'Knowledge', endpoints: 'Endpoints' };
+  var SETTINGS_PAGES = {
+    'password': { title: 'Change password', text: 'Passwords cannot be changed in the playground. This page exists so that the link on the Settings page has somewhere to go.' },
+    'two-factor': { title: 'Two-factor authentication', text: 'Two-factor authentication asks for a code from your phone as well as your password. It cannot be switched on in the playground.' },
+    'session-timeout': { title: 'Session timeout', text: 'You are signed out after eight hours without activity. The timeout cannot be changed in the playground.' },
+    'api-keys': { title: 'API keys', text: 'API keys let other systems call your agents. They cannot be managed in the playground.' }
+  };
+  var EMAIL_PREVIEWS = { en: 'Your agent Support was published.', de: 'Ihr Agent Support wurde ver\u00f6ffentlicht.', fr: 'Votre agent Support a \u00e9t\u00e9 publi\u00e9.' };
   function parseHash() {
     var hash = location.hash || '#/home';
     if (hash.indexOf('#/') !== 0) return null;
@@ -671,6 +794,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       var project = findProject(parts[1]);
       if (!project) return views.simple('Not found', 'That project does not exist.');
       if (parts.length === 2) return views.project(project);
+      return views.simple('Not found', 'That page does not exist.');
+    }
+    if (section === 'settings') {
+      if (parts.length === 1) return views.settings();
+      var page = parts.length === 2 && Object.prototype.hasOwnProperty.call(SETTINGS_PAGES, parts[1]) ? SETTINGS_PAGES[parts[1]] : null;
+      if (page) return views.simple(page.title, page.text, '#/settings');
       return views.simple('Not found', 'That page does not exist.');
     }
     if (section === 'help') {
@@ -1009,6 +1138,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     renameItem(key, name);
   });
 
+  viewEl.addEventListener('change', function (e) {
+    if (e.target.id !== 'email-language') return;
+    var preview = document.getElementById('email-preview');
+    preview.textContent = EMAIL_PREVIEWS[e.target.value];
+    preview.setAttribute('lang', e.target.value);
+  });
   viewEl.addEventListener('input', function (e) {
     if (e.target.id !== 'project-search') return;
     state.query = e.target.value;
