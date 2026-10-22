@@ -304,10 +304,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
 <template id="settings-content">
   <div class="home">
-  <div class="prose" >
-
+  <div class="prose" {{broken:role="main" aria-label="Settings"|accessible:}}>
+<!--IF BROKEN-->
+    <div class="view-header"><div class="h1">Settings</div></div>
+<!--ELSE-->
     <div class="view-header"><h1>Settings</h1></div>
-
+<!--ENDIF-->
     <p class="muted">Your profile, preferences, notifications and security. Changes are not saved in the playground.</p>
 
     <h2 id="profile">Profile</h2>
@@ -328,9 +330,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       <input id="job-title" name="job-title" type="text" value="Conversation designer" autocomplete="organization-title">
     </div>
 
-
+<!--IF BROKEN-->
+    <p class="h2" id="preferences">Preferences</p>
+<!--ELSE-->
     <h2 id="preferences">Preferences</h2>
-
+<!--ENDIF-->
     <div class="field">
       <label for="time-zone">Time zone</label>
       <select id="time-zone" name="time-zone">
@@ -356,7 +360,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         <option value="fr">Français</option>
       </select>
       <p class="muted hint" id="email-language-hint">Notification emails are sent in this language.</p>
-      <p class="hint">Preview: <span id="email-preview" lang="de">Ihr Agent Support wurde veröffentlicht.</span></p>
+      <p class="hint">Preview: <span id="email-preview" {{broken:|accessible:lang="de"}}>Ihr Agent Support wurde veröffentlicht.</span></p>
     </div>
 
     <h2 id="notifications">Notifications</h2>
@@ -369,9 +373,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
     <h2 id="security">Security</h2>
     <p>Password last changed three months ago. <a href="#/settings/password">Change password</a></p>
-
+<!--IF BROKEN-->
+    <h4>Active sessions</h4>
+<!--ELSE-->
     <h3>Active sessions</h3>
-
+<!--ENDIF-->
     <ul>
       <li>Chrome on Windows, Berlin. Active now, this device.</li>
       <li>Safari on iPhone, Berlin. Last active 2 hours ago.</li>
@@ -379,21 +385,21 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     </ul>
     <h3>Recommendations</h3>
     <p>Two-factor authentication is off.</p>
-    <p><a href="#/settings/two-factor">Learn more<span class="visually-hidden"> about two-factor authentication</span></a></p>
+    <p><a href="#/settings/two-factor">Learn more{{broken:|accessible:<span class="visually-hidden"> about two-factor authentication</span>}}</a></p>
     <p>Your session timeout is 8 hours.</p>
-    <p><a href="#/settings/session-timeout">Learn more<span class="visually-hidden"> about session timeouts</span></a></p>
+    <p><a href="#/settings/session-timeout">Learn more{{broken:|accessible:<span class="visually-hidden"> about session timeouts</span>}}</a></p>
     <p>You have two active API keys.</p>
-    <p><a href="#/settings/api-keys">Learn more<span class="visually-hidden"> about API keys</span></a></p>
+    <p><a href="#/settings/api-keys">Learn more{{broken:|accessible:<span class="visually-hidden"> about API keys</span>}}</a></p>
 
     <h2 id="whats-new">What's new</h2>
     <p>Release notes and session plans, straight from the documentation site.</p>
-    <iframe class="news-frame" title="Product news" src="../documentation/"></iframe>
+    <iframe class="news-frame" {{broken:|accessible:title="Product news"}} src="../documentation/"></iframe>
 
     <h2 id="danger">Danger zone</h2>
     <p>Deleting your account removes your agents and cannot be undone.</p>
     <button type="button" class="btn btn-danger">Delete account</button>
   </div>
-    <nav class="contents" aria-label="On this page">
+    <nav class="contents" {{broken:|accessible:aria-label="On this page"}}>
       <p>On this page</p>
       <ul>
         <li><a href="#profile">Profile</a></li>
@@ -1142,7 +1148,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (e.target.id !== 'email-language') return;
     var preview = document.getElementById('email-preview');
     preview.textContent = EMAIL_PREVIEWS[e.target.value];
+    /*IF BROKEN*/
+    /*ELSE*/
     preview.setAttribute('lang', e.target.value);
+    /*ENDIF*/
   });
   viewEl.addEventListener('input', function (e) {
     if (e.target.id !== 'project-search') return;
