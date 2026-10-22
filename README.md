@@ -24,5 +24,7 @@ pages are plain HTML and are not generated.
 The playground covers name, role and state (WCAG 4.1.2), ARIA overriding native
 semantics, text alternatives, keyboard access, bypass blocks (2.4.1), page titles
 (2.4.2), focus order (2.4.3), focus visibility (2.4.7) and status messages (4.1.3).
+The Settings page adds page structure: headings and landmarks (1.3.1, 2.4.6), link
+purpose (2.4.4), language of parts (3.1.2) and iframe titles (4.1.2).
 
 The list of seeded bugs is deliberately not in this repository.
