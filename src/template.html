@@ -80,13 +80,15 @@ p { margin: 8px 0; }
 .prose ul { padding-left: 22px; }
 .prose li { margin: 4px 0; }
 .prose code { padding: 1px 5px; border-radius: 4px; background: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95em; }
-.profile-head { display: flex; align-items: center; gap: 12px; margin: 12px 0 4px; }
-.field .hint { margin: 0; }
-.checks { margin: 16px 0; padding: 0; border: 0; min-width: 0; }
-.checks legend { margin: 0 0 4px; padding: 0; font-weight: 600; }
-.check { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
-.check input { width: 20px; height: 20px; margin: 0; padding: 0; accent-color: var(--primary); }
-.check label { font-weight: 400; }
+.profile-head { display: flex; align-items: flex-start; gap: 16px; margin: 12px 0; }
+.profile-head .facts { margin: 0; }
+.facts { margin: 8px 0; }
+.facts div { display: flex; gap: 16px; margin: 4px 0; }
+.facts dt { flex: none; width: 140px; font-weight: 600; }
+.facts dd { margin: 0; }
+.prose table { width: 100%; max-width: 560px; margin: 8px 0; border-collapse: collapse; }
+.prose th, .prose td { padding: 6px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.prose th { font-weight: 600; }
 .news-frame { display: block; width: 100%; height: 240px; margin: 12px 0; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
 .contents { flex: none; position: sticky; top: 0; width: 220px; margin: 0; padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; }
 .contents p { margin: 0 0 6px; font-weight: 600; }
@@ -310,24 +312,16 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 <!--ELSE-->
     <div class="view-header"><h1>Settings</h1></div>
 <!--ENDIF-->
-    <p class="muted">Your profile, preferences, notifications and security. Changes are not saved in the playground.</p>
+    <p class="muted">Your profile, preferences, notifications and security at a glance. Settings are managed by your workspace administrator.</p>
 
     <h2 id="profile">Profile</h2>
     <div class="profile-head">
       <span class="avatar" aria-hidden="true">AN</span>
-      <p class="muted">Your avatar shows your initials.</p>
-    </div>
-    <div class="field">
-      <label for="display-name">Display name</label>
-      <input id="display-name" name="display-name" type="text" value="Ada Nair" autocomplete="name">
-    </div>
-    <div class="field">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" value="ada.nair@example.com" autocomplete="email">
-    </div>
-    <div class="field">
-      <label for="job-title">Job title</label>
-      <input id="job-title" name="job-title" type="text" value="Conversation designer" autocomplete="organization-title">
+      <dl class="facts">
+        <div><dt>Display name</dt><dd>Ada Nair</dd></div>
+        <div><dt>Email</dt><dd>ada.nair@example.com</dd></div>
+        <div><dt>Job title</dt><dd>Conversation designer</dd></div>
+      </dl>
     </div>
 
 <!--IF BROKEN-->
@@ -335,41 +329,21 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 <!--ELSE-->
     <h2 id="preferences">Preferences</h2>
 <!--ENDIF-->
-    <div class="field">
-      <label for="time-zone">Time zone</label>
-      <select id="time-zone" name="time-zone">
-        <option>Europe/Berlin</option>
-        <option>Europe/London</option>
-        <option>America/New_York</option>
-        <option>Asia/Kolkata</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="date-format">Date format</label>
-      <select id="date-format" name="date-format">
-        <option>DD.MM.YYYY</option>
-        <option>MM/DD/YYYY</option>
-        <option>YYYY-MM-DD</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="email-language">Email language</label>
-      <select id="email-language" name="email-language" aria-describedby="email-language-hint">
-        <option value="en">English</option>
-        <option value="de" selected>Deutsch</option>
-        <option value="fr">Français</option>
-      </select>
-      <p class="muted hint" id="email-language-hint">Notification emails are sent in this language.</p>
-      <p class="hint">Preview: <span id="email-preview" {{broken:|accessible:lang="de"}}>Ihr Agent Support wurde veröffentlicht.</span></p>
-    </div>
+    <dl class="facts">
+      <div><dt>Time zone</dt><dd>Europe/Berlin</dd></div>
+      <div><dt>Date format</dt><dd>DD.MM.YYYY</dd></div>
+      <div><dt>Email language</dt><dd>Deutsch</dd></div>
+    </dl>
+    <p class="muted">Notification emails are sent in this language.</p>
+    <p>Preview: <span id="email-preview" {{broken:|accessible:lang="de"}}>Ihr Agent Support wurde veröffentlicht.</span></p>
 
     <h2 id="notifications">Notifications</h2>
-    <fieldset class="checks">
-      <legend>Email me when</legend>
-      <div class="check"><input type="checkbox" id="notify-published" name="notify-published" checked><label for="notify-published">An agent is published</label></div>
-      <div class="check"><input type="checkbox" id="notify-errors" name="notify-errors" checked><label for="notify-errors">A flow has errors</label></div>
-      <div class="check"><input type="checkbox" id="notify-digest" name="notify-digest"><label for="notify-digest">Weekly usage digest</label></div>
-    </fieldset>
+    <p>You get an email when:</p>
+    <ul>
+      <li>an agent is published</li>
+      <li>a flow has errors</li>
+    </ul>
+    <p>The weekly usage digest is switched off.</p>
 
     <h2 id="security">Security</h2>
     <p>Password last changed three months ago. <a href="#/settings/password">Change password</a></p>
@@ -378,11 +352,16 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 <!--ELSE-->
     <h3>Active sessions</h3>
 <!--ENDIF-->
-    <ul>
-      <li>Chrome on Windows, Berlin. Active now, this device.</li>
-      <li>Safari on iPhone, Berlin. Last active 2 hours ago.</li>
-      <li>Firefox on Linux, Hamburg. Last active 3 days ago.</li>
-    </ul>
+    <table>
+      <thead>
+        <tr><th scope="col">Device</th><th scope="col">Location</th><th scope="col">Last active</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Chrome on Windows</td><td>Berlin</td><td>Now, this device</td></tr>
+        <tr><td>Safari on iPhone</td><td>Berlin</td><td>2 hours ago</td></tr>
+        <tr><td>Firefox on Linux</td><td>Hamburg</td><td>3 days ago</td></tr>
+      </tbody>
+    </table>
     <h3>Recommendations</h3>
     <p>Two-factor authentication is off.</p>
     <p><a href="#/settings/two-factor">Learn more{{broken:|accessible:<span class="visually-hidden"> about two-factor authentication</span>}}</a></p>
@@ -396,8 +375,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     <iframe class="news-frame" {{broken:|accessible:title="Product news"}} src="../documentation/"></iframe>
 
     <h2 id="danger">Danger zone</h2>
-    <p>Deleting your account removes your agents and cannot be undone.</p>
-    <button type="button" class="btn btn-danger">Delete account</button>
+    <p>Deleting your account removes your agents and cannot be undone. Account deletion is handled by your workspace administrator.</p>
   </div>
     <nav class="contents" {{broken:|accessible:aria-label="On this page"}}>
       <p>On this page</p>
@@ -785,7 +763,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     'session-timeout': { title: 'Session timeout', text: 'You are signed out after eight hours without activity. The timeout cannot be changed in the playground.' },
     'api-keys': { title: 'API keys', text: 'API keys let other systems call your agents. They cannot be managed in the playground.' }
   };
-  var EMAIL_PREVIEWS = { en: 'Your agent Support was published.', de: 'Ihr Agent Support wurde ver\u00f6ffentlicht.', fr: 'Votre agent Support a \u00e9t\u00e9 publi\u00e9.' };
   function parseHash() {
     var hash = location.hash || '#/home';
     if (hash.indexOf('#/') !== 0) return null;
@@ -1144,15 +1121,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     renameItem(key, name);
   });
 
-  viewEl.addEventListener('change', function (e) {
-    if (e.target.id !== 'email-language') return;
-    var preview = document.getElementById('email-preview');
-    preview.textContent = EMAIL_PREVIEWS[e.target.value];
-    /*IF BROKEN*/
-    /*ELSE*/
-    preview.setAttribute('lang', e.target.value);
-    /*ENDIF*/
-  });
   viewEl.addEventListener('input', function (e) {
     if (e.target.id !== 'project-search') return;
     state.query = e.target.value;
