@@ -73,27 +73,6 @@ p { margin: 8px 0; }
 .popover button { display: block; width: 100%; padding: 8px 10px; border: 0; border-radius: 6px; background: none; color: var(--text); font: inherit; text-align: left; cursor: pointer; }
 .popover button:hover { background: #f3f4f6; }
 .popover .danger { color: #b91c1c; }
-.personas { margin: 28px 0 0; padding: 0; border: 0; min-width: 0; }
-.personas legend { padding: 0; }
-.persona-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; margin-top: 12px; max-width: 960px; }
-.persona-card { position: relative; padding: 16px; background: var(--panel); border: 2px solid var(--border); border-radius: 12px; cursor: pointer; }
-.persona-card:hover { background: rgba(29, 78, 216, .06); }
-.persona-card:has(input:checked), .persona-card.selected { border-color: var(--primary); }
-.persona-card:has(input:focus-visible), .persona-card:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
-.persona-name::after { content: ""; position: absolute; inset: 0; }
-.persona-head { display: flex; align-items: flex-start; gap: 12px; }
-.persona-avatar { flex: none; width: 48px; height: 48px; border-radius: 10px; }
-.persona-title { flex: 1; min-width: 0; }
-.persona-name { display: block; font-size: 18px; font-weight: 700; }
-.persona-desc { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
-.persona-radio { flex: none; width: 18px; height: 18px; margin-top: 4px; border: 2px solid #6b7280; border-radius: 50%; background: #fff; }
-.persona-card:has(input:checked) .persona-radio, .persona-card.selected .persona-radio { border-color: var(--primary); background: var(--primary); box-shadow: inset 0 0 0 3px #fff; }
-.persona-sub { margin: 14px 0 6px; font-size: 13px; font-weight: 600; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
-.chip { display: inline-block; padding: 2px 8px; border: 1px solid #bfdbfe; border-radius: 999px; background: #eff6ff; color: var(--primary-dark); font-size: 13px; }
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
-.stat strong { display: block; font-size: 24px; line-height: 1.2; }
-.stat span { font-size: 14px; color: var(--muted); }
 .home { display: flex; align-items: flex-start; gap: 32px; max-width: 1040px; }
 .prose { flex: 1; min-width: 0; max-width: 760px; }
 .prose h2 { margin: 28px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 1.25rem; }
@@ -221,7 +200,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     <p>Agent Studio is a small fake application for practising accessibility checks. This page explains what the playground is, gives a short primer on WCAG, lists the mistakes we see most often, and points to the material worth reading.</p>
 
     <h2 id="about">What this playground is</h2>
-    <p>Agent Studio pretends to be a product for building chat agents. It has an agent list with search, a card and a table view, a form to create an agent, a persona chooser, and dialogs for renaming and deleting. It exists in two versions that look the same but are built differently.</p>
+    <p>Agent Studio pretends to be a product for building chat agents. It has an agent list with search, a card and a table view, a form to create an agent, and dialogs for renaming and deleting. It exists in two versions that look the same but are built differently.</p>
     <p>The <a href="../accessible/">accessible version</a> is the reference: native HTML first, ARIA only where it adds something. The <a href="../broken/">seeded version</a> has deliberate accessibility bugs in the same screens. Nothing you enter is saved, and reloading a page restores the bugs. Fix one by editing the DOM in the developer tools, then check again. The plan for each session is in the <a href="../documentation/">documentation</a>.</p>
 
     <h2 id="wcag">WCAG in five minutes</h2>
@@ -370,11 +349,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
   var state = {
     nextProjectId: 9,
-    personas: [
-      { id: 'sarah', name: 'Sarah', color: '#2563eb', description: 'Warm and patient. Explains things step by step and never rushes the customer.', voice: 'ElevenLabs', language: 'English', agents: 12, scenarios: 4 },
-      { id: 'marcus', name: 'Marcus', color: '#7c3aed', description: 'Direct and concise. Gets to the point and confirms the next step.', voice: 'Azure Neural', language: 'English', agents: 7, scenarios: 2 },
-      { id: 'lena', name: 'Lena', color: '#0f766e', description: 'Formal and precise. Suited to billing and contract questions.', voice: 'ElevenLabs', language: 'German', agents: 3, scenarios: 5 }
-    ],
     view: 'card',
     query: '',
     sort: null,
@@ -382,19 +356,19 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     projects: [
       { id: 1, name: 'Customer support bot',
         description: 'Answers customer questions about orders, returns and delivery times, and hands over to a human agent when it cannot help.',
-        persona: 'sarah', editedDaysAgo: 120, editedAgo: '4 months ago', editedBy: 'Alex_Dev' },
+        editedDaysAgo: 120, editedAgo: '4 months ago', editedBy: 'Alex_Dev' },
       { id: 2, name: 'Internal IT helpdesk',
         description: 'Resets passwords, unlocks accounts and creates tickets for everything else. Used by all employees from the intranet.',
         editedDaysAgo: 2, editedAgo: '2 days ago', editedBy: 'Jamie_Ops' },
       { id: 3, name: 'Returns and refunds',
         description: 'Guides customers through returning an item and checks whether they qualify for a refund or a replacement.',
-        persona: 'lena', editedDaysAgo: 21, editedAgo: '3 weeks ago', editedBy: 'Priya_CX' },
+        editedDaysAgo: 21, editedAgo: '3 weeks ago', editedBy: 'Priya_CX' },
       { id: 4, name: 'HR onboarding assistant',
         description: 'Welcomes new employees, explains the first-week schedule and answers questions about benefits and holidays.',
         editedDaysAgo: 7, editedAgo: '1 week ago', editedBy: 'Morgan_HR' },
       { id: 5, name: 'Booking helper',
         description: 'Books, changes and cancels appointments for the service centres and sends a confirmation by text message.',
-        persona: 'marcus', editedDaysAgo: 5, editedAgo: '5 days ago', editedBy: 'Sam_Field' },
+        editedDaysAgo: 5, editedAgo: '5 days ago', editedBy: 'Sam_Field' },
       { id: 6, name: 'Sales lead qualifier',
         description: 'Chats with website visitors, asks a few qualifying questions and passes promising leads to the sales team.',
         editedDaysAgo: 1, editedAgo: 'yesterday', editedBy: 'Chris_Sales' },
@@ -595,44 +569,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     statusEl.textContent = text;
   }
   /*ENDIF*/
-  function avatarSrc(persona) {
-    return 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="' + persona.color + '"/><text x="24" y="30" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">' + initials(persona.name) + '</text></svg>');
-  }
-  function personaCard(project, persona, index) {
-    var id = 'persona-' + persona.id;
-    var checked = project.persona === persona.id;
-    var details = '<div class="persona-details" id="' + id + '-details">' +
-      '<p class="persona-sub">Speaking style</p>' +
-      '<p class="chips"><span class="chip">Voice: ' + esc(persona.voice) + '</span><span class="chip">Language: ' + esc(persona.language) + '</span></p>' +
-      '<div class="stats"><div class="stat"><strong>' + persona.agents + '</strong><span>Agents using this persona</span></div>' +
-      '<div class="stat"><strong>' + persona.scenarios + '</strong><span>Active test scenarios</span></div></div></div>';
-    /*IF BROKEN*/
-    return '<div class="persona-card' + (checked ? ' selected' : '') + '" role="radio" aria-checked="' + checked + '" tabindex="0" aria-labelledby="' + id + '-name" aria-describedby="' + id + '-desc ' + id + '-details" data-persona="' + persona.id + '">' +
-      '<div class="persona-head"><img class="persona-avatar" src="' + avatarSrc(persona) + '" alt="" width="48" height="48">' +
-      '<div class="persona-title"><span class="persona-name" id="' + id + '-name">' + esc(persona.name) + '</span>' +
-      '<p class="persona-desc" id="' + id + '-desc">' + esc(persona.description) + '</p></div>' +
-      '<span class="persona-radio" aria-hidden="true"></span></div>' + details + '</div>';
-    /*ELSE*/
-    return '<div class="persona-card">' +
-      '<input type="radio" class="visually-hidden" name="persona" id="' + id + '" value="' + persona.id + '" aria-describedby="' + id + '-desc ' + id + '-details"' + (checked ? ' checked' : '') + '>' +
-      '<div class="persona-head"><img class="persona-avatar" src="' + avatarSrc(persona) + '" alt="" width="48" height="48">' +
-      '<div class="persona-title"><label class="persona-name" for="' + id + '">' + esc(persona.name) + '</label>' +
-      '<p class="persona-desc" id="' + id + '-desc">' + esc(persona.description) + '</p></div>' +
-      '<span class="persona-radio" aria-hidden="true"></span></div>' + details + '</div>';
-    /*ENDIF*/
-  }
-  function personaSection(project) {
-    var cards = state.personas.map(function (persona, index) { return personaCard(project, persona, index); }).join('');
-    /*IF BROKEN*/
-    return '<div class="personas"><h2 id="persona-heading">Persona</h2>' +
-      '<p class="muted" id="persona-hint">Choose the persona this agent speaks with. One persona per agent.</p>' +
-      '<div class="persona-grid" role="radiogroup" aria-labelledby="persona-heading" aria-describedby="persona-hint">' + cards + '</div></div>';
-    /*ELSE*/
-    return '<fieldset class="personas"><legend><h2>Persona</h2></legend>' +
-      '<p class="muted">Choose the persona this agent speaks with. One persona per agent.</p>' +
-      '<div class="persona-grid">' + cards + '</div></fieldset>';
-    /*ENDIF*/
-  }
 
   var views = {
     projects: function () {
@@ -676,7 +612,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         backButton('#/agents') +
         '<div class="view-header"><h1>' + esc(p.name) + '</h1></div>' +
         '<p class="muted">' + esc(p.description) + '</p>' +
-        personaSection(p) };
+        '<p>Nothing to configure here yet. This page exists so that each agent has somewhere to go.</p>' };
     },
     newAgent: function () {
       return { title: 'New agent', html:
@@ -979,13 +915,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       return;
     }
     /*ENDIF*/
-    /*IF BROKEN*/
-    var personaRadio = e.target.closest('[role="radio"][data-persona]');
-    if (personaRadio) {
-      selectPersona(personaRadio);
-      return;
-    }
-    /*ENDIF*/
     var routed = e.target.closest('[data-route]');
     if (routed) {
       e.preventDefault();
@@ -1007,14 +936,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (sw) toggleSwitch(sw);
   });
 
-  /*IF BROKEN*/
-  function selectPersona(card) {
-    var project = findProject(parseHash()[1]);
-    var radios = card.parentNode.querySelectorAll('[role="radio"]');
-    for (var i = 0; i < radios.length; i++) radios[i].classList.toggle('selected', radios[i] === card);
-    if (project) project.persona = card.getAttribute('data-persona');
-  }
-  /*ENDIF*/
   function rearmTip(e) {
     var wrap = e.target.closest ? e.target.closest('.tip-wrap') : null;
     if (wrap && !wrap.contains(e.relatedTarget)) wrap.classList.remove('tip-dismissed');
@@ -1100,10 +1021,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   /*ELSE*/
   viewEl.addEventListener('change', function (e) {
     if (e.target.name === 'view') setView(e.target.value);
-    if (e.target.name === 'persona') {
-      var project = findProject(parseHash()[1]);
-      if (project) project.persona = e.target.value;
-    }
   });
   /*ENDIF*/
 
