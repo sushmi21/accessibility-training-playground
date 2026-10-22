@@ -453,15 +453,16 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
   function actionsMenu(item) {
     var panelId = 'actions-' + item.key.replace(/:/g, '-');
+    var buttonId = panelId + '-button';
     return '<div class="card-actions">' +
       /*IF BROKEN*/
-      '<button type="button" class="icon-btn" data-actions="' + item.key + '" aria-label="More actions">' + ICON_MORE + '</button>' +
+      '<button type="button" class="icon-btn" id="' + buttonId + '" data-actions="' + item.key + '" aria-haspopup="menu" aria-label="More actions">' + ICON_MORE + '</button>' +
       /*ELSE*/
-      '<button type="button" class="icon-btn" data-actions="' + item.key + '" aria-label="More actions for ' + esc(item.name) + '" aria-expanded="false" aria-controls="' + panelId + '">' + ICON_MORE + '</button>' +
+      '<button type="button" class="icon-btn" id="' + buttonId + '" data-actions="' + item.key + '" aria-haspopup="menu" aria-expanded="false" aria-controls="' + panelId + '" aria-label="More actions for ' + esc(item.name) + '">' + ICON_MORE + '</button>' +
       /*ENDIF*/
-      '<div class="popover" id="' + panelId + '" hidden>' +
-      '<button type="button" data-rename="' + item.key + '">Rename</button>' +
-      '<button type="button" class="danger" data-delete="' + item.key + '">Delete</button>' +
+      '<div class="popover" id="' + panelId + '" role="menu" aria-labelledby="' + buttonId + '" hidden>' +
+      '<button type="button" role="menuitem" {{broken:|accessible:tabindex="-1"}} data-rename="' + item.key + '">Rename</button>' +
+      '<button type="button" role="menuitem" {{broken:|accessible:tabindex="-1"}} class="danger" data-delete="' + item.key + '">Delete</button>' +
       '</div>' +
       '</div>';
   }
@@ -547,7 +548,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
   function projectListInner() {
     var projects = filteredProjects();
-    if (!projects.length) return '<div class="empty"><p>No projects match “' + esc(state.query.trim()) + '”.</p></div>';
+    if (!projects.length) return '<div class="empty"><p>No agents match “' + esc(state.query.trim()) + '”.</p></div>';
     return state.view === 'list' ? projectTable(projects) : projectCards(projects);
   }
   function projectList() {
@@ -582,9 +583,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function searchStatus() {
     var q = state.query.trim();
     var count = filteredProjects().length;
-    if (!q) return 'Showing all ' + count + (count === 1 ? ' project' : ' projects');
-    if (!count) return 'No projects match \u201c' + q + '\u201d';
-    return count === 1 ? '1 project matches' : count + ' projects match';
+    if (!q) return 'Showing all ' + count + (count === 1 ? ' agent' : ' agents');
+    if (!count) return 'No agents match \u201c' + q + '\u201d';
+    return count === 1 ? '1 agent matches' : count + ' agents match';
   }
   /*IF BROKEN*/
   /*ELSE*/
@@ -655,8 +656,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         /*ENDIF*/
         '<div class="toolbar-end">' +
         '<search class="search">' + ICON_SEARCH +
-        '<label for="project-search" class="visually-hidden">Search projects</label>' +
-        '<input type="search" id="project-search" placeholder="Search projects" autocomplete="off" value="' + esc(state.query) + '">' +
+        '<label for="project-search" class="visually-hidden">Search Agents in your Project</label>' +
+        '<input type="search" id="project-search" placeholder="Search Agents" autocomplete="off" value="' + esc(state.query) + '">' +
         '</search>' +
         /*IF BROKEN*/
         (state.canCreate ? '<a class="btn btn-primary" href="#/agents/new">' + ICON_PLUS + 'New agent</a>'
@@ -798,21 +799,49 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (returnFocus) current.button.focus();
     /*ENDIF*/
   }
-  function togglePopover(button) {
+  function openMenu(button, focusLast) {
     var panel = button.nextElementSibling;
-    if (openPopover && openPopover.panel === panel) {
-      closePopover(true);
-      return;
-    }
     closePopover(false);
     panel.hidden = false;
     openPopover = { panel: panel, button: button };
     /*IF BROKEN*/
     /*ELSE*/
     button.setAttribute('aria-expanded', 'true');
-    panel.querySelector('button, a').focus();
+    var items = menuItems(panel);
+    items[focusLast ? items.length - 1 : 0].focus();
     /*ENDIF*/
   }
+  function togglePopover(button) {
+    if (openPopover && openPopover.button === button) {
+      closePopover(true);
+      return;
+    }
+    openMenu(button, false);
+  }
+  /*IF BROKEN*/
+  /*ELSE*/
+  function menuItems(panel) {
+    return Array.prototype.slice.call(panel.querySelectorAll('[role="menuitem"]'));
+  }
+  function menuKeydown(e, items) {
+    var index = items.indexOf(e.target);
+    var target = null;
+    if (e.key === 'ArrowDown') target = items[(index + 1) % items.length];
+    else if (e.key === 'ArrowUp') target = items[(index - 1 + items.length) % items.length];
+    else if (e.key === 'Home') target = items[0];
+    else if (e.key === 'End') target = items[items.length - 1];
+    else if (e.key === 'Tab') { closePopover(false); return; }
+    else if (e.key.length === 1 && e.key !== ' ' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      for (var i = 1; i <= items.length && !target; i++) {
+        var candidate = items[(index + i) % items.length];
+        if (candidate.textContent.trim().charAt(0).toLowerCase() === e.key.toLowerCase()) target = candidate;
+      }
+    }
+    if (!target) return;
+    e.preventDefault();
+    target.focus();
+  }
+  /*ENDIF*/
   function openModal(dialogEl, key) {
     var found = findItem(key);
     if (!found) return null;
@@ -992,6 +1021,13 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
   viewEl.addEventListener('mouseout', rearmTip);
   viewEl.addEventListener('focusout', rearmTip);
+  /*IF BROKEN*/
+  /*ELSE*/
+  viewEl.addEventListener('focusout', function (e) {
+    if (!openPopover || !e.relatedTarget || e.relatedTarget === openPopover.button) return;
+    if (!openPopover.panel.contains(e.relatedTarget)) closePopover(false);
+  });
+  /*ENDIF*/
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       var tips = document.querySelectorAll('.tip-wrap:hover, .tip-wrap:focus-within');
@@ -1001,6 +1037,19 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       closePopover(true);
       return;
     }
+    /*IF BROKEN*/
+    /*ELSE*/
+    var trigger = e.target.closest('[data-actions]');
+    if (trigger && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      e.preventDefault();
+      openMenu(trigger, e.key === 'ArrowUp');
+      return;
+    }
+    if (openPopover && openPopover.panel.contains(e.target)) {
+      menuKeydown(e, menuItems(openPopover.panel));
+      return;
+    }
+    /*ENDIF*/
     /*IF BROKEN*/
     if (e.key === 'Enter' && e.target.matches('[role="link"][data-href]')) window.open(e.target.getAttribute('data-href'), '_blank', 'noopener');
     if (e.key === 'Escape' && pending) closeModal();
