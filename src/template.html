@@ -207,9 +207,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       <div id="status" role="status" class="visually-hidden"></div>
 <!--ENDIF-->
     </main>
-
+<!--IF BROKEN-->
+    <div class="page-footer" id="page-footer" hidden>
+<!--ELSE-->
     <footer class="page-footer" id="page-footer" hidden>
-
+<!--ENDIF-->
       <p>© 2026 Agent Studio. A fictional product built for the Accessibility Champions training.</p>
       <nav aria-label="Footer">
         <ul>
@@ -219,9 +221,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
           <li><a href="#/help">Help</a></li>
         </ul>
       </nav>
-
+<!--IF BROKEN-->
+    </div>
+<!--ELSE-->
     </footer>
-
+<!--ENDIF-->
   </div>
 </div>
 
