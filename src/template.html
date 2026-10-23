@@ -45,6 +45,8 @@ main:focus-visible { outline-offset: -3px; }
 .topbar .icon-btn:hover { background: rgba(255, 255, 255, .12); }
 .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .layout { display: flex; flex: 1; min-height: 0; }
+.footer { flex: none; padding: 10px 32px; border-top: 1px solid var(--border); background: var(--panel); color: var(--muted); font-size: 14px; }
+.footer p { margin: 0; }
 .sidebar { width: 240px; flex: none; padding: 16px; overflow-y: auto; background: var(--panel); border-right: 1px solid var(--border); }
 .nav { list-style: none; margin: 0; padding: 0; }
 .nav a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
@@ -202,6 +204,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 <!--ENDIF-->
   </main>
 </div>
+<footer class="footer">
+  <p>Agent Studio is a fictional product built for the Accessibility Champions training. Nothing you enter is saved. <a href="../documentation/">Read the session plans</a>.</p>
+</footer>
 
 <template id="home-content">
   <div class="home">
