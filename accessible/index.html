@@ -51,7 +51,8 @@ main:focus-visible { outline-offset: -3px; }
 .nav a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
 .nav a:hover { background: #f3f4f6; }
 .nav a[aria-current="page"] { background: #e0e7ff; color: var(--primary-dark); font-weight: 600; }
-main { position: relative; flex: 1; min-width: 0; padding: 24px 32px; overflow-y: auto; }
+.content { display: flex; flex-direction: column; flex: 1; min-width: 0; overflow-y: auto; }
+main { position: relative; flex: 1 0 auto; padding: 24px 32px; }
 .view-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
 h1, .h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
 h2 { font-size: 1.2rem; margin: 0; }
@@ -90,7 +91,7 @@ p { margin: 8px 0; }
 .prose table { width: 100%; max-width: 560px; margin: 8px 0; border-collapse: collapse; }
 .prose th, .prose td { padding: 6px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
 .prose th { font-weight: 600; }
-.page-footer { max-width: 1040px; margin-top: 32px; padding: 12px 0; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+.page-footer { flex: none; max-width: 1040px; margin: 8px 32px 0; padding: 12px 0 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
 .page-footer p { margin: 0 0 6px; }
 .page-footer ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0; padding: 0; }
 .news-frame { display: block; width: 100%; height: 240px; margin: 12px 0; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
@@ -165,6 +166,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   .sidebar { width: auto; padding: 8px 16px; border-right: 0; border-bottom: 1px solid var(--border); }
   .nav { display: flex; flex-wrap: wrap; gap: 4px; }
   main { padding: 16px; }
+  .page-footer { margin: 0 16px; }
 }
 </style>
 </head>
@@ -195,11 +197,27 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       </ul>
     </nav>
   </div>
-  <main id="main" tabindex="-1">
-    <div id="view"></div>
-    <div id="status" role="status" class="visually-hidden"></div>
+  <div class="content">
+    <main id="main" tabindex="-1">
+      <div id="view"></div>
+      <div id="status" role="status" class="visually-hidden"></div>
 
-  </main>
+    </main>
+
+    <footer class="page-footer" id="page-footer" hidden>
+
+      <p>© 2026 Agent Studio. A fictional product built for the Accessibility Champions training.</p>
+      <nav aria-label="Footer">
+        <ul>
+          <li><a href="#/privacy">Privacy</a></li>
+          <li><a href="#/terms">Terms of use</a></li>
+          <li><a href="#/accessibility">Accessibility statement</a></li>
+          <li><a href="#/help">Help</a></li>
+        </ul>
+      </nav>
+
+    </footer>
+  </div>
 </div>
 
 <template id="home-content">
@@ -380,17 +398,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       </ul>
     </nav>
   </div>
-  <footer class="page-footer">
-    <p>© 2026 Agent Studio. A fictional product built for the Accessibility Champions training.</p>
-    <nav aria-label="Footer">
-      <ul>
-        <li><a href="#/privacy">Privacy</a></li>
-        <li><a href="#/terms">Terms of use</a></li>
-        <li><a href="#/accessibility">Accessibility statement</a></li>
-        <li><a href="#/help">Help</a></li>
-      </ul>
-    </nav>
-  </footer>
 </template>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
     <div class="dialog-header">
@@ -763,6 +770,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     closePopover(false);
     viewEl.innerHTML = result.html;
     updateNav(parts[0]);
+    document.getElementById('page-footer').hidden = parts[0] !== 'settings';
     if (anchor && document.getElementById(anchor)) document.getElementById(anchor).scrollIntoView();
     
     clearTimeout(announceTimer);
