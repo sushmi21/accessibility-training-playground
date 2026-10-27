@@ -50,8 +50,8 @@ main:focus-visible { outline-offset: -3px; }
 .nav a { display: block; padding: 8px 10px; border-radius: 6px; color: var(--text); text-decoration: none; }
 .nav a:hover { background: #f3f4f6; }
 .nav a[aria-current="page"] { background: #e0e7ff; color: var(--primary-dark); font-weight: 600; }
-.content { display: flex; flex-direction: column; flex: 1; min-width: 0; overflow-y: auto; }
-main { position: relative; flex: 1 0 auto; padding: 24px 32px; }
+.content { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; overflow: hidden; }
+main { position: relative; flex: 1 1 0; min-height: 0; overflow-y: auto; padding: 24px 32px; }
 .view-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
 h1, .h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
 h2 { font-size: 1.2rem; margin: 0; }
@@ -77,7 +77,8 @@ p { margin: 8px 0; }
 .home { display: flex; align-items: flex-start; gap: 32px; max-width: 1040px; }
 .prose { flex: 1; min-width: 0; max-width: 760px; }
 .prose h2, .prose .h2 { margin: 28px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 1.25rem; font-weight: 700; }
-.prose h3, .prose h4 { margin: 18px 0 6px; font-size: 1.05rem; }
+.prose h3, .prose h4, .prose h5 { margin: 18px 0 6px; font-size: 1.05rem; font-weight: 700; }
+.prose .nested-heading { margin-left: 20px; }
 .prose ul { padding-left: 22px; }
 .prose li { margin: 4px 0; }
 .prose code { padding: 1px 5px; border-radius: 4px; background: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95em; }
@@ -389,10 +390,25 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       </tbody>
     </table>
     <h3>Recommendations</h3>
+<!--IF BROKEN-->
+    <h5 class="nested-heading">Two-factor authentication</h5>
+<!--ELSE-->
+    <h4 class="nested-heading">Two-factor authentication</h4>
+<!--ENDIF-->
     <p>Two-factor authentication is off.</p>
     <p><a href="#/settings/two-factor">Learn more{{broken:|accessible:<span class="visually-hidden"> about two-factor authentication</span>}}</a></p>
+<!--IF BROKEN-->
+    <h5 class="nested-heading">Session timeout</h5>
+<!--ELSE-->
+    <h4 class="nested-heading">Session timeout</h4>
+<!--ENDIF-->
     <p>Your session timeout is 8 hours.</p>
     <p><a href="#/settings/session-timeout">Learn more{{broken:|accessible:<span class="visually-hidden"> about session timeouts</span>}}</a></p>
+<!--IF BROKEN-->
+    <h5 class="nested-heading">API keys</h5>
+<!--ELSE-->
+    <h4 class="nested-heading">API keys</h4>
+<!--ENDIF-->
     <p>You have two active API keys.</p>
     <p><a href="#/settings/api-keys">Learn more{{broken:|accessible:<span class="visually-hidden"> about API keys</span>}}</a></p>
 
