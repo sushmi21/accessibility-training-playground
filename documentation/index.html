@@ -115,14 +115,13 @@ ol li, ul li { margin: 4px 0; }
       <ol>
         <li><strong>Skimming.</strong> How a sighted user skims a screen by its layout and then by the headings, and what a screen reader uses instead: the page title, the landmarks and the heading outline. A keyboard user skims with the skip link. The declared language picks the voice.</li>
         <li><strong>Demo: the home page.</strong> The accessible home page with NVDA: the title, the elements list, and the H, D and K keys. Then the same page through the bookmarklets and ANDI.</li>
-        <li><strong>Mission.</strong> Participants find structure bugs on the Settings page in three passes: eyes, x-ray, fix and compare.</li>
-        <li><strong>What we found together.</strong> What each tool showed, what only a screen reader showed, and what nothing found.</li>
+        <li><strong>Mission.</strong> Participants examine the Settings page in four passes: eyes, accessibility tree, tools, findings.</li>
+        <li><strong>Walkthrough and discussion.</strong> We go through the Settings page together: what each pass showed, what only a screen reader showed, and what nothing found.</li>
         <li><strong>The criteria so far.</strong> The success criteria touched in Sessions 1 to 3.</li>
       </ol>
 
       <h4>Mission: find the structure bugs on the Settings page</h4>
       <p>Use the <a href="../broken/#/settings">seeded version</a>. Stay on the Settings page. It only displays information, so you are looking at how the page is put together, not at what it says.</p>
-      <p>For each finding, write down where it is, what is wrong, how you found it, and the WCAG success criterion you think it fails.</p>
 
       <h5>Pass 1: skim with your eyes</h5>
       <ol>
@@ -130,19 +129,27 @@ ol li, ul li { margin: 4px 0; }
         <li>Write down the outline you expect: the page heading and its sections, in order.</li>
       </ol>
 
-      <h5>Pass 2: x-ray</h5>
+      <h5>Pass 2: the accessibility tree</h5>
       <ol start="3">
-        <li>Run the Page Title, Headings, Landmarks and Lang bookmarklets, then ANDI's Structures and Links modules, then axe with "Best practices" switched on.</li>
-        <li>Compare each result with your outline and note every gap, with the criterion you think it fails.</li>
-        <li>Open the browser tab list and the elements list a screen reader user would see. Could you tell where you are?</li>
+        <li>Open DevTools, go to the Elements panel and open the Accessibility pane. Switch on the full-page accessibility tree.</li>
+        <li>Walk the tree from the top. Write down every landmark you meet, with its name, and every heading, with its level.</li>
+        <li>Compare the tree with the outline from Pass 1.</li>
       </ol>
 
-      <h5>Pass 3: fix and compare</h5>
+      <h5>Pass 3: the tools</h5>
       <ol start="6">
-        <li>In your own DevTools, fix three things so that the Headings and Landmarks overlays match your outline.</li>
-        <li>Open the <a href="../accessible/#/settings">accessible version</a> and compare the outline, the landmark list and the title.</li>
+        <li>Run axe DevTools with "Best practices" switched on. For each result, read the rule, the element and the fix.</li>
+        <li>Run ANDI's Structures module, then its Links module. Note the landmarks, headings and link names it lists.</li>
+        <li>Run the Page Title, Headings, Landmarks and Lang bookmarklets.</li>
+        <li>For each tool, write down what it showed that the others did not, and where it disagrees with the tree.</li>
       </ol>
-      <p class="note">Fixing more than three is not the point; seeing the outline change is.</p>
+
+      <h5>Pass 4: your findings</h5>
+      <ol start="10">
+        <li>From the passes so far, write down how many landmarks the Settings page has and what they are called.</li>
+        <li>List the issues. For each one, write down where it is, what is wrong, how you found it, and the WCAG success criterion you think it fails.</li>
+      </ol>
+      <p class="note">When everyone is done, we go through the page together and discuss what each pass showed.</p>
 
       <h4>Links for this session</h4>
       <ul>
