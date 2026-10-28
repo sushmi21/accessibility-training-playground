@@ -14,7 +14,8 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; }
-body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); display: flex; flex-direction: column; height: 100vh; height: 100dvh; overflow: hidden; }
+body { font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--text); background: var(--bg); height: 100vh; height: 100dvh; overflow: hidden; }
+.app { display: flex; flex-direction: column; height: 100%; min-height: 0; }
 :focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
 .topbar :focus-visible { outline-color: var(--ring-on-dark); }
 main:focus-visible { outline-offset: -3px; }
@@ -174,7 +175,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 <body>
 
 <a class="skip-link" href="#main" id="skip-link">Skip to main content</a>
-
+<div class="app">
 <header class="topbar">
   <img class="logo" width="150" height="28" alt="Agent Studio" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='28' viewBox='0 0 150 28'%3E%3Crect width='28' height='28' rx='7' fill='%232563eb'/%3E%3Cpath d='M8 20l6-12 6 12M10.5 15.5h7' stroke='white' stroke-width='2.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ctext x='36' y='19' font-family='system-ui, Segoe UI, Roboto, sans-serif' font-size='16' font-weight='600' fill='white'%3EAgent Studio%3C/text%3E%3C/svg%3E">
   <nav class="topbar-nav" aria-label="Global">
@@ -219,6 +220,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
     </footer>
   </div>
+</div>
 </div>
 
 <template id="home-content">
