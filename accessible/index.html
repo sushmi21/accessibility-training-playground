@@ -103,6 +103,13 @@ p { margin: 8px 0; }
 .contents li { margin: 6px 0; }
 .contents a { color: var(--text); text-decoration: none; }
 .contents a:hover { text-decoration: underline; }
+.side { flex: none; position: sticky; top: 0; display: flex; flex-direction: column; gap: 12px; width: 220px; }
+.side .contents { position: static; width: auto; }
+.help { padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; }
+.help h2 { margin: 0 0 6px; font-size: 1rem; }
+.help p { margin: 0 0 8px; font-size: 15px; color: var(--muted); }
+.help ul { list-style: none; margin: 0; padding: 0; }
+.help li { margin: 6px 0; }
 .sc { color: var(--muted); }
 .ext { width: 14px; height: 14px; margin-left: 3px; vertical-align: -1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .empty { padding: 24px; margin: 16px 0; background: var(--panel); border: 1px dashed #9ca3af; border-radius: 8px; }
@@ -159,7 +166,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (max-width: 960px) {
   .home { display: block; }
-  .contents { position: static; width: auto; margin: 16px 0 0; }
+  .contents, .side { position: static; width: auto; margin: 16px 0 0; }
+  .side .contents { margin: 0; }
   .contents ul { display: flex; flex-wrap: wrap; gap: 4px 16px; }
   .contents li { margin: 0; }
 }
@@ -359,6 +367,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     </ul>
     <p>The weekly usage digest is switched off.</p>
 
+    <section role="region" aria-labelledby="security">
     <h2 id="security">Security</h2>
     <p>Password last changed three months ago. <a href="#/settings/password">Change password</a></p>
 
@@ -390,20 +399,31 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
     <p>You have two active API keys.</p>
     <p><a href="#/settings/api-keys">Learn more<span class="visually-hidden"> about API keys</span></a></p>
+    </section>
 
     <h2 id="danger">Danger zone</h2>
     <p>Deleting your account removes your agents and cannot be undone. Account deletion is handled by your workspace administrator.</p>
   </div>
-    <nav class="contents" aria-label="On this page">
-      <p>On this page</p>
-      <ul>
-        <li><a href="#profile">Profile</a></li>
-        <li><a href="#preferences">Preferences</a></li>
-        <li><a href="#notifications">Notifications</a></li>
-        <li><a href="#security">Security</a></li>
-        <li><a href="#danger">Danger zone</a></li>
-      </ul>
-    </nav>
+    <div class="side">
+      <nav class="contents" aria-label="On this page">
+        <p>On this page</p>
+        <ul>
+          <li><a href="#profile">Profile</a></li>
+          <li><a href="#preferences">Preferences</a></li>
+          <li><a href="#notifications">Notifications</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#danger">Danger zone</a></li>
+        </ul>
+      </nav>
+      <aside class="help" aria-labelledby="help-heading">
+        <h2 id="help-heading">Need help?</h2>
+        <p>Your workspace administrator changes these settings for you. Ask them for a different time zone, date format or email language.</p>
+        <ul>
+          <li><a href="#/help">Help</a></li>
+          <li><a href="#/accessibility">Accessibility statement</a></li>
+        </ul>
+      </aside>
+    </div>
   </div>
 </template>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
