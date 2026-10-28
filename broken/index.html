@@ -334,6 +334,22 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
     <p class="muted">Your profile, preferences, notifications and security at a glance. Settings are managed by your workspace administrator.</p>
 
+    <section role="region" aria-labelledby="recent-changes">
+    <h2 id="recent-changes">Recent changes</h2>
+    <p>Settings changed by your workspace administrators in the last 30 days.</p>
+    <table>
+      <thead>
+        <tr><th scope="col">Date</th><th scope="col">Setting</th><th scope="col">Changed by</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>24.10.2026</td><td>Email language changed to German</td><td>Priya Raman</td></tr>
+        <tr><td>17.10.2026</td><td>Session timeout set to 8 hours</td><td>Tom Becker</td></tr>
+        <tr><td>09.10.2026</td><td>Weekly usage digest switched off</td><td>Priya Raman</td></tr>
+        <tr><td>02.10.2026</td><td>Job title changed to Conversation designer</td><td>Tom Becker</td></tr>
+      </tbody>
+    </table>
+    </section>
+
     <h2 id="profile">Profile</h2>
     <div class="profile-head">
       <span class="avatar" aria-hidden="true">AN</span>
@@ -362,7 +378,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     </ul>
     <p>The weekly usage digest is switched off.</p>
 
-    <section role="region" aria-labelledby="security">
     <h2 id="security">Security</h2>
     <p>Password last changed three months ago. <a href="#/settings/password">Change password</a></p>
 
@@ -394,7 +409,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
     <p>You have two active API keys.</p>
     <p><a href="#/settings/api-keys">Learn more</a></p>
-    </section>
 
     <h2 id="danger">Danger zone</h2>
     <p>Deleting your account removes your agents and cannot be undone. Account deletion is handled by your workspace administrator.</p>
@@ -403,6 +417,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       <nav class="contents">
         <p>On this page</p>
         <ul>
+          <li><a href="#recent-changes">Recent changes</a></li>
           <li><a href="#profile">Profile</a></li>
           <li><a href="#preferences">Preferences</a></li>
           <li><a href="#notifications">Notifications</a></li>
