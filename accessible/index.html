@@ -57,7 +57,8 @@ main { position: relative; flex: 1 1 0; min-height: 0; overflow-y: auto; padding
 .view-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
 h1, .h1 { font-size: 1.6rem; font-weight: 700; margin: 0; }
 h2 { font-size: 1.2rem; margin: 0; }
-p { margin: 8px 0; }
+p, .p { margin: 8px 0; }
+.pill { display: inline-block; margin: 0; padding: 1px 8px; border-radius: 999px; background: #e5e7eb; color: #374151; font-size: .8rem; font-weight: 700; line-height: 1.4; letter-spacing: .04em; text-transform: uppercase; vertical-align: 1px; }
 .muted { color: var(--muted); }
 .cards { list-style: none; margin: 16px 0; padding: 0; display: grid; gap: 12px; max-width: 560px; }
 .card { position: relative; display: block; padding: 16px 20px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; color: inherit; text-decoration: none; }
@@ -235,6 +236,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   <div class="home">
   <div class="prose">
     <div class="view-header"><h1>Accessibility training playground</h1></div>
+    <p lang="es">¡Hola! Te damos la bienvenida al entorno de pruebas de accesibilidad.</p>
     <p>Agent Studio is a small fake application for practising accessibility checks. This page explains what the playground is, gives a short primer on WCAG, lists the mistakes we see most often, and points to the material worth reading.</p>
 
     <h2 id="about">What this playground is</h2>
@@ -381,7 +383,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       <li>an agent is published</li>
       <li>a flow has errors</li>
     </ul>
-    <p>The weekly usage digest is switched off.</p>
+
+    <p>The weekly usage digest is switched <span class="pill">off</span>.</p>
 
     <h2 id="security">Security</h2>
     <p>Password last changed three months ago. <a href="#/settings/password">Change password</a></p>
