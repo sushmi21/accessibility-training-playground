@@ -26,5 +26,11 @@ semantics, text alternatives, keyboard access, bypass blocks (2.4.1), page title
 (2.4.2), focus order (2.4.3), focus visibility (2.4.7) and status messages (4.1.3).
 The Settings page adds page structure: headings and landmarks (1.3.1, 2.4.6), link
 purpose (2.4.4) and language of parts (3.1.2).
+The Monitoring page is a design handed over for implementation review: the seeded
+version is the handoff as received, the accessible version the revised proposal
+after design review. It covers text contrast (1.4.3), content that moves on its
+own (2.2.2), reflow (1.4.10), a text alternative for a chart (1.1.1), error
+identification and suggestion (3.3.1, 3.3.3) and status messages (4.1.3), plus
+the questions a reviewer has to ask when the design leaves states unspecified.
 
 The list of seeded bugs is deliberately not in this repository.

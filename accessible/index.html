@@ -163,6 +163,112 @@ dialog, .dialog { width: min(480px, 90vw); margin: auto; border: 1px solid var(-
 dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .dialog-backdrop { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; }
 .dialog-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+/* Monitoring page (Session 4: design review) */
+.mon {
+  --mon-line: #dfe4ec; --mon-accent: #0b5fd9; --mon-accent-soft: #e8f0fd; --mon-ok: #15803d; --mon-warn: #b45309; --mon-crit: #b91c1c;
+  
+  --mon-kpi-label: #5b6472; --mon-kpi-sub: #5b6472;
+  
+  display: flex; flex-direction: column; gap: 18px; max-width: 1200px; font-variant-numeric: tabular-nums;
+}
+.mon .view-header { flex-wrap: wrap; margin-bottom: 0; }
+.mon .sp { flex: 1; }
+.mon .sel { padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px; background: #fff; color: var(--text); font-size: 15px; }
+.mon .mon-ghost, .mon-dlg .mon-ghost { padding: 6px 8px; border-color: transparent; background: transparent; color: var(--primary); }
+.mon .mon-ghost:hover { background: #eef2ff; }
+.mon .brief { display: flex; align-items: flex-start; gap: 16px; padding: 14px 18px; background: #fff8e8; border: 1px solid #f1d58c; border-radius: 10px; }
+.mon .brief h2 { margin: 0 0 6px; font-size: 1.05rem; }
+.mon .brief p { margin: 0 0 6px; max-width: 95ch; color: #5a4714; }
+.mon .brief ul { margin: 4px 0 0; padding-left: 18px; color: #5a4714; }
+.mon .brief .x { flex: none; margin-left: auto; padding: 6px 10px; border: 1px solid #d9be6a; border-radius: 8px; background: none; color: #5a4714; font: inherit; cursor: pointer; }
+.mon .notices { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; min-height: 58px; padding: 12px 18px; background: var(--panel); border: 1px solid var(--mon-line); border-radius: 10px; }
+.mon .notices .tag { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mon-accent); }
+.mon .notices .msg { min-width: 0; }
+.mon .notices .msg b { font-weight: 600; }
+.mon .dots { display: flex; gap: 6px; }
+.mon .dots i { width: 8px; height: 8px; border-radius: 50%; background: #d1d5db; }
+.mon .dots i.on { background: var(--mon-accent); }
+.mon .nctl { display: flex; align-items: center; gap: 6px; }
+.mon .nctl button { padding: 5px 9px; border: 1px solid #c9d1dc; border-radius: 8px; background: #fff; color: var(--text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.mon .nctl .muted { font-size: 13px; }
+.mon .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.mon .mon-card { min-width: 0; padding: 16px 20px; background: var(--panel); border: 1px solid var(--mon-line); border-radius: 12px; }
+.mon .kpi .lbl { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--mon-kpi-label); }
+.mon .kpi .val { margin: 6px 0 2px; font-size: 28px; font-weight: 700; line-height: 1.1; color: #111827; }
+.mon .kpi .sub { font-size: 13px; color: var(--mon-kpi-sub); }
+.mon .kpi .val.warn { color: var(--mon-warn); }
+.mon .kpi .val.crit { color: var(--mon-crit); }
+.mon .mon-row { display: grid; grid-template-columns: 1fr 1.25fr; align-items: start; gap: 18px; }
+.mon .mon-head { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; }
+.mon .mon-head h2 { font-size: 1.05rem; font-weight: 600; }
+.mon svg text { font-family: inherit; }
+.mon .summary { margin: 6px 0 8px; max-width: 70ch; font-size: 14px; color: var(--muted); }
+.mon .chart-table { margin-top: 8px; }
+.mon .mon-toolbar { position: relative; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.mon .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px 4px 10px; border: 1px solid var(--mon-accent); border-radius: 999px; background: var(--mon-accent-soft); color: #0a4bb0; font-size: 12px; font-weight: 600; }
+.mon .chip button { padding: 0 2px; border: 0; background: none; color: inherit; font-size: 14px; line-height: 1; cursor: pointer; }
+.mon .count { margin-left: auto; font-size: 14px; color: var(--muted); }
+.mon .pop { position: absolute; left: 0; top: 44px; z-index: 20; width: 300px; padding: 12px 16px 14px; background: #fff; border: 1px solid #c9d1dc; border-radius: 12px; box-shadow: 0 12px 30px rgba(20, 30, 50, .16); }
+.mon .pop h3 { margin: 6px 0 4px; font-size: 14px; color: var(--muted); }
+.mon .pop label { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-weight: 400; cursor: pointer; }
+.mon .pop input { width: 17px; height: 17px; margin: 0; padding: 0; accent-color: var(--mon-accent); }
+.mon .pop .actions { justify-content: flex-end; gap: 8px; margin-top: 10px; }
+.mon table { width: 100%; border-collapse: collapse; }
+.mon th { padding: 9px 8px; border-bottom: 1px solid var(--mon-line); color: #4a5568; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-align: left; text-transform: uppercase; }
+.mon td { padding: 10px 8px; border-bottom: 1px solid #eef1f5; vertical-align: middle; }
+.mon td.num { white-space: nowrap; }
+.mon tr:last-child td, .mon tr:last-child th { border-bottom: 0; }
+.mon tbody th { border-bottom: 1px solid #eef1f5; color: inherit; font-size: inherit; font-weight: 500; letter-spacing: 0; text-transform: none; }
+.mon .service-region { margin: 0; font-size: 14px; }
+.mon .st { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600; }
+.mon .st::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+.mon .ok { color: var(--mon-ok); }
+.mon .warn { color: var(--mon-warn); }
+.mon .crit { color: var(--mon-crit); }
+.mon .over { color: var(--mon-crit); font-weight: 600; }
+.mon .mon-empty { padding: 28px; text-align: center; color: var(--muted); }
+
+.mon .tablewrap { position: relative; overflow-x: auto; }
+
+.mon .tablewrap table { min-width: 620px; }
+.mon-dlg .dialog-header { margin-bottom: 4px; }
+.mon-dlg .dialog-header + .muted { margin: 0 0 16px; }
+.mon-dlg .ctx { display: flex; flex-direction: column; gap: 6px; margin: 0 0 16px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--mon-line); border-radius: 10px; }
+.mon-dlg .ctx .l { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.mon-dlg .ctx b { font-size: 20px; white-space: nowrap; }
+.mon-dlg .ctx .m { font-size: 14px; color: var(--muted); }
+.mon-dlg .ctx svg { display: block; width: 100%; height: 36px; }
+.mon-dlg .field { margin: 14px 0; }
+.mon-dlg .field input { width: 180px; }
+.mon-dlg .hint { font-size: 14px; font-weight: 400; color: var(--muted); }
+.mon-dlg .err { font-size: 14px; font-weight: 600; color: var(--mon-crit); }
+.mon-dlg .err:empty { display: none; }
+.mon-dlg input[aria-invalid="true"] { border-color: var(--mon-crit); box-shadow: 0 0 0 2px #f3c4c4; }
+.mon-dlg .about p { margin: 0 0 10px; max-width: 60ch; }
+.mon-dlg .about ul { margin: 0 0 10px; padding-left: 20px; }
+.mon-dlg .actions { justify-content: flex-end; margin-top: 18px; }
+.mon-toast { position: fixed; right: 24px; bottom: 24px; z-index: 60; padding: 12px 16px; background: #0f3d2e; color: #fff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); font-weight: 600; opacity: 0; pointer-events: none; }
+.mon-toast.show { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) { .mon-toast.show { animation: mon-pop .18s ease-out; } }
+@keyframes mon-pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+@media (max-width: 1100px) {
+  .mon .kpis { grid-template-columns: repeat(2, 1fr); }
+  .mon .mon-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .mon .kpis { grid-template-columns: 1fr; }
+  .mon .brief { flex-wrap: wrap; }
+  
+  .mon .notices { grid-template-columns: auto 1fr; }
+  .mon .notices .nctl { grid-column: 1 / 3; }
+  .mon .mon-head { flex-wrap: wrap; }
+  .mon .mon-head .sp { display: none; }
+  .mon .mon-head select.sel { flex: 1 1 100%; width: 100%; }
+  .mon .sel { min-width: 0; max-width: 100%; }
+  .mon .count { flex: 1 1 100%; margin-left: 0; }
+  .mon .pop { width: min(300px, calc(100vw - 48px)); }
+  .mon .chart-table table { min-width: 0; }
+}
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (max-width: 960px) {
@@ -204,6 +310,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         <li><a href="#/agents">Agents</a></li>
         <li><a href="#/knowledge">Knowledge</a></li>
         <li><a href="#/endpoints">Endpoints</a></li>
+        <li><a href="#/monitoring">Monitoring</a></li>
         <li><a href="#/settings">Settings</a></li>
       </ul>
     </nav>
@@ -444,6 +551,116 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     </div>
   </div>
 </template>
+
+<template id="monitoring-content">
+  <div class="mon">
+    <div class="view-header">
+      <h1>System overview</h1>
+      <label for="mon-range" class="visually-hidden">Time range</label>
+      <select id="mon-range" class="sel"><option value="24h">Last 24 hours</option><option value="7d">Last 7 days</option></select>
+      <span class="sp"></span>
+      <span class="sel">Production</span>
+      <button type="button" class="btn mon-ghost" id="mon-about-button">About this design</button>
+    </div>
+
+    <section class="brief" id="mon-brief" aria-labelledby="mon-brief-heading">
+      <div>
+        <h2 id="mon-brief-heading">Design handoff brief</h2>
+
+        <p>This is the revised proposal for the Overview page of the internal monitoring tool, after design review. It uses the standard sidebar, table, dialog and form components from the component library.</p>
+        <ul>
+          <li>Provided: this desktop layout (1440 px) and the user journey: review metrics, filter services, inspect the response-time chart, edit an alert threshold, save.</li>
+          <li>Also specified: responsive behaviour follows the app shell (content stacks, tables scroll inside their card); the threshold dialog uses the standard inline validation pattern and shows the current P95 and trend; the chart has a text summary and a data-table view.</li>
+          <li>Notices and metrics are illustrative data.</li>
+        </ul>
+      </div>
+      <button type="button" class="x" id="mon-brief-hide" aria-label="Hide handoff brief">Hide</button>
+    </section>
+
+    <section class="notices" aria-label="Notices">
+      <span class="tag">Notice</span>
+      <div class="msg" id="mon-notice"></div>
+      <div class="nctl">
+        <button type="button" id="mon-notice-prev" aria-label="Previous notice">‹</button>
+        <button type="button" id="mon-notice-pause" aria-pressed="false">Pause</button>
+        <button type="button" id="mon-notice-next" aria-label="Next notice">›</button>
+        <span class="muted" id="mon-notice-count"></span>
+      </div>
+
+    </section>
+
+    <section aria-labelledby="mon-kpi-heading">
+      <h2 id="mon-kpi-heading" class="visually-hidden">Key metrics</h2>
+      <div class="kpis" id="mon-kpis"></div>
+    </section>
+    <div class="mon-row">
+      <section class="mon-card" aria-labelledby="mon-chart-heading">
+        <div class="mon-head">
+          <h2 id="mon-chart-heading">P95 response time</h2>
+          <span class="sp"></span>
+          <label for="mon-chart-service" class="visually-hidden">Service shown in chart</label>
+          <select id="mon-chart-service" class="sel"></select>
+        </div>
+
+        <p class="summary" id="mon-chart-summary"></p>
+        <div id="mon-chart"></div>
+        <button type="button" class="btn mon-ghost" id="mon-chart-table-toggle" aria-expanded="false" aria-controls="mon-chart-table">Show data as table</button>
+        <div class="chart-table" id="mon-chart-table" hidden></div>
+
+      </section>
+
+      <section class="mon-card" aria-labelledby="mon-services-heading">
+        <div class="mon-head"><h2 id="mon-services-heading">Services</h2></div>
+        <div class="mon-toolbar">
+          <button type="button" class="btn" id="mon-filter-button" aria-expanded="false" aria-controls="mon-filter-popover">Filters</button>
+          <div id="mon-chips"></div>
+          <span class="count" id="mon-count" role="status"></span>
+          <div class="pop" id="mon-filter-popover" hidden>
+            <h3>Status</h3>
+            <label><input type="checkbox" data-filter="status" value="Operational">Operational</label>
+            <label><input type="checkbox" data-filter="status" value="Degraded">Degraded</label>
+            <label><input type="checkbox" data-filter="status" value="Outage">Outage</label>
+            <h3>Region</h3>
+            <label><input type="checkbox" data-filter="region" value="eu-central">EU Central</label>
+            <label><input type="checkbox" data-filter="region" value="us-east">US East</label>
+            <div class="actions"><button type="button" class="btn" id="mon-filter-clear">Clear</button><button type="button" class="btn btn-primary" id="mon-filter-apply">Apply</button></div>
+          </div>
+        </div>
+        <div class="tablewrap">
+          <table id="mon-services-table">
+            <thead><tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col">P95</th><th scope="col">Critical threshold</th><th scope="col">Error rate</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="mon-empty" id="mon-empty" hidden>No services match the selected filters.</div>
+      </section>
+    </div>
+    <dialog id="mon-edit-dialog" class="mon-dlg" aria-labelledby="mon-edit-title">
+      <form id="mon-edit-form" method="dialog" novalidate>
+        <div class="dialog-header"><h2 id="mon-edit-title">Edit alert threshold</h2></div>
+        <p class="muted" id="mon-edit-service"></p>
+        <div class="ctx" id="mon-edit-context"></div>
+        <div class="field"><label for="mon-warning">Warning threshold (ms)</label><input id="mon-warning" type="number" min="1" step="1" required aria-describedby="mon-warning-error"><span class="err" id="mon-warning-error"></span></div>
+        <div class="field"><label for="mon-critical">Critical threshold (ms)</label><input id="mon-critical" type="number" min="1" step="1" required aria-describedby="mon-critical-hint mon-critical-error"><span class="hint" id="mon-critical-hint">An alert fires when P95 exceeds this value for 5 consecutive minutes. Must be higher than the warning threshold.</span><span class="err" id="mon-critical-error"></span></div>
+        <div class="actions"><button type="button" class="btn" id="mon-edit-cancel">Cancel</button><button type="submit" class="btn btn-primary">Save</button></div>
+      </form>
+    </dialog>
+    <dialog id="mon-about-dialog" class="mon-dlg" aria-labelledby="mon-about-title">
+      <div class="about">
+        <div class="dialog-header"><h2 id="mon-about-title">About this design</h2></div>
+
+        <p>Revised proposal for the Overview page of the internal monitoring tool, after design review. Standard sidebar, table, dialog and form components from the component library.</p>
+        <ul>
+          <li><b>Provided:</b> this desktop layout (1440 px) and the user journey: review metrics, filter services, inspect the response-time chart, edit an alert threshold, save.</li>
+          <li><b>Also specified:</b> responsive behaviour follows the app shell (content stacks, tables scroll inside their card); the threshold dialog uses the standard inline validation pattern and shows the current P95 and trend; the chart has a text summary and a data-table view.</li>
+          <li>Notices and metrics are illustrative data.</li>
+        </ul>
+        <div class="actions"><button type="button" class="btn btn-primary" id="mon-about-close">Close</button></div>
+      </div>
+    </dialog>
+    <div class="mon-toast" id="mon-toast" role="status"></div>
+  </div>
+</template>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
     <div class="dialog-header">
       <h2 id="confirm-title">Delete agent?</h2>
@@ -678,6 +895,365 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     statusEl.textContent = text;
   }
 
+  // Monitoring page (Session 4: design review). The data is illustrative; thresholds edited here last until the page is reloaded.
+  var MON_SERVICES = [
+    { id: 'gateway', name: 'API Gateway', status: 'Operational', region: 'eu-central', p95: 142, crit: 300, warn: 220, err: 0.1,
+      series: [150, 140, 135, 160, 145, 138, 142, 150, 139, 144, 141, 142] },
+    { id: 'auth', name: 'Authentication Service', status: 'Operational', region: 'eu-central', p95: 96, crit: 200, warn: 150, err: 0.0,
+      series: [90, 95, 100, 92, 98, 94, 97, 99, 95, 93, 96, 96] },
+    { id: 'db', name: 'Database Cluster', status: 'Degraded', region: 'eu-central', p95: 381, crit: 320, warn: 250, err: 1.4,
+      series: [210, 230, 250, 240, 280, 300, 310, 340, 330, 360, 375, 381] },
+    { id: 'payments', name: 'Payment Processing', status: 'Operational', region: 'us-east', p95: 268, crit: 300, warn: 240, err: 0.4,
+      series: [220, 240, 230, 260, 250, 245, 255, 270, 262, 258, 266, 268] },
+    { id: 'notify', name: 'Notification Service', status: 'Outage', region: 'us-east', p95: null, crit: 400, warn: 300, err: 12.6,
+      series: [300, 320, 350, 420, 480, 520, 600, 700, 760, 820, null, null] },
+    { id: 'search', name: 'Search Service', status: 'Operational', region: 'eu-central', p95: 210, crit: 350, warn: 280, err: 0.3,
+      series: [200, 205, 215, 198, 210, 220, 212, 208, 215, 211, 209, 210] }
+  ];
+  var MON_NOTICES = [
+    '<b>Scheduled maintenance:</b> Database Cluster failover test on Sunday 02:00–04:00 CET. Expect up to 15 minutes of elevated latency.',
+    '<b>Incident #4821 (Notification Service):</b> outage since 09:14. Push notifications are queued and will be delivered after recovery.',
+    '<b>Alert rule change:</b> Payment Processing critical threshold was raised to 300 ms by j.okafor on 24 Oct.',
+    '<b>Capacity:</b> EU Central is at 78 % of reserved compute. A scale-up is planned for next week.'
+  ];
+  var MON_LABELS_24H = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
+  var MON_LABELS_7D = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon'];
+  var MON_REGIONS = { 'eu-central': 'EU Central', 'us-east': 'US East' };
+  var mon = { filters: { status: [], region: [] }, notice: 0, paused: false, timer: null, toastTimer: null, editing: null, docClick: null };
+
+  function monEl(id) { return document.getElementById('mon-' + id); }
+  function monFormat(ms) { return ms == null ? '—' : ms + ' ms'; }
+  function monRegion(code) { return MON_REGIONS[code] || code; }
+  function monService(id) { return MON_SERVICES.filter(function (s) { return s.id === id; })[0]; }
+
+  function monRenderNotice() {
+    monEl('notice').innerHTML = MON_NOTICES[mon.notice];
+    
+    monEl('notice-count').textContent = (mon.notice + 1) + ' of ' + MON_NOTICES.length;
+  }
+  function monStopRotation() {
+    clearInterval(mon.timer);
+    mon.timer = null;
+  }
+  function monStartRotation() {
+    monStopRotation();
+    if (mon.paused) return;
+    mon.timer = setInterval(function () {
+      mon.notice = (mon.notice + 1) % MON_NOTICES.length;
+      monRenderNotice();
+    }, 4800);
+  }
+
+  function monRenderKpis() {
+    var open = 0, availability = 0, p95Sum = 0, p95Count = 0, errSum = 0, total = MON_SERVICES.length;
+    MON_SERVICES.forEach(function (s) {
+      if (s.status !== 'Operational') open++;
+      availability += s.status === 'Outage' ? 97.2 : s.status === 'Degraded' ? 99.71 : 99.97;
+      if (s.p95 != null) { p95Sum += s.p95; p95Count++; }
+      errSum += s.err;
+    });
+    var errRate = errSum / total;
+    var kpis = [
+      ['Availability', (availability / total).toFixed(2) + ' %', 'last 24 hours', ''],
+      ['Open incidents', String(open), open ? '1 critical, ' + (open - 1) + ' major' : 'none', 'crit'],
+      ['P95 response', 'Avg. ' + Math.round(p95Sum / p95Count) + ' ms', 'across ' + total + ' services', ''],
+      ['Error rate', errRate.toFixed(1) + ' %', 'threshold 2.0 %', errRate > 2 ? 'warn' : '']
+    ];
+    monEl('kpis').innerHTML = kpis.map(function (k) {
+      return '<div class="mon-card kpi"><div class="lbl">' + k[0] + '</div><div class="val' + (k[3] ? ' ' + k[3] : '') + '">' + k[1] + '</div><div class="sub">' + k[2] + '</div></div>';
+    }).join('');
+  }
+
+  function monRenderChart() {
+    var selected = monEl('chart-service').value, range = monEl('range').value;
+    var service = selected === 'all' ? null : monService(selected);
+    var W = 640, H = 230, L = 46, R = 16, T = 18, B = 34;
+    var labels = MON_LABELS_24H, series, threshold = null;
+    if (service) {
+      series = service.series.slice();
+      threshold = service.crit;
+    } else {
+      series = MON_LABELS_24H.map(function (_, i) {
+        var values = MON_SERVICES.map(function (s) { return s.series[i]; }).filter(function (v) { return v != null; });
+        return Math.round(values.reduce(function (a, b) { return a + b; }, 0) / values.length);
+      });
+    }
+    if (range === '7d') {
+      labels = MON_LABELS_7D;
+      series = MON_LABELS_7D.map(function (_, i) { return series[Math.min(11, i * 2)]; });
+    }
+    var present = series.filter(function (v) { return v != null; });
+    var max = Math.ceil(Math.max.apply(null, [400, threshold || 0].concat(present)) * 1.1 / 100) * 100;
+    function x(i) { return L + i * (W - L - R) / (labels.length - 1); }
+    function y(v) { return T + (H - T - B) * (1 - v / max); }
+    var first = -1, last = -1, path = '';
+    series.forEach(function (v, i) {
+      if (v == null) return;
+      if (first === -1) first = i;
+      last = i;
+      path += (path ? ' L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1);
+    });
+    var area = path + ' L' + x(last).toFixed(1) + ',' + (H - B) + ' L' + x(first).toFixed(1) + ',' + (H - B) + ' Z';
+    var g = '';
+    for (var t = 0; t <= max; t += 100) {
+      g += '<line x1="' + L + '" y1="' + y(t) + '" x2="' + (W - R) + '" y2="' + y(t) + '" stroke="#eef1f5"/>' +
+        '<text x="' + (L - 8) + '" y="' + (y(t) + 4) + '" font-size="11" fill="#4a5568" text-anchor="end">' + t + '</text>';
+    }
+    labels.forEach(function (label, i) {
+      g += '<text x="' + x(i) + '" y="' + (H - 10) + '" font-size="11" fill="#4a5568" text-anchor="middle">' + label + '</text>';
+    });
+    g += '<path d="' + area + '" fill="#0b5fd9" fill-opacity=".1"/><path d="' + path + '" fill="none" stroke="#0b5fd9" stroke-width="2.5"/>';
+    g += '<circle cx="' + x(last) + '" cy="' + y(series[last]) + '" r="4" fill="#0b5fd9"/>';
+    if (threshold != null) {
+      g += '<line x1="' + L + '" y1="' + y(threshold) + '" x2="' + (W - R) + '" y2="' + y(threshold) + '" stroke="#b91c1c" stroke-dasharray="6 4"/>' +
+        '<text x="' + (W - R) + '" y="' + (y(threshold) - 6) + '" font-size="11" fill="#b91c1c" text-anchor="end">Critical threshold ' + threshold + ' ms</text>';
+    }
+    
+    var name = service ? service.name : 'All services (average)';
+    var summary = name + ': P95 ' + series[last] + ' ms at ' + labels[last] + ', from ' + series[first] + ' ms at ' + labels[first] + '.';
+    if (threshold != null) {
+      var over = -1;
+      series.forEach(function (v, i) { if (over === -1 && v != null && v > threshold) over = i; });
+      summary += over >= 0 ? ' Above the ' + threshold + ' ms critical threshold since ' + labels[over] + '.' : ' Below the ' + threshold + ' ms critical threshold for the whole period.';
+    }
+    monEl('chart-summary').textContent = summary;
+    monEl('chart').innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="Line chart. ' + esc(summary) + '">' + g + '</svg>';
+    monEl('chart-table').innerHTML = '<table><caption class="visually-hidden">P95 response time, ' + esc(name) + '</caption>' +
+      '<thead><tr><th scope="col">Time</th><th scope="col">P95 (ms)</th>' + (threshold != null ? '<th scope="col">Critical threshold (ms)</th>' : '') + '</tr></thead><tbody>' +
+      labels.map(function (label, i) {
+        return '<tr><th scope="row">' + label + '</th><td class="num">' + (series[i] == null ? 'no data' : series[i]) + '</td>' + (threshold != null ? '<td class="num">' + threshold + '</td>' : '') + '</tr>';
+      }).join('') + '</tbody></table>';
+  }
+
+  function monVisibleServices() {
+    return MON_SERVICES.filter(function (s) {
+      return (!mon.filters.status.length || mon.filters.status.indexOf(s.status) !== -1) &&
+        (!mon.filters.region.length || mon.filters.region.indexOf(s.region) !== -1);
+    });
+  }
+  function monRenderChips() {
+    var chips = mon.filters.status.map(function (v) { return { filter: 'status', value: v, label: v }; })
+      .concat(mon.filters.region.map(function (v) { return { filter: 'region', value: v, label: monRegion(v) }; }));
+    monEl('chips').innerHTML = chips.map(function (chip) {
+      return '<span class="chip">' + esc(chip.label) + '<button type="button" data-remove-filter="' + chip.filter + '" data-value="' + esc(chip.value) + '" aria-label="Remove filter ' + esc(chip.label) + '">✕</button></span>';
+    }).join('');
+  }
+  function monRenderTable() {
+    var rows = monVisibleServices();
+    monEl('services-table').querySelector('tbody').innerHTML = rows.map(function (s) {
+      var cls = s.status === 'Operational' ? 'ok' : s.status === 'Degraded' ? 'warn' : 'crit';
+      return '<tr>' +
+        '<td><b>' + esc(s.name) + '</b><p class="muted service-region">' + monRegion(s.region) + '</p></td>' +
+        '<td><span class="st ' + cls + '">' + s.status + '</span></td>' +
+        '<td class="num' + (s.p95 != null && s.p95> s.crit ? ' over' : '') + '">' + monFormat(s.p95) + '</td>' +
+        '<td class="num">' + s.crit + ' ms</td>' +
+        '<td class="num">' + s.err.toFixed(1) + ' %</td>' +
+        '<td><button type="button" class="btn mon-ghost" data-edit-threshold="' + s.id + '" aria-label="Edit threshold for ' + esc(s.name) + '">Edit</button></td>' +
+        '</tr>';
+    }).join('');
+    monEl('empty').hidden = rows.length > 0;
+    monEl('count').textContent = 'Showing ' + rows.length + ' of ' + MON_SERVICES.length + ' services';
+    monRenderChips();
+  }
+  function monOpenFilters() {
+    var pop = monEl('filter-popover');
+    pop.hidden = false;
+    monEl('filter-button').setAttribute('aria-expanded', 'true');
+    pop.querySelector('input').focus();
+  }
+  function monCloseFilters() {
+    monEl('filter-popover').hidden = true;
+    monEl('filter-button').setAttribute('aria-expanded', 'false');
+  }
+  
+  function monSyncApply() {
+    var checked = monEl('filter-popover').querySelectorAll('input:checked').length;
+    monEl('filter-apply').textContent = checked ? 'Apply (' + checked + ')' : 'Apply';
+  }
+  function monClearErrors() {
+    ['warning', 'critical'].forEach(function (id) {
+      monEl(id).removeAttribute('aria-invalid');
+      monEl(id + '-error').textContent = '';
+    });
+  }
+  function monSetError(id, message) {
+    monEl(id + '-error').textContent = message;
+    monEl(id).setAttribute('aria-invalid', 'true');
+  }
+
+  function monOpenEdit(id) {
+    var service = monService(id);
+    if (!service) return;
+    mon.editing = service;
+    monEl('edit-service').textContent = service.name;
+    monEl('warning').value = service.warn;
+    monEl('critical').value = service.crit;
+    
+    var values = service.series.filter(function (v) { return v != null; });
+    var min = Math.min.apply(null, values), max = Math.max.apply(null, values), w = 160, h = 36;
+    var points = values.map(function (v, i) {
+      return (i * w / (values.length - 1)).toFixed(1) + ',' + (h - 4 - (v - min) / (max - min || 1) * (h - 8)).toFixed(1);
+    }).join(' ');
+    monEl('edit-context').innerHTML = '<div class="l"><span class="m">Current P95</span><b>' + monFormat(service.p95) + '</b></div>' +
+      '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" role="img" aria-label="Last 24 hours: from ' + values[0] + ' ms to ' + values[values.length - 1] + ' ms, range ' + min + ' to ' + max + ' ms">' +
+      '<polyline points="' + points + '" fill="none" stroke="#0b5fd9" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>' +
+      '<div class="l"><span class="m">Current warning / critical</span><span class="m">' + service.warn + ' / ' + service.crit + ' ms</span></div>';
+    monClearErrors();
+    
+    monEl('edit-dialog').showModal();
+    monEl('warning').focus();
+  }
+  function monSaveThreshold(e) {
+    e.preventDefault();
+    var warn = parseInt(monEl('warning').value, 10), crit = parseInt(monEl('critical').value, 10);
+    
+    monClearErrors();
+    var invalid = null;
+    if (isNaN(warn) || warn < 1) {
+      monSetError('warning', 'Enter a warning threshold in milliseconds, greater than 0.');
+      invalid = invalid || monEl('warning');
+    }
+    if (isNaN(crit) || crit < 1) {
+      monSetError('critical', 'Enter a critical threshold in milliseconds, greater than 0.');
+      invalid = invalid || monEl('critical');
+    } else if (!isNaN(warn) && crit <= warn) {
+      monSetError('critical', 'Critical threshold must be higher than the warning threshold (' + warn + ' ms).');
+      invalid = invalid || monEl('critical');
+    }
+    if (invalid) {
+      invalid.focus();
+      return;
+    }
+    
+    mon.editing.warn = warn;
+    mon.editing.crit = crit;
+    monEl('edit-dialog').close();
+    monRenderTable();
+    monRenderChart();
+    monToast('Threshold saved for ' + mon.editing.name);
+  }
+  function monToast(message) {
+    var toast = monEl('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(mon.toastTimer);
+    mon.toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 4000);
+  }
+
+  function initMonitoring() {
+    mon.filters = { status: [], region: [] };
+    mon.notice = 0;
+    mon.paused = false;
+    var page = viewEl.querySelector('.mon');
+    var pop = monEl('filter-popover'), filterButton = monEl('filter-button');
+    var editDialog = monEl('edit-dialog'), aboutDialog = monEl('about-dialog');
+    monEl('chart-service').innerHTML = '<option value="all">All services (average)</option>' +
+      MON_SERVICES.map(function (s) { return '<option value="' + s.id + '">' + esc(s.name) + '</option>'; }).join('');
+    monRenderNotice();
+    monStartRotation();
+    monRenderKpis();
+    monRenderTable();
+    monRenderChart();
+
+    monEl('chart-service').addEventListener('change', monRenderChart);
+    monEl('range').addEventListener('change', monRenderChart);
+    filterButton.addEventListener('click', function () { if (pop.hidden) monOpenFilters(); else monCloseFilters(); });
+    pop.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      e.stopPropagation();
+      monCloseFilters();
+      filterButton.focus();
+    });
+    mon.docClick = function (e) {
+      if (!pop.hidden && !pop.contains(e.target) && e.target !== filterButton) monCloseFilters();
+    };
+    document.addEventListener('click', mon.docClick);
+    var boxes = pop.querySelectorAll('input');
+    for (var i = 0; i < boxes.length; i++) {
+      
+      boxes[i].addEventListener('change', monSyncApply);
+    }
+    
+    monEl('filter-apply').addEventListener('click', function () {
+      mon.filters = { status: [], region: [] };
+      var checked = pop.querySelectorAll('input:checked');
+      for (var j = 0; j < checked.length; j++) mon.filters[checked[j].getAttribute('data-filter')].push(checked[j].value);
+      monCloseFilters();
+      monRenderTable();
+      filterButton.focus();
+    });
+    monEl('filter-clear').addEventListener('click', function () {
+      for (var j = 0; j < boxes.length; j++) boxes[j].checked = false;
+      monSyncApply();
+    });
+    monEl('chart-table-toggle').addEventListener('click', function () {
+      var table = monEl('chart-table');
+      table.hidden = !table.hidden;
+      this.setAttribute('aria-expanded', table.hidden ? 'false' : 'true');
+      this.textContent = table.hidden ? 'Show data as table' : 'Hide data table';
+    });
+    var notices = page.querySelector('.notices');
+    monEl('notice-prev').addEventListener('click', function () {
+      mon.notice = (mon.notice + MON_NOTICES.length - 1) % MON_NOTICES.length;
+      monRenderNotice();
+      monStartRotation();
+    });
+    monEl('notice-next').addEventListener('click', function () {
+      mon.notice = (mon.notice + 1) % MON_NOTICES.length;
+      monRenderNotice();
+      monStartRotation();
+    });
+    monEl('notice-pause').addEventListener('click', function () {
+      mon.paused = !mon.paused;
+      this.setAttribute('aria-pressed', mon.paused ? 'true' : 'false');
+      this.textContent = mon.paused ? 'Resume' : 'Pause';
+      monStartRotation();
+    });
+    notices.addEventListener('mouseenter', monStopRotation);
+    notices.addEventListener('mouseleave', monStartRotation);
+    notices.addEventListener('focusin', monStopRotation);
+    notices.addEventListener('focusout', monStartRotation);
+    
+    page.addEventListener('click', function (e) {
+      var remove = e.target.closest('[data-remove-filter]');
+      if (remove) {
+        var list = mon.filters[remove.getAttribute('data-remove-filter')], value = remove.getAttribute('data-value');
+        list.splice(list.indexOf(value), 1);
+        for (var j = 0; j < boxes.length; j++) if (boxes[j].value === value) boxes[j].checked = false;
+        
+        monSyncApply();
+        
+        monRenderTable();
+        return;
+      }
+      var edit = e.target.closest('[data-edit-threshold]');
+      if (edit) monOpenEdit(edit.getAttribute('data-edit-threshold'));
+    });
+    monEl('edit-form').addEventListener('submit', monSaveThreshold);
+    monEl('edit-cancel').addEventListener('click', function () { editDialog.close(); });
+    editDialog.addEventListener('close', function () {
+      var button = mon.editing && page.querySelector('[data-edit-threshold="' + mon.editing.id + '"]');
+      (button || filterButton).focus();
+    });
+    monEl('about-button').addEventListener('click', function () {
+      aboutDialog.showModal();
+      monEl('about-close').focus();
+    });
+    monEl('about-close').addEventListener('click', function () { aboutDialog.close(); });
+    aboutDialog.addEventListener('close', function () { monEl('about-button').focus(); });
+    monEl('brief-hide').addEventListener('click', function () {
+      monEl('brief').hidden = true;
+      monEl('about-button').focus();
+    });
+  }
+  function teardownMonitoring() {
+    monStopRotation();
+    clearTimeout(mon.toastTimer);
+    if (mon.docClick) document.removeEventListener('click', mon.docClick);
+    mon.docClick = null;
+    mon.editing = null;
+  }
+
   var views = {
     projects: function () {
       return { title: 'Agents', html:
@@ -746,6 +1322,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     settings: function () {
       return { title: 'Settings', html: document.getElementById('settings-content').innerHTML };
     },
+    monitoring: function () {
+      return { title: 'System overview', html: document.getElementById('monitoring-content').innerHTML };
+    },
     simple: function (title, text, back) {
       return { title: title, html: (back ? backButton(back) : '') + '<div class="view-header"><h1>' + esc(title) + '</h1></div><p>' + text + '</p>' };
     }
@@ -771,6 +1350,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function resolve(parts) {
     var section = parts[0];
     if (section === 'home') return views.home();
+    if (section === 'monitoring') return parts.length === 1 ? views.monitoring() : views.simple('Not found', 'That page does not exist.');
     if (section === 'agents') {
       if (parts.length === 1) return views.projects();
       if (parts[1] === 'new' && parts.length === 2) return views.newAgent();
@@ -813,7 +1393,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     }
     var result = resolve(parts);
     closePopover(false);
+    teardownMonitoring();
     viewEl.innerHTML = result.html;
+    if (parts[0] === 'monitoring') initMonitoring();
     updateNav(parts[0]);
     document.getElementById('page-footer').hidden = parts[0] !== 'settings';
     if (anchor && document.getElementById(anchor)) document.getElementById(anchor).scrollIntoView();
