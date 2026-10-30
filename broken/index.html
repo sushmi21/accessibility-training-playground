@@ -231,6 +231,64 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .mon .tablewrap { position: relative; overflow: hidden; }
 
 .mon .tablewrap table { min-width: 620px; }
+/* More panels, loaded on demand */
+.mon .mon-more { display: flex; flex-direction: column; gap: 18px; }
+.mon .mon-more > button { align-self: flex-start; }
+.mon #mon-more-content { display: flex; flex-direction: column; gap: 18px; }
+.mon .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid #c9d1dc; border-top-color: var(--mon-accent); border-radius: 50%; vertical-align: middle; animation: mon-spin .8s linear infinite; }
+@keyframes mon-spin { to { transform: rotate(360deg); } }
+.mon .mon-banner { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 10px 16px; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 10px; color: #881337; }
+.mon .live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--mon-crit); }
+.mon .live i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+
+.mon .live i.blink { animation: mon-blink 1s steps(2, start) infinite; }
+@keyframes mon-blink { to { visibility: hidden; } }
+
+.mon .mon-check { display: inline-flex; align-items: center; gap: 8px; font-weight: 400; }
+.mon .mon-check input { width: 17px; height: 17px; margin: 0; padding: 0; accent-color: var(--mon-accent); }
+.mon .refresh-note { font-size: 14px; color: var(--muted); }
+.mon .sev { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: currentColor; vertical-align: middle; }
+.mon .low { color: #1d4ed8; }
+.mon .row-actions { white-space: nowrap; }
+.mon .row-actions > * { vertical-align: middle; }
+.mon .row-actions a { margin-left: 8px; }
+
+.mon .row-actions [data-ack] { opacity: 0; }
+.mon tr:hover .row-actions [data-ack] { opacity: 1; }
+.mon .mon-pages ul { display: flex; gap: 4px; list-style: none; margin: 10px 0 0; padding: 0; }
+.mon .page { padding: 0 2px; border: 0; background: none; color: var(--primary); font: inherit; font-size: 12px; line-height: 1.2; cursor: pointer; }
+.mon .page.current { color: var(--text); }
+
+.mon .page:disabled { color: #9ca3af; cursor: default; }
+.mon details { margin: 12px 0 0; border: 1px solid var(--mon-line); border-radius: 8px; }
+.mon details details { margin: 8px 12px 10px; }
+.mon summary { padding: 8px 12px; font-weight: 600; cursor: pointer; }
+.mon details p, .mon details table { margin: 4px 12px 10px; }
+.mon details table { width: auto; }
+.mon .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 14px; }
+.mon .legend li { display: inline-flex; align-items: center; gap: 6px; }
+.mon .legend .sw { width: 14px; height: 14px; border-radius: 3px; }
+.mon .legend svg { width: 28px; height: 10px; }
+.mon .deploys { display: flex; flex-direction: column; gap: 10px; }
+.mon .deploy { padding: 8px 12px; border: 1px solid var(--mon-line); border-radius: 8px; font-size: 14px; height: 64px; overflow: hidden; }
+.mon .deploy b { display: block; }
+.mon .widgets { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.mon .widget { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--panel); border: 1px solid var(--mon-line); border-radius: 8px; }
+.mon .widget.over { border-color: var(--mon-accent); box-shadow: 0 0 0 2px var(--mon-accent-soft); }
+.mon .handle { color: #9ca3af; font-weight: 700; letter-spacing: -2px; cursor: grab; }
+.mon .wname { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.mon .wval { margin-left: auto; }
+.mon .wmove { display: inline-flex; gap: 2px; }
+.mon .info { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; color: var(--primary); font-size: 14px; }
+.mon .icon-btn.info { width: 28px; height: 28px; }
+.mon .sla, .mon .sla-img { display: inline-block; vertical-align: middle; }
+.mon .sla { padding: 3px 12px; border-radius: 999px; background: #e0e7ff; color: #1e3a8a; font-size: 13px; font-weight: 700; }
+.mon .mon-form .field { max-width: 320px; margin: 12px 0; }
+.mon .mon-form .field input { width: 100%; }
+.mon .mon-form .hint { font-size: 14px; font-weight: 400; color: var(--muted); }
+.mon .mon-form .err { font-size: 14px; font-weight: 600; color: var(--mon-crit); }
+.mon .mon-form .err:empty { display: none; }
+.mon .mon-form input[aria-invalid="true"], .mon .mon-form input.invalid { border-color: var(--mon-crit); box-shadow: 0 0 0 2px #f3c4c4; }
 .mon-dlg .dialog-header { margin-bottom: 4px; }
 .mon-dlg .dialog-header + .muted { margin: 0 0 16px; }
 .mon-dlg .ctx { display: flex; flex-direction: column; gap: 6px; margin: 0 0 16px; padding: 10px 14px; background: var(--bg); border: 1px solid var(--mon-line); border-radius: 10px; }
@@ -611,6 +669,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         <div class="mon-empty" id="mon-empty" hidden>No services match the selected filters.</div>
       </section>
     </div>
+    <div class="mon-more" id="mon-more">
+      <button type="button" class="btn" id="mon-load-more">Load more panels</button>
+      <div id="mon-more-content" hidden></div>
+    </div>
     <dialog id="mon-edit-dialog" class="mon-dlg" aria-labelledby="mon-edit-title">
       <form id="mon-edit-form" method="dialog">
         <div class="dialog-header"><h2 id="mon-edit-title">Edit alert threshold</h2></div>
@@ -635,6 +697,77 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     </dialog>
     <div class="mon-toast" id="mon-toast"></div>
   </div>
+</template>
+
+<template id="monitoring-more">
+    <div class="mon-banner" id="mon-session">
+
+      <span>Still there? Your session expires in <span id="mon-session-left">1:00</span>.</span>
+    </div>
+
+    <section class="mon-card" aria-labelledby="mon-incidents-heading">
+      <div class="mon-head">
+        <h2 id="mon-incidents-heading" tabindex="-1">Incidents</h2>
+
+        <span class="live"><i class="blink"></i>Live</span>
+        <span class="sp"></span>
+        <span class="refresh-note" id="mon-refresh-note">Refreshes every 20 s</span>
+      </div>
+
+      <p class="muted">Incidents with a red dot need attention. Use the button on the right of the row to acknowledge one.</p>
+      <div class="mon-toolbar">
+        <label class="mon-check"><input type="checkbox" id="mon-show-resolved">Show resolved</label>
+      </div>
+      <p class="muted" id="mon-incidents-count"></p>
+      <div class="tablewrap">
+        <table id="mon-incidents-table">
+          <thead><tr><th scope="col">Incident</th><th scope="col">Service</th><th scope="col">Severity</th><th scope="col">Opened</th><th scope="col">Status</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="mon-empty" id="mon-incidents-empty" hidden>No open incidents.</div>
+      <nav class="mon-pages" aria-label="Incident pages" id="mon-pages"></nav>
+
+      <details><summary>Incident #4821 details</summary>
+        <details><summary>Timeline</summary>
+          <details><summary>09:14 Alert fired</summary><p>P95 above 400 ms for 5 minutes on Notification Service.</p></details>
+          <details><summary>09:21 Paged</summary><p>On-call engineer paged, acknowledged after 4 minutes.</p></details>
+          <details><summary>09:40 Mitigation</summary><p>Queue workers scaled from 4 to 12. Delivery backlog draining.</p></details>
+        </details>
+        <details><summary>Affected</summary><p>Push notifications, EU Central and US East.</p></details>
+      </details>
+
+    </section>
+    <div class="mon-row">
+      <section class="mon-card" aria-labelledby="mon-compare-heading">
+        <div class="mon-head"><h2 id="mon-compare-heading">Compare services</h2></div>
+        <div id="mon-compare"></div>
+        <ul class="legend" id="mon-compare-legend"></ul>
+      </section>
+      <section class="mon-card" aria-labelledby="mon-deploys-heading">
+        <div class="mon-head"><h2 id="mon-deploys-heading">Recent deploys</h2></div>
+        <div class="deploys" id="mon-deploys"></div>
+      </section>
+    </div>
+    <div class="mon-row">
+      <section class="mon-card" aria-labelledby="mon-silence-heading">
+        <div class="mon-head"><h2 id="mon-silence-heading">Silence alerts</h2></div>
+        <p class="muted">Pause alerting for every service while you work on an incident.</p>
+        <form id="mon-silence-form" class="mon-form" novalidate>
+          <div class="field"><input id="mon-silence-duration" type="number" min="1" placeholder="Duration (minutes) *"></div>
+          <div class="field"><input id="mon-silence-reason" type="text" placeholder="Reason *"></div>
+          <div class="actions"><button type="submit" class="btn btn-primary">Silence alerts</button></div>
+        </form>
+      </section>
+      <section class="mon-card" aria-labelledby="mon-widgets-heading">
+        <div class="mon-head"><h2 id="mon-widgets-heading">Arrange panels</h2></div>
+
+        <p class="muted">Drag a panel by its handle to change the order on your overview.</p>
+
+        <ul class="widgets" id="mon-widgets"></ul>
+      </section>
+    </div>
+
 </template>
 <div class="dialog-backdrop" id="confirm-dialog" hidden>
   <div class="dialog" role="dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
@@ -1053,6 +1186,329 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     mon.toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 4000);
   }
 
+  // More panels, loaded on demand (Session 4, further design-review examples).
+  var ICON_PENCIL = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+  var MON_INCIDENTS = [
+    { id: 4821, service: 'Notification Service', severity: 'Critical', opened: '09:14', status: 'open', acked: false },
+    { id: 4819, service: 'Database Cluster', severity: 'Major', opened: '07:52', status: 'open', acked: true },
+    { id: 4817, service: 'Payment Processing', severity: 'Minor', opened: 'Yesterday 22:10', status: 'open', acked: false },
+    { id: 4815, service: 'Search Service', severity: 'Minor', opened: 'Yesterday 16:40', status: 'open', acked: false },
+    { id: 4812, service: 'API Gateway', severity: 'Major', opened: 'Yesterday 09:05', status: 'resolved', acked: true },
+    { id: 4808, service: 'Authentication Service', severity: 'Minor', opened: 'Mon 14:20', status: 'resolved', acked: true },
+    { id: 4805, service: 'Database Cluster', severity: 'Critical', opened: 'Mon 03:12', status: 'resolved', acked: true },
+    { id: 4801, service: 'Search Service', severity: 'Minor', opened: 'Sun 19:48', status: 'resolved', acked: true },
+    { id: 4799, service: 'Payment Processing', severity: 'Major', opened: 'Sun 11:30', status: 'resolved', acked: true }
+  ];
+  var MON_DEPLOYS = [
+    { service: 'API Gateway', version: 'v2.14', time: '10:20', by: 'a.ruiz', note: 'Rolled out to EU Central. No errors in the first thirty minutes.' },
+    { service: 'Search Service', version: 'v1.9.2', time: 'Yesterday 17:05', by: 'k.osei', note: 'Index rebuild included. Latency back to normal after the warm-up.' },
+    { service: 'Payment Processing', version: 'v3.1', time: 'Yesterday 11:40', by: 'j.okafor', note: 'New retry policy for the card network. Threshold raised to 300 ms.' }
+  ];
+  var MON_WIDGETS = [
+    { id: 'budget', name: 'Error budget', value: '72 % left' },
+    { id: 'sla', name: 'SLA', value: '99.9 %' },
+    { id: 'deploys', name: 'Deploys today', value: '4' }
+  ];
+  var MON_PAGE_SIZE = 3;
+  var more = { loaded: false, loading: false, page: 1, showResolved: false, widgets: [], drag: null, sessionLeft: 60,
+    loadTimer: null, refreshTimer: null, sessionTimer: null, flashTimer: null };
+
+  function monIncident(id) { return MON_INCIDENTS.filter(function (i) { return String(i.id) === String(id); })[0]; }
+  function monOpenIncidents() { return MON_INCIDENTS.filter(function (i) { return i.status === 'open'; }); }
+  function monListedIncidents() { return more.showResolved ? MON_INCIDENTS : monOpenIncidents(); }
+  function monPageCount() { return Math.max(1, Math.ceil(monListedIncidents().length / MON_PAGE_SIZE)); }
+  function monWidget(id) { return MON_WIDGETS.filter(function (w) { return w.id === id; })[0]; }
+  function monClock() {
+    var d = new Date();
+    return [d.getHours(), d.getMinutes(), d.getSeconds()].map(function (n) { return (n < 10 ? '0' : '') + n; }).join(':');
+  }
+  function monKeepFocus(render) {
+    var a = document.activeElement, key = null;
+    if (a && viewEl.contains(a)) {
+      if (a.id) key = '#' + a.id;
+      else if (a.hasAttribute('data-ack')) key = '[data-ack="' + a.getAttribute('data-ack') + '"]';
+      else if (a.hasAttribute('data-edit-incident')) key = '[data-edit-incident="' + a.getAttribute('data-edit-incident') + '"]';
+      else if (a.hasAttribute('data-page')) key = '[data-page="' + a.getAttribute('data-page') + '"]';
+    }
+    render();
+    var again = key && viewEl.querySelector(key);
+    if (!again || again.disabled) return false;
+    again.focus();
+    return true;
+  }
+
+  function monRenderIncidents() {
+    var listed = monListedIncidents();
+    if (more.page > monPageCount()) more.page = monPageCount();
+    var start = (more.page - 1) * MON_PAGE_SIZE;
+    var rows = listed.slice(start, start + MON_PAGE_SIZE);
+    monEl('incidents-table').querySelector('tbody').innerHTML = rows.map(function (i) {
+      var cls = i.severity === 'Critical' ? 'crit' : i.severity === 'Major' ? 'warn' : 'low';
+      var status = i.status === 'resolved' ? 'Resolved' : i.acked ? 'Acknowledged' : 'Open';
+      var canAck = i.status === 'open' && !i.acked;
+      return '<tr>' +
+        '<td><b>#' + i.id + '</b></td>' +
+        '<td>' + esc(i.service) + '</td>' +
+        
+        '<td><span class="sev ' + cls + '"></span></td>' +
+        
+        '<td class="num">' + esc(i.opened) + '</td>' +
+        '<td>' + status + '</td>' +
+        '<td class="row-actions">' +
+        (canAck ? '<button type="button" class="btn mon-ghost" data-ack="' + i.id + '">Acknowledge</button>' : '') +
+        
+        '<button type="button" class="icon-btn" data-edit-incident="' + i.id + '" title="Edit">' + ICON_PENCIL + '</button>' +
+        '<a href="#/monitoring/incidents/' + i.id + '">Details</a>' +
+        
+        '</td></tr>';
+    }).join('');
+    monEl('incidents-empty').hidden = listed.length > 0;
+    monEl('incidents-count').textContent = listed.length ?
+      'Showing ' + (start + 1) + ' to ' + (start + rows.length) + ' of ' + listed.length + (more.showResolved ? ' incidents' : ' open incidents') : '';
+    monRenderPages();
+  }
+  function monRenderPages() {
+    var pages = monPageCount();
+    var html = '<ul><li><button type="button" class="page" data-page="prev" aria-label="Previous page"' + (more.page === 1 ? ' disabled' : '') + '>‹</button></li>';
+    for (var p = 1; p <= pages; p++) {
+      
+      html += '<li><button type="button" class="page' + (p === more.page ? ' current' : '') + '" data-page="' + p + '">' + p + '</button></li>';
+    }
+    html += '<li><button type="button" class="page" data-page="next" aria-label="Next page"' + (more.page === pages ? ' disabled' : '') + '>›</button></li></ul>';
+    monEl('pages').innerHTML = html;
+  }
+  function monRefreshIncidents() {
+    
+    more.showResolved = false;
+    more.page = 1;
+    monEl('show-resolved').checked = false;
+    monRenderIncidents();
+    var note = monEl('refresh-note');
+    note.textContent = 'Refreshing…';
+    clearTimeout(more.flashTimer);
+    more.flashTimer = setTimeout(function () { note.textContent = 'Refreshed ' + monClock() + ' \u00b7 Refreshes every 20 s'; }, 800);
+  }
+  function monAcknowledge(id) {
+    var incident = monIncident(id);
+    if (!incident || incident.acked || incident.status !== 'open') return;
+    incident.acked = true;
+    monRenderIncidents();
+    
+    monToast('Acknowledged #' + id);
+  }
+  function monRenderCompare() {
+    var W = 640, H = 230, L = 46, R = 16, T = 18, B = 34, max = 500;
+    var ids = ['gateway', 'db', 'payments'], labels = MON_LABELS_24H;
+    
+    var styles = [{ color: '#93c5fd', dash: '' }, { color: '#86efac', dash: '' }, { color: '#fdba74', dash: '' }];
+    
+    function x(i) { return L + i * (W - L - R) / (labels.length - 1); }
+    function y(v) { return T + (H - T - B) * (1 - v / max); }
+    var g = '';
+    for (var t = 0; t <= max; t += 100) {
+      g += '<line x1="' + L + '" y1="' + y(t) + '" x2="' + (W - R) + '" y2="' + y(t) + '" stroke="#eef1f5"/>' +
+        '<text x="' + (L - 8) + '" y="' + (y(t) + 4) + '" font-size="11" fill="#4a5568" text-anchor="end">' + t + '</text>';
+    }
+    labels.forEach(function (label, i) {
+      g += '<text x="' + x(i) + '" y="' + (H - 10) + '" font-size="11" fill="#4a5568" text-anchor="middle">' + label + '</text>';
+    });
+    var legend = '', latest = [];
+    ids.forEach(function (id, n) {
+      var s = monService(id), st = styles[n], path = '';
+      s.series.forEach(function (v, i) { path += (path ? ' L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1); });
+      var dash = st.dash ? ' stroke-dasharray="' + st.dash + '"' : '';
+      g += '<path d="' + path + '" fill="none" stroke="' + st.color + '" stroke-width="2.5"' + dash + '/>';
+      var last = s.series[s.series.length - 1];
+      
+      legend += '<li><span class="sw" style="background:' + st.color + '"></span>' + esc(s.name) + '</li>';
+      
+      latest.push(s.name + ' ' + last + ' ms');
+    });
+    
+    var label = 'P95 comparison chart';
+    
+    monEl('compare').innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="' + label + '">' + g + '</svg>';
+    monEl('compare-legend').innerHTML = legend;
+  }
+  function monRenderDeploys() {
+    monEl('deploys').innerHTML = MON_DEPLOYS.map(function (d) {
+      return '<div class="deploy"><b>' + esc(d.service) + ' ' + esc(d.version) + ' <span class="muted">· ' + esc(d.time) + ' · ' + esc(d.by) + '</span></b>' + esc(d.note) + '</div>';
+    }).join('');
+  }
+
+  function monWidgetInner(w) {
+    if (w.id === 'budget') {
+      return '<span class="wname">' + esc(w.name) +
+        
+        '<span class="info" title="The share of the monthly error allowance that is still unused.">ⓘ</span>' +
+        
+        '</span><span class="wval">' + esc(w.value) + '</span>';
+    }
+    if (w.id === 'sla') {
+      return '<span class="wname">' + esc(w.name) + '</span><span class="wval">' +
+        
+        '<img class="sla-img" width="88" height="26" alt="SLA 99.9 %" src="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2788%27 height=%2726%27%3E%3Crect width=%2788%27 height=%2726%27 rx=%2713%27 fill=%27%23e0e7ff%27/%3E%3Ctext x=%2744%27 y=%2717.5%27 text-anchor=%27middle%27 font-family=%27system-ui, sans-serif%27 font-size=%2713%27 font-weight=%27700%27 fill=%27%231e3a8a%27%3ESLA 99.9 %25%3C/text%3E%3C/svg%3E">' +
+        
+        '</span>';
+    }
+    return '<span class="wname">' + esc(w.name) + '</span><span class="wval">' + esc(w.value) + '</span>';
+  }
+  function monRenderWidgets() {
+    monEl('widgets').innerHTML = more.widgets.map(function (id, n) {
+      var w = monWidget(id);
+      return '<li class="widget" draggable="true" data-widget="' + w.id + '">' +
+        '<span class="handle" title="Drag to reorder">⋮⋮</span>' +
+        monWidgetInner(w) +
+
+        '</li>';
+    }).join('');
+  }
+  function monMoveWidget(id, dir) {
+    var from = more.widgets.indexOf(id), to = from + (dir === 'up' ? -1 : 1);
+    if (from < 0 || to < 0 || to >= more.widgets.length) return;
+    more.widgets.splice(from, 1);
+    more.widgets.splice(to, 0, id);
+    monRenderWidgets();
+  }
+  function monWireDrag(list) {
+    list.addEventListener('dragstart', function (e) {
+      var li = e.target.closest('[data-widget]');
+      if (!li) return;
+      more.drag = li.getAttribute('data-widget');
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', more.drag); } catch (err) { /* older engines */ }
+    });
+    list.addEventListener('dragover', function (e) {
+      var li = e.target.closest('[data-widget]');
+      if (!li || !more.drag) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      var items = list.querySelectorAll('.widget');
+      for (var i = 0; i < items.length; i++) items[i].classList.toggle('over', items[i] === li);
+    });
+    list.addEventListener('drop', function (e) {
+      var li = e.target.closest('[data-widget]');
+      if (!li || !more.drag) return;
+      e.preventDefault();
+      var target = li.getAttribute('data-widget');
+      if (target !== more.drag) {
+        var below = e.clientY - li.getBoundingClientRect().top > li.offsetHeight / 2;
+        more.widgets.splice(more.widgets.indexOf(more.drag), 1);
+        more.widgets.splice(more.widgets.indexOf(target) + (below ? 1 : 0), 0, more.drag);
+      }
+      more.drag = null;
+      monRenderWidgets();
+    });
+    list.addEventListener('dragend', function () {
+      more.drag = null;
+      var items = list.querySelectorAll('.widget.over');
+      for (var i = 0; i < items.length; i++) items[i].classList.remove('over');
+    });
+  }
+
+  function monSilenceSubmit(e) {
+    e.preventDefault();
+    var duration = monEl('silence-duration'), reason = monEl('silence-reason');
+    var minutes = parseInt(duration.value, 10), why = reason.value.trim();
+    
+    duration.classList.toggle('invalid', isNaN(minutes) || minutes < 1);
+    reason.classList.toggle('invalid', !why);
+    if (isNaN(minutes) || minutes < 1 || !why) return;
+    
+    duration.value = '';
+    reason.value = '';
+    monToast('Alerts silenced for ' + minutes + ' minutes: ' + why);
+  }
+
+  function monSessionText() {
+    var m = Math.floor(more.sessionLeft / 60), s = more.sessionLeft % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+  function monStartSession() {
+    more.sessionLeft = 60;
+    monEl('session-left').textContent = monSessionText();
+    clearInterval(more.sessionTimer);
+    more.sessionTimer = setInterval(function () {
+      more.sessionLeft--;
+      if (more.sessionLeft > 0) {
+        monEl('session-left').textContent = monSessionText();
+        return;
+      }
+      clearInterval(more.sessionTimer);
+      monEl('session').innerHTML = '<span>Your session has expired. Sign in again to continue.</span>';
+    }, 1000);
+  }
+
+  function monMoreClick(e) {
+    var ack = e.target.closest('[data-ack]');
+    if (ack) {
+      monAcknowledge(ack.getAttribute('data-ack'));
+      return;
+    }
+    if (e.target.closest('[data-edit-incident]')) {
+      monToast('Editing incidents is not part of this prototype.');
+      return;
+    }
+    var page = e.target.closest('[data-page]');
+    if (page) {
+      var p = page.getAttribute('data-page');
+      more.page = p === 'prev' ? more.page - 1 : p === 'next' ? more.page + 1 : parseInt(p, 10);
+      
+      monRenderIncidents();
+      
+      return;
+    }
+    var move = e.target.closest('[data-move]');
+    if (move) {
+      monMoveWidget(move.getAttribute('data-widget'), move.getAttribute('data-move'));
+      return;
+    }
+  }
+  function monLoadMore() {
+    if (more.loading || more.loaded) return;
+    more.loading = true;
+    var button = monEl('load-more');
+    
+    button.innerHTML = '<span class="spinner"></span>';
+    
+    more.loadTimer = setTimeout(monInsertMore, 1200);
+  }
+  function monInsertMore() {
+    var holder = monEl('more-content'), button = monEl('load-more');
+    holder.innerHTML = document.getElementById('monitoring-more').innerHTML;
+    holder.hidden = false;
+    button.parentNode.removeChild(button);
+    more.loaded = true;
+    more.loading = false;
+    more.page = 1;
+    more.showResolved = false;
+    more.widgets = MON_WIDGETS.map(function (w) { return w.id; });
+    monRenderIncidents();
+    monRenderCompare();
+    monRenderDeploys();
+    monRenderWidgets();
+    monStartSession();
+    holder.addEventListener('click', monMoreClick);
+    monEl('show-resolved').addEventListener('change', function (e) {
+      more.showResolved = e.target.checked;
+      more.page = 1;
+      monRenderIncidents();
+    });
+    monEl('silence-form').addEventListener('submit', monSilenceSubmit);
+    monWireDrag(monEl('widgets'));
+    
+    more.refreshTimer = setInterval(monRefreshIncidents, 20000);
+  }
+  function monTeardownMore() {
+    clearTimeout(more.loadTimer);
+    clearInterval(more.refreshTimer);
+    clearInterval(more.sessionTimer);
+    clearTimeout(more.flashTimer);
+    more.loaded = false;
+    more.loading = false;
+    more.drag = null;
+  }
+
   function initMonitoring() {
     mon.filters = { status: [], region: [] };
     mon.notice = 0;
@@ -1122,8 +1578,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       monEl('brief').hidden = true;
       monEl('about-button').focus();
     });
+    monEl('load-more').addEventListener('click', monLoadMore);
   }
   function teardownMonitoring() {
+    monTeardownMore();
     monStopRotation();
     clearTimeout(mon.toastTimer);
     if (mon.docClick) document.removeEventListener('click', mon.docClick);
@@ -1223,7 +1681,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function resolve(parts) {
     var section = parts[0];
     if (section === 'home') return views.home();
-    if (section === 'monitoring') return parts.length === 1 ? views.monitoring() : views.simple('Not found', 'That page does not exist.');
+    if (section === 'monitoring') {
+      if (parts.length === 1) return views.monitoring();
+      if (parts[1] === 'incidents' && parts.length === 3) return views.simple('Incident #' + parts[2], 'Incident pages are not part of this prototype. This page exists so that the Details links have somewhere to go.', '#/monitoring');
+      return views.simple('Not found', 'That page does not exist.');
+    }
     if (section === 'agents') {
       if (parts.length === 1) return views.projects();
       if (parts[1] === 'new' && parts.length === 2) return views.newAgent();
@@ -1268,7 +1730,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     closePopover(false);
     teardownMonitoring();
     viewEl.innerHTML = result.html;
-    if (parts[0] === 'monitoring') initMonitoring();
+    if (parts[0] === 'monitoring' && parts.length === 1) initMonitoring();
     updateNav(parts[0]);
     document.getElementById('page-footer').hidden = parts[0] !== 'settings';
     if (anchor && document.getElementById(anchor)) document.getElementById(anchor).scrollIntoView();
