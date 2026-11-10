@@ -324,6 +324,185 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   .mon .pop { width: min(300px, calc(100vw - 48px)); }
   .mon .chart-table table { min-width: 0; }
 }
+/* Components page (Session 5: keyboard interaction patterns) */
+.kb { max-width: 1040px; }
+.kb .lead { max-width: 75ch; }
+.kb .kb-group { margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--border); }
+.kb .kb-group > h2 { font-size: 1.25rem; font-weight: 700; margin: 0; }
+.kb .kb-group > p { max-width: 75ch; color: var(--muted); }
+.kb .kb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 12px; }
+.kb .kb-card { min-width: 0; padding: 16px 20px 18px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
+.kb .kb-card.wide { grid-column: 1 / -1; }
+.kb .kb-card > h3 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.kb .kb-card > h3 .kb-apg { font-weight: 600; letter-spacing: 0; text-transform: none; }
+.kb .kb-head { display: flex; align-items: center; gap: 4px; margin: 0 0 8px; }
+.kb .kb-head label, .kb .kb-label { font-weight: 600; }
+.kb .kb-head .hint { margin-left: auto; font-size: 14px; font-weight: 400; color: var(--muted); }
+.kb fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.kb legend { float: left; margin: 0 4px 8px 0; padding: 0; font-weight: 600; }
+.kb fieldset > .tip-wrap { float: left; margin-bottom: 8px; }
+.kb fieldset > .kb-options { clear: both; }
+.kb .tip-wrap { display: inline-flex; }
+.kb .kb-info { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 28px; height: 28px; color: var(--primary); }
+.kb .kb-info svg { width: 18px; height: 18px; }
+.kb .kb-tip { left: 0; right: auto; width: max-content; max-width: min(360px, calc(100vw - 48px)); }
+.kb .kb-tip::before { left: 10px; right: auto; }
+.kb .kb-tip p { margin: 0 0 6px; font-weight: 600; }
+.kb .kb-tip ul { margin: 0; padding: 0; list-style: none; }
+.kb .kb-tip li { margin: 4px 0; }
+.kb .kb-tip kbd { display: inline-block; margin: 1px 2px 1px 0; padding: 0 6px; border: 1px solid #6b7280; border-bottom-width: 2px; border-radius: 4px; background: #1f2937; color: #fff; font: inherit; font-size: 13px; font-weight: 600; line-height: 1.5; white-space: nowrap; }
+.kb .tip-wrap.tip-open .tip { display: block; }
+.kb .tip-wrap.tip-dismissed .tip { display: none; }
+.kb .kb-note { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
+.kb .kb-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.kb .kb-stack { display: flex; flex-direction: column; gap: 10px; }
+.kb .btn-toggle[aria-pressed="true"], .kb .btn-toggle.on { background: #e0e7ff; border-color: var(--primary); color: var(--primary-dark); }
+.kb .btn-toggle .icon { width: 18px; height: 18px; }
+.kb a.kb-link { font-weight: 600; }
+.kb span.kb-link { color: var(--primary); font-weight: 600; text-decoration: underline; cursor: pointer; }
+
+/* choices */
+.kb .kb-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kb .kb-choice { position: relative; min-width: 0; }
+.kb .kb-choice > label, .kb .kb-choice > .kb-fake { position: relative; display: flex; flex-direction: column; gap: 2px; height: 100%; padding: 12px 14px 12px 40px; border: 2px solid var(--border); border-radius: 10px; background: #fff; font-weight: 600; cursor: pointer; }
+.kb .kb-choice .desc { font-size: 14px; font-weight: 400; color: var(--muted); }
+.kb .kb-choice > label:hover, .kb .kb-choice > .kb-fake:hover { border-color: #9ca3af; background: #f9fafb; }
+.kb .kb-choice > label::before, .kb .kb-choice > .kb-fake::before { content: ""; position: absolute; left: 12px; top: 14px; width: 18px; height: 18px; border: 2px solid #6b7280; border-radius: 50%; background: #fff; }
+.kb .kb-choice input:checked + label, .kb .kb-choice > .kb-fake.checked, .kb .kb-choice > .kb-fake[aria-checked="true"] { border-color: var(--primary); background: #eef2ff; color: var(--primary-dark); }
+.kb .kb-choice input:checked + label::before, .kb .kb-choice > .kb-fake.checked::before, .kb .kb-choice > .kb-fake[aria-checked="true"]::before { border-color: var(--primary); background: radial-gradient(circle, var(--primary) 0 45%, #fff 50% 100%); }
+.kb .kb-choice input:focus-visible + label, .kb .kb-choice > .kb-fake:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.kb .kb-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.kb .kb-chip { position: relative; }
+.kb .kb-chip > label, .kb .kb-chip > .kb-fake { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 34px; border: 2px solid var(--border); border-radius: 999px; background: #fff; font-weight: 600; cursor: pointer; }
+.kb .kb-chip > label::before, .kb .kb-chip > .kb-fake::before { content: ""; position: absolute; left: 10px; top: 50%; width: 16px; height: 16px; margin-top: -9px; border: 2px solid #6b7280; border-radius: 4px; background: #fff; }
+.kb .kb-chip > label:hover, .kb .kb-chip > .kb-fake:hover { border-color: #9ca3af; background: #f9fafb; }
+.kb .kb-chip input:checked + label, .kb .kb-chip > .kb-fake.checked { border-color: var(--primary); background: #eef2ff; color: var(--primary-dark); }
+.kb .kb-chip input:checked + label::before, .kb .kb-chip > .kb-fake.checked::before { border-color: var(--primary); background: var(--primary) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-6' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat; }
+.kb .kb-chip input:focus-visible + label, .kb .kb-chip > .kb-fake:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.kb .kb-check { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; }
+.kb .kb-check input { width: 18px; height: 18px; margin: 0; padding: 0; accent-color: var(--primary); }
+.kb .kb-switch { appearance: none; -webkit-appearance: none; position: relative; flex: none; width: 46px; height: 26px; margin: 0; padding: 0; border: 0; border-radius: 13px; background: #6b7280; cursor: pointer; vertical-align: middle; }
+.kb .kb-switch::before { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left .15s; }
+.kb .kb-switch:checked, .kb .kb-switch.on, .kb .kb-switch[aria-checked="true"] { background: var(--primary); }
+.kb .kb-switch:checked::before, .kb .kb-switch.on::before, .kb .kb-switch[aria-checked="true"]::before { left: 23px; }
+.kb .kb-switch-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.kb .kb-switch-row .kb-state { font-size: 14px; color: var(--muted); min-width: 24px; }
+.kb .kb-sel { width: 100%; max-width: 320px; appearance: none; -webkit-appearance: none; padding-right: 40px; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23374151' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") right 12px center / 18px no-repeat; }
+.kb select[size], .kb .kb-list { width: 100%; max-width: 320px; padding: 4px; }
+.kb select[size] option { padding: 7px 10px; border-radius: 6px; }
+.kb .kb-list { margin: 0; list-style: none; border: 1px solid #6b7280; border-radius: 6px; background: #fff; }
+.kb .kb-list li { padding: 7px 10px; border-radius: 6px; cursor: pointer; }
+.kb .kb-list li:hover { background: #f3f4f6; }
+.kb .kb-list li.selected { background: #e0e7ff; color: var(--primary-dark); font-weight: 600; }
+.kb .kb-text { width: 100%; max-width: 320px; }
+.kb .kb-num { width: 110px; }
+.kb .kb-stepper { display: inline-flex; align-items: center; gap: 6px; }
+.kb .kb-stepper button { width: 32px; height: 36px; border: 1px solid #6b7280; border-radius: 6px; background: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.kb .kb-range-wrap { display: flex; align-items: center; gap: 12px; }
+.kb .kb-range-wrap .kb-value { min-width: 2.5ch; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kb input[type="range"].kb-range { flex: 1; width: 100%; height: 28px; margin: 0; padding: 0; border: 0; background: transparent; appearance: none; -webkit-appearance: none; cursor: pointer; }
+.kb .kb-range::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--primary) 0 var(--pct, 50%), #6b7280 var(--pct, 50%) 100%); }
+.kb .kb-range::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; margin-top: -8px; border: 3px solid #fff; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.kb .kb-range::-moz-range-track { height: 6px; border-radius: 3px; background: #6b7280; }
+.kb .kb-range::-moz-range-progress { height: 6px; border-radius: 3px; background: var(--primary); }
+.kb .kb-range::-moz-range-thumb { width: 16px; height: 16px; border: 3px solid #fff; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.kb .kb-range:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 6px; }
+.kb .kb-range-ends { display: flex; justify-content: space-between; margin-top: 2px; font-size: 14px; color: var(--muted); }
+.kb .kb-slider { position: relative; height: 28px; cursor: pointer; }
+.kb .kb-slider .track { position: absolute; left: 0; right: 0; top: 11px; height: 6px; border-radius: 3px; background: #6b7280; }
+.kb .kb-slider .fill { position: absolute; left: 0; top: 11px; height: 6px; border-radius: 3px; background: var(--primary); }
+.kb .kb-slider .thumb { position: absolute; top: 3px; width: 22px; height: 22px; margin-left: -11px; border: 3px solid #fff; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.kb .kb-combo { position: relative; max-width: 320px; }
+.kb .kb-combo input { width: 100%; }
+.kb .kb-suggest { position: absolute; left: 0; right: 0; top: 100%; z-index: 20; margin: 4px 0 0; padding: 4px; list-style: none; background: #fff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.kb .kb-suggest li { padding: 7px 10px; border-radius: 6px; cursor: pointer; }
+.kb .kb-suggest li:hover { background: #f3f4f6; }
+.kb .kb-date-wrap { position: relative; display: inline-flex; gap: 6px; }
+.kb .kb-cal { position: absolute; left: 0; top: 100%; z-index: 20; width: 260px; margin-top: 4px; padding: 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.kb .kb-cal .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-weight: 600; }
+.kb .kb-cal .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.kb .kb-cal .cal-grid span { font-size: 12px; text-align: center; color: var(--muted); }
+.kb .kb-cal .cal-grid button { height: 30px; border: 0; border-radius: 6px; background: none; font: inherit; font-size: 14px; cursor: pointer; }
+.kb .kb-cal .cal-grid button:hover { background: #f3f4f6; }
+.kb .kb-cal .cal-grid button.sel { background: var(--primary); color: #fff; font-weight: 700; }
+/* composites */
+.kb [role="tablist"], .kb .kb-tablist { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; border-bottom: 2px solid var(--border); }
+.kb .kb-tab { margin: 0 0 -2px; padding: 8px 14px; border: 0; border-bottom: 3px solid transparent; border-radius: 6px 6px 0 0; background: none; color: var(--muted); font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+.kb .kb-tab:hover { background: #f3f4f6; color: var(--text); }
+.kb .kb-tab[aria-selected="true"], .kb .kb-tab.active { color: var(--primary-dark); border-bottom-color: var(--primary); }
+.kb .kb-panel { padding: 12px 4px 4px; }
+.kb .kb-panel p { margin: 0 0 8px; }
+.kb .kb-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; padding: 6px; border: 1px solid #6b7280; border-bottom: 0; border-radius: 8px 8px 0 0; background: #f9fafb; }
+.kb .kb-toolbar .tb { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0; border: 1px solid transparent; border-radius: 6px; background: none; color: var(--text); font: inherit; font-weight: 700; cursor: pointer; }
+.kb .kb-toolbar .tb:hover { background: #e5e7eb; }
+.kb .kb-toolbar .tb[aria-pressed="true"], .kb .kb-toolbar .tb.on, .kb .kb-toolbar input:checked + .tb { background: #e0e7ff; border-color: var(--primary); color: var(--primary-dark); }
+.kb .kb-toolbar input:focus-visible + .tb { outline: 3px solid var(--ring); outline-offset: 2px; }
+.kb .kb-toolbar .tb.text { width: auto; padding: 0 10px; font-weight: 600; }
+.kb .kb-toolbar .tb-sep { width: 1px; height: 24px; margin: 0 4px; background: var(--border); }
+.kb .kb-toolbar fieldset, .kb .kb-toolbar .kb-align { display: inline-flex; gap: 4px; }
+.kb .kb-toolbar .icon { width: 18px; height: 18px; }
+.kb .kb-editor textarea { display: block; width: 100%; min-height: 96px; border-radius: 0 0 8px 8px; resize: vertical; }
+.kb .kb-tree { margin: 0; padding: 0; list-style: none; }
+.kb .kb-tree ul { margin: 0; padding: 0 0 0 22px; list-style: none; }
+.kb .kb-tree li { margin: 0; outline: none; }
+.kb .kb-tree .node { display: flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 6px; cursor: pointer; }
+.kb .kb-tree .node:hover { background: #f3f4f6; }
+.kb .kb-tree [aria-selected="true"] > .node, .kb .kb-tree li.selected > .node { background: #e0e7ff; color: var(--primary-dark); font-weight: 600; }
+.kb .kb-tree li:focus-visible > .node { outline: 3px solid var(--ring); outline-offset: -1px; }
+.kb .kb-tree .twisty { flex: none; width: 16px; height: 16px; transition: transform .12s; }
+.kb .kb-tree [aria-expanded="true"] > .node .twisty, .kb .kb-tree li.open > .node .twisty { transform: rotate(90deg); }
+.kb .kb-tree .leaf .twisty { visibility: hidden; }
+.kb .kb-tree [aria-expanded="false"] > ul, .kb .kb-tree li.closed > ul { display: none; }
+.kb .kb-tree .doc { width: 16px; height: 16px; color: var(--muted); }
+.kb table.kb-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.kb .kb-table caption { margin-bottom: 6px; text-align: left; font-weight: 600; }
+.kb .kb-table th, .kb .kb-table td { padding: 8px 10px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border); }
+.kb .kb-table thead th { background: #f3f4f6; font-weight: 600; white-space: nowrap; }
+.kb .kb-table tbody tr:last-child td { border-bottom: 0; }
+.kb .kb-table td:focus-visible, .kb .kb-table td.focus { outline: 3px solid var(--ring); outline-offset: -3px; }
+.kb .kb-table input[type="checkbox"] { width: 18px; height: 18px; margin: 0; accent-color: var(--primary); vertical-align: middle; }
+.kb .kb-table .sort { font-weight: 600; }
+.kb .kb-table th.sorted .sort { color: var(--primary-dark); }
+.kb .kb-table th.sortable { cursor: pointer; }
+.kb .kb-table th.sortable .icon { width: 16px; height: 16px; vertical-align: -3px; margin-left: 4px; }
+/* popups */
+.kb .kb-menubar { display: flex; gap: 2px; margin: 0; padding: 4px; list-style: none; border: 1px solid var(--border); border-radius: 8px; background: #f9fafb; }
+.kb .kb-menubar > li { position: relative; margin: 0; }
+.kb .kb-menubar .mi { display: block; width: 100%; padding: 6px 12px; border: 0; border-radius: 6px; background: none; color: var(--text); font: inherit; font-weight: 600; text-align: left; white-space: nowrap; cursor: pointer; }
+.kb .kb-menubar .mi:hover, .kb .kb-menubar .mi[aria-expanded="true"] { background: #e5e7eb; }
+.kb .kb-menubar .sub { position: absolute; left: 0; top: 100%; z-index: 20; min-width: 180px; margin: 2px 0 0; padding: 6px; list-style: none; background: #fff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.kb .kb-menubar .sub li { margin: 0; }
+.kb .kb-menubar .sub .mi { font-weight: 400; }
+.kb .kb-menubar .sub .mi:hover { background: #f3f4f6; }
+
+.kb .kb-menu-wrap { position: relative; display: inline-block; }
+.kb .kb-menu-wrap .popover { top: 44px; left: 0; right: auto; z-index: 20; }
+.kb .kb-popover { width: 320px; margin: 0; padding: 16px 18px; border: 1px solid var(--border); border-radius: 10px; background: #fff; color: var(--text); box-shadow: 0 10px 30px rgba(0, 0, 0, .18); }
+.kb .kb-popover h4 { margin: 0 0 8px; font-size: 1rem; }
+.kb .kb-popover .field { margin: 8px 0; max-width: none; }
+.kb .kb-popover .actions { margin-top: 10px; }
+.kb .kb-popover-fake { position: fixed; z-index: 40; }
+.kb .kb-dialog-fake { display: flex; align-items: center; justify-content: center; }
+.kb .kb-dialog-fake .dialog { width: min(480px, 90vw); }
+.kb .kb-code { display: block; width: 100%; min-height: 110px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; line-height: 1.5; tab-size: 2; white-space: pre; resize: vertical; }
+.kb-toast { position: fixed; right: 24px; bottom: 24px; z-index: 60; padding: 12px 16px; background: #0f3d2e; color: #fff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); font-weight: 600; opacity: 0; pointer-events: none; }
+.kb-toast.show { opacity: 1; }
+@media (max-width: 700px) {
+  .kb .kb-cards { grid-template-columns: 1fr 1fr; }
+  .kb .kb-tip { max-width: calc(100vw - 48px); }
+}
+.kb .kb-disclosure summary, .kb .kb-disc-head { display: flex; align-items: center; gap: 6px; padding: 6px 0; font-weight: 600; cursor: pointer; }
+.kb .kb-disclosure summary { display: list-item; }
+.kb .kb-disclosure .kb-stack { padding: 6px 0 0 20px; }
+.kb .kb-disc-head .twisty { width: 16px; height: 16px; transition: transform .12s; }
+.kb .kb-disc-head.open .twisty { transform: rotate(90deg); }
+.kb .kb-disc .kb-stack { padding: 6px 0 0 22px; }
+.kb .kb-acc details, .kb .kb-acc h4 { margin: 0; border-top: 1px solid var(--border); }
+.kb .kb-acc summary { padding: 8px 0; font-weight: 600; cursor: pointer; }
+.kb .kb-acc p { margin: 0 0 10px; }
+.kb .kb-acc-btn { display: block; width: 100%; padding: 8px 0; border: 0; background: none; color: var(--text); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+.kb .kb-popover { inset: auto; }
+.kb .kb-popover:popover-open { display: block; }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 @media (max-width: 960px) {
@@ -366,6 +545,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         <li><a href="#/knowledge">Knowledge</a></li>
         <li><a href="#/endpoints">Endpoints</a></li>
         <li><a href="#/monitoring">Monitoring</a></li>
+        <li><a href="#/components">Components</a></li>
         <li><a href="#/settings">Settings</a></li>
       </ul>
     </nav>
@@ -796,6 +976,390 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       </section>
     </div>
 
+</template>
+
+<template id="components-content">
+  <div class="kb">
+    <div class="view-header"><h1>Components</h1></div>
+    <p class="lead">Every control Agent Studio uses, in one place, grouped the way the keyboard cheat sheet groups them. The info button next to each control lists the keys it answers to: Tab to the button or hover over it, and press Escape to dismiss the list. Nothing you change here is saved.</p>
+
+    <section class="kb-group" aria-labelledby="kb-g1">
+      <h2 id="kb-g1">One Tab stop each: Enter or Space does the work</h2>
+      <p>Each of these is one stop in the Tab order. Enter or Space does the work, and no other key is needed.</p>
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h3 data-apg="button">Button</h3>
+          <div class="kb-head"><span class="kb-label">Save or reset the draft</span><span data-keys="button" data-name="the Save draft and Reset buttons"></span></div>
+          <div class="kb-row">
+
+            <button type="button" class="btn btn-primary" data-toast="Draft saved.">Save draft</button>
+            <button type="button" class="btn" data-toast="Draft reset.">Reset</button>
+          </div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="button">Toggle button</h3>
+          <div class="kb-head"><span class="kb-label">Notifications</span><span data-keys="toggle" data-name="the Mute notifications toggle"></span></div>
+          <div class="kb-row">
+
+            <button type="button" class="btn btn-toggle" aria-pressed="false" data-toggle><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Mute notifications</button>
+
+            <span class="kb-note" id="kb-mute-state">Notifications are on.</span>
+          </div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="link">Link</h3>
+          <div class="kb-head"><span class="kb-label">Documentation</span><span data-keys="link" data-name="the release notes link"></span></div>
+          <p>Version 2.4 adds voice agents. <a class="kb-link" href="#/components/release-notes">Read the release notes</a></p>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="checkbox">Checkbox</h3>
+          <fieldset>
+            <legend>Channels</legend>
+            <span data-keys="checkbox" data-name="the Channels checkboxes"></span>
+            <div class="kb-options kb-stack">
+              <label class="kb-check"><input type="checkbox" id="kb-all-channels" data-all="kb-channel">All channels</label>
+              <div class="kb-chips">
+
+                <span class="kb-chip"><input type="checkbox" class="visually-hidden" id="kb-ch-web" name="kb-channel" checked><label for="kb-ch-web">Web chat</label></span>
+                <span class="kb-chip"><input type="checkbox" class="visually-hidden" id="kb-ch-wa" name="kb-channel"><label for="kb-ch-wa">WhatsApp</label></span>
+                <span class="kb-chip"><input type="checkbox" class="visually-hidden" id="kb-ch-mail" name="kb-channel"><label for="kb-ch-mail">Email</label></span>
+                <span class="kb-chip"><input type="checkbox" class="visually-hidden" id="kb-ch-voice" name="kb-channel"><label for="kb-ch-voice">Voice</label></span>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="switch">Switch</h3>
+          <div class="kb-head"><span class="kb-label">Availability</span><span data-keys="switch" data-name="the availability switch"></span></div>
+          <div class="kb-switch-row">
+
+            <label for="kb-247">Available outside business hours</label>
+            <input type="checkbox" role="switch" id="kb-247" class="kb-switch">
+          </div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="disclosure">Disclosure</h3>
+          <div class="kb-head"><span class="kb-label">Logging</span><span data-keys="disclosure" data-name="the Advanced options disclosure"></span></div>
+
+          <details class="kb-disclosure">
+            <summary>Advanced options</summary>
+            <div class="kb-stack">
+              <label class="kb-check"><input type="checkbox">Log conversations for quality review</label>
+              <p class="kb-note">Logs are kept for 30 days and then deleted.</p>
+            </div>
+          </details>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="accordion">Accordion</h3>
+          <div class="kb-head"><span class="kb-label">Conversation rules</span><span data-keys="accordion" data-name="the Conversation rules accordion"></span></div>
+          <div class="kb-acc">
+            <details name="kb-rules" open><summary>Greeting</summary><p>The agent greets by name when the visitor is signed in, and asks how it can help.</p></details>
+            <details name="kb-rules"><summary>Fallback answer</summary><p>After two misunderstood messages the agent offers the three most common topics as buttons.</p></details>
+            <details name="kb-rules"><summary>Handover rules</summary><p>Conversations are handed to a human when the visitor asks for one, or after a third fallback.</p></details>
+          </div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="tooltip">Tooltip</h3>
+          <div class="kb-head"><span class="kb-label">The info buttons on this page</span><span data-keys="tooltip" data-name="the tooltip pattern"></span></div>
+          <p class="kb-note">Every info button on this page is a tooltip: a focusable trigger, a text that appears on focus and on hover, and Escape to dismiss it. This one describes itself.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="kb-group" aria-labelledby="kb-g2">
+      <h2 id="kb-g2">One Tab stop: arrow keys change a value</h2>
+      <p>One stop. The arrow keys change the value instead of moving the focus.</p>
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h3 data-apg="slider">Slider</h3>
+          <div class="kb-head"><label for="kb-creativity">Creativity</label><span data-keys="slider" data-name="the Creativity slider"></span></div>
+          <div class="kb-range-wrap">
+
+            <input type="range" id="kb-creativity" class="kb-range" min="0" max="100" step="5" value="40" style="--pct: 40%">
+
+            <span class="kb-value" id="kb-creativity-value">40</span>
+          </div>
+          <div class="kb-range-ends"><span>Precise</span><span>Creative</span></div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="spinbutton">Spin button</h3>
+          <div class="kb-head"><label for="kb-turns">Maximum turns</label><span data-keys="spinbutton" data-name="the Maximum turns field"></span></div>
+
+          <input type="number" id="kb-turns" class="kb-num" min="1" max="50" step="1" value="10">
+
+          <p class="kb-note">Between 1 and 50 turns before the agent hands over.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="kb-group" aria-labelledby="kb-g3">
+      <h2 id="kb-g3">Composites: one Tab stop, arrow keys move inside</h2>
+      <p>One stop for the whole widget. Inside it the arrow keys move the focus, and Tab leaves.</p>
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h3 data-apg="radio">Radio group</h3>
+
+          <fieldset>
+            <legend>Agent type</legend>
+            <span data-keys="radio" data-name="the Agent type cards"></span>
+            <div class="kb-options kb-cards">
+              <div class="kb-choice"><input type="radio" class="visually-hidden" name="kb-type" id="kb-type-chat" value="chat" checked><label for="kb-type-chat">Chat<span class="desc">Text on the website</span></label></div>
+              <div class="kb-choice"><input type="radio" class="visually-hidden" name="kb-type" id="kb-type-voice" value="voice"><label for="kb-type-voice">Voice<span class="desc">Phone and voice apps</span></label></div>
+              <div class="kb-choice"><input type="radio" class="visually-hidden" name="kb-type" id="kb-type-email" value="email"><label for="kb-type-email">Email<span class="desc">Replies to a shared inbox</span></label></div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="tabs">Tabs</h3>
+          <div class="kb-head"><span class="kb-label" id="kb-tabs-label">Agent settings</span><span data-keys="tabs" data-name="the Agent settings tabs"></span></div>
+          <div role="tablist" aria-labelledby="kb-tabs-label">
+            <button type="button" role="tab" class="kb-tab" id="kb-tab-1" aria-selected="true" aria-controls="kb-panel-1">Overview</button>
+            <button type="button" role="tab" class="kb-tab" id="kb-tab-2" aria-selected="false" aria-controls="kb-panel-2" tabindex="-1">Prompt</button>
+            <button type="button" role="tab" class="kb-tab" id="kb-tab-3" aria-selected="false" aria-controls="kb-panel-3" tabindex="-1">Channels</button>
+          </div>
+          <div role="tabpanel" id="kb-panel-1" class="kb-panel" aria-labelledby="kb-tab-1" tabindex="0"><p>Booking helper answers questions about appointments and books, changes and cancels them.</p></div>
+          <div role="tabpanel" id="kb-panel-2" class="kb-panel" aria-labelledby="kb-tab-2" tabindex="0" hidden><p>The prompt tells the agent who it is, what it may do and when to hand over.</p></div>
+          <div role="tabpanel" id="kb-panel-3" class="kb-panel" aria-labelledby="kb-tab-3" tabindex="0" hidden><p>Web chat is live. WhatsApp and Email are configured but not yet published.</p></div>
+        </div>
+        <div class="kb-card wide">
+          <h3 data-apg="toolbar">Toolbar</h3>
+          <div class="kb-head"><label for="kb-prompt">Prompt</label><span data-keys="toolbar" data-name="the prompt formatting toolbar"></span></div>
+          <div class="kb-editor">
+            <div role="toolbar" class="kb-toolbar" aria-label="Prompt formatting" aria-controls="kb-prompt">
+              <button type="button" class="tb" aria-pressed="false" aria-label="Bold" data-format="bold"><b>B</b></button>
+              <button type="button" class="tb" aria-pressed="false" aria-label="Italic" data-format="italic"><i>I</i></button>
+              <button type="button" class="tb" aria-pressed="false" aria-label="Underline" data-format="underline"><u>U</u></button>
+              <span class="tb-sep"></span>
+              <fieldset class="kb-align">
+                <legend class="visually-hidden">Alignment</legend>
+                <input type="radio" class="visually-hidden" name="kb-align" id="kb-align-left" value="left" checked><label class="tb" for="kb-align-left"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="18" y2="18"/></svg><span class="visually-hidden">Align left</span></label>
+                <input type="radio" class="visually-hidden" name="kb-align" id="kb-align-center" value="center"><label class="tb" for="kb-align-center"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="5" y1="18" x2="19" y2="18"/></svg><span class="visually-hidden">Align centre</span></label>
+                <input type="radio" class="visually-hidden" name="kb-align" id="kb-align-right" value="right"><label class="tb" for="kb-align-right"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="6" y1="18" x2="20" y2="18"/></svg><span class="visually-hidden">Align right</span></label>
+              </fieldset>
+              <span class="tb-sep"></span>
+              <button type="button" class="tb text" data-toast="A link would be inserted here.">Insert link</button>
+            </div>
+
+            <textarea id="kb-prompt" rows="4">You are Booking helper, the assistant of a chain of service centres. Book, change and cancel appointments. Hand over to a person when the visitor asks for one.</textarea>
+          </div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="listbox">Listbox</h3>
+          <div class="kb-head"><label for="kb-fallback">Fallback agent</label><span data-keys="listbox" data-name="the Fallback agent list"></span></div>
+          <select id="kb-fallback" size="5">
+            <option>None</option>
+            <option selected>Customer support bot</option>
+            <option>Internal IT helpdesk</option>
+            <option>Returns and refunds</option>
+            <option>Store locator</option>
+          </select>
+
+          <p class="kb-note">Takes over when this agent cannot answer.</p>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="treeview">Tree view</h3>
+          <div class="kb-head"><span class="kb-label" id="kb-tree-label">Knowledge sources</span><span data-keys="treeview" data-name="the Knowledge sources tree"></span></div>
+
+          <ul class="kb-tree" role="tree" aria-labelledby="kb-tree-label">
+            <li role="treeitem" aria-expanded="true" aria-selected="true" tabindex="0"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Product documentation</span>
+              <ul role="group">
+                <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Getting started</span></li>
+                <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Billing FAQ</span></li>
+                <li role="treeitem" aria-expanded="false" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>API reference</span>
+                  <ul role="group">
+                    <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Endpoints</span></li>
+                    <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Authentication</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li role="treeitem" aria-expanded="false" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Support articles</span>
+              <ul role="group">
+                <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Returns policy</span></li>
+                <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Delivery times</span></li>
+              </ul>
+            </li>
+            <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Release notes</span></li>
+          </ul>
+        </div>
+        <div class="kb-card wide">
+          <h3 data-apg="grid">Grid</h3>
+          <div class="kb-head"><span class="kb-label" id="kb-grid-label">Deployments</span><span data-keys="grid" data-name="the Deployments grid"></span></div>
+          <table class="kb-table" role="grid" aria-labelledby="kb-grid-label" id="kb-grid">
+            <thead><tr><th scope="col">Agent</th><th scope="col">Environment</th><th scope="col">Version</th><th scope="col">Region</th><th scope="col">Enabled</th></tr></thead>
+            <tbody>
+
+              <tr><td><a href="#/agents/1">Customer support bot</a></td><td>Production</td><td>2.4</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Customer support bot in Production"></td></tr>
+              <tr><td><a href="#/agents/2">Internal IT helpdesk</a></td><td>Production</td><td>2.3</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Internal IT helpdesk in Production"></td></tr>
+              <tr><td><a href="#/agents/5">Booking helper</a></td><td>Staging</td><td>2.4</td><td>US East</td><td><input type="checkbox" aria-label="Enabled, Booking helper in Staging"></td></tr>
+              <tr><td><a href="#/agents/8">Store locator</a></td><td>Staging</td><td>2.4</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Store locator in Staging"></td></tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-card wide">
+          <h3 data-apg="menubar">Menubar</h3>
+          <div class="kb-head"><span class="kb-label" id="kb-menubar-label">Flow editor</span><span data-keys="menubar" data-name="the Flow editor menubar"></span></div>
+
+          <ul class="kb-menubar" role="menubar" aria-labelledby="kb-menubar-label" id="kb-menubar">
+            <li role="none"><button type="button" class="mi" role="menuitem" aria-haspopup="menu" aria-expanded="false" aria-controls="kb-mb-file">File</button>
+              <ul class="sub" role="menu" id="kb-mb-file" aria-label="File" hidden>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="New flow created.">New flow</button></li>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Flow saved.">Save</button></li>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Flow exported.">Export</button></li>
+              </ul>
+            </li>
+            <li role="none"><button type="button" class="mi" role="menuitem" aria-haspopup="menu" aria-expanded="false" aria-controls="kb-mb-edit" tabindex="-1">Edit</button>
+              <ul class="sub" role="menu" id="kb-mb-edit" aria-label="Edit" hidden>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Nothing to undo.">Undo</button></li>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Nothing to redo.">Redo</button></li>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Node duplicated.">Duplicate node</button></li>
+              </ul>
+            </li>
+            <li role="none"><button type="button" class="mi" role="menuitem" aria-haspopup="menu" aria-expanded="false" aria-controls="kb-mb-view" tabindex="-1">View</button>
+              <ul class="sub" role="menu" id="kb-mb-view" aria-label="View" hidden>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Zoomed in.">Zoom in</button></li>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Zoomed out.">Zoom out</button></li>
+                <li role="none"><button type="button" class="mi" role="menuitem" tabindex="-1" data-toast="Fitted to screen.">Fit to screen</button></li>
+              </ul>
+            </li>
+          </ul>
+
+          <p class="kb-note">A menubar belongs to an editor-like application. Site navigation is a list of links in a navigation landmark, not a menubar.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="kb-group" aria-labelledby="kb-g4">
+      <h2 id="kb-g4">Popups: what opens them, where focus goes, how they close</h2>
+      <p>Something opens. The keys to check are what opens it, where the focus goes, and how it closes.</p>
+      <div class="kb-grid">
+        <div class="kb-card">
+          <h3 data-apg="menu-button">Menu button</h3>
+          <div class="kb-head"><span class="kb-label">Actions for this agent</span><span data-keys="menubutton" data-name="the More actions menu"></span></div>
+          <div class="kb-menu-wrap">
+
+            <button type="button" class="btn" id="kb-more" aria-haspopup="menu" aria-expanded="false" aria-controls="kb-more-menu">More actions ▾</button>
+            <div class="popover" role="menu" id="kb-more-menu" aria-labelledby="kb-more" hidden>
+              <button type="button" role="menuitem" tabindex="-1" data-toast="Agent duplicated.">Duplicate</button>
+              <button type="button" role="menuitem" tabindex="-1" data-toast="Agent exported.">Export</button>
+              <button type="button" role="menuitem" tabindex="-1" class="danger" data-toast="Agent archived.">Archive</button>
+            </div>
+          </div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="combobox">Select-only combobox</h3>
+          <div class="kb-head"><label for="kb-lang">Default language</label><span data-keys="select" data-name="the Default language select"></span></div>
+          <select id="kb-lang" class="kb-sel">
+            <option>English</option>
+            <option>German</option>
+            <option>French</option>
+            <option>Spanish</option>
+          </select>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="combobox">Editable combobox</h3>
+          <div class="kb-head"><label for="kb-tz">Time zone</label><span data-keys="autocomplete" data-name="the Time zone field"></span></div>
+
+          <input type="text" id="kb-tz" class="kb-text" list="kb-tz-list" autocomplete="off" value="Europe/Berlin">
+          <datalist id="kb-tz-list">
+            <option value="Europe/Berlin"></option>
+            <option value="Europe/London"></option>
+            <option value="Europe/Madrid"></option>
+            <option value="America/New_York"></option>
+            <option value="America/Los_Angeles"></option>
+            <option value="Asia/Kolkata"></option>
+            <option value="Asia/Tokyo"></option>
+            <option value="Australia/Sydney"></option>
+          </datalist>
+
+          <p class="kb-note">Start typing a region or a city.</p>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="dialog-modal">Modal dialog</h3>
+          <div class="kb-head"><span class="kb-label">Publishing</span><span data-keys="dialog" data-name="the Publish agent dialog"></span></div>
+          <button type="button" class="btn btn-primary" data-open="kb-publish">Publish agent</button>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="alertdialog">Alert dialog</h3>
+          <div class="kb-head"><span class="kb-label">Danger zone</span><span data-keys="alertdialog" data-name="the Delete agent dialog"></span></div>
+          <button type="button" class="btn btn-danger" data-open="kb-delete">Delete agent</button>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="popover">Non-modal popover</h3>
+          <div class="kb-head"><span class="kb-label">Sharing</span><span data-keys="popover" data-name="the Share popover"></span></div>
+
+          <button type="button" class="btn" id="kb-share-btn" popovertarget="kb-share">Share</button>
+          <div id="kb-share" popover class="kb-popover" role="dialog" aria-labelledby="kb-share-title">
+            <h4 id="kb-share-title">Share this agent</h4>
+            <div class="field"><label for="kb-share-link">Link</label><input type="text" id="kb-share-link" readonly value="https://studio.example.com/agents/5" autofocus></div>
+            <div class="actions"><button type="button" class="btn btn-primary" data-copy="kb-share-link">Copy link</button><button type="button" class="btn" popovertarget="kb-share" popovertargetaction="hide">Done</button></div>
+          </div>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="datepicker">Date picker</h3>
+          <div class="kb-head"><label for="kb-golive">Go-live date</label><span data-keys="date" data-name="the Go-live date field"></span></div>
+
+          <input type="date" id="kb-golive" class="kb-text" value="2026-12-01">
+        </div>
+      </div>
+    </section>
+
+    <section class="kb-group" aria-labelledby="kb-g5">
+      <h2 id="kb-g5">No keys of their own</h2>
+      <p>These have no keys of their own, or they use Tab for something else. The requirement sits elsewhere: in the structure, in a way out, or in an announcement.</p>
+      <div class="kb-grid">
+        <div class="kb-card wide">
+          <h3 data-apg="table">Table</h3>
+          <div class="kb-head"><span class="kb-label">Published versions</span><span data-keys="table" data-name="the Published versions table"></span></div>
+          <table class="kb-table" id="kb-versions">
+            <caption class="visually-hidden">Published versions</caption>
+            <thead>
+              <tr>
+
+                <th scope="col" class="sorted" aria-sort="descending"><button type="button" class="sort" data-kb-sort="version">Version<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16M6 14l6 6 6-6"/></svg></button></th>
+                <th scope="col"><button type="button" class="sort" data-kb-sort="date">Published<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/></svg></button></th>
+
+                <th scope="col">Published by</th>
+                <th scope="col">Note</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="trap">Editor that uses Tab</h3>
+          <div class="kb-head"><label for="kb-css">Custom CSS</label><span data-keys="editor" data-name="the Custom CSS editor"></span></div>
+
+          <p class="kb-note" id="kb-css-hint">Tab inserts two spaces. Press Escape, then Tab, to leave the editor.</p>
+          <textarea id="kb-css" class="kb-code" rows="5" aria-describedby="kb-css-hint" data-editor>.chat-widget {
+  --accent: #1d4ed8;
+  border-radius: 12px;
+}</textarea>
+        </div>
+        <div class="kb-card">
+          <h3 data-apg="status">Status message</h3>
+          <div class="kb-head"><span class="kb-label">Feedback after an action</span><span data-keys="status" data-name="the status message"></span></div>
+          <button type="button" class="btn" data-toast="Settings synced to all environments.">Sync settings</button>
+          <p class="kb-note">The message appears at the bottom right for four seconds. Focus does not move to it.</p>
+        </div>
+      </div>
+    </section>
+    <dialog id="kb-publish" aria-labelledby="kb-publish-title">
+      <form method="dialog">
+        <div class="dialog-header"><h2 id="kb-publish-title">Publish agent</h2><button type="button" class="icon-btn" data-close aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+        <div class="field"><label for="kb-pub-note">Version note</label><input id="kb-pub-note" type="text" autocomplete="off" autofocus></div>
+        <div class="field"><label for="kb-pub-env">Environment</label><select id="kb-pub-env"><option>Staging</option><option>Production</option></select></div>
+        <div class="actions"><button type="button" class="btn" data-close>Cancel</button><button type="submit" class="btn btn-primary" value="publish">Publish</button></div>
+      </form>
+    </dialog>
+    <dialog id="kb-delete" role="alertdialog" aria-labelledby="kb-delete-title" aria-describedby="kb-delete-text">
+      <div class="dialog-header"><h2 id="kb-delete-title">Delete this agent?</h2></div>
+      <p id="kb-delete-text">This removes Booking helper and its conversation history. It cannot be undone.</p>
+      <div class="actions"><button type="button" class="btn" data-close autofocus>Cancel</button><button type="button" class="btn btn-danger" data-close data-toast="Agent deleted.">Delete agent</button></div>
+    </dialog>
+    <div class="kb-toast" id="kb-toast" role="status"></div>
+  </div>
 </template>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
     <div class="dialog-header">
@@ -1750,6 +2314,670 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     mon.editing = null;
   }
 
+  // Components page (Session 5: keyboard interaction patterns). Every control with the keys it answers to.
+  var ICON_INFO = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8.01"/></svg>';
+  var ICON_EXT = '<svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>';
+  var KB_APG_BASE = 'https://www.w3.org/WAI/ARIA/apg/';
+  var KB_APG = {
+    button: ['APG', KB_APG_BASE + 'patterns/button/#keyboardinteraction'],
+    link: ['APG', KB_APG_BASE + 'patterns/link/#keyboardinteraction'],
+    checkbox: ['APG', KB_APG_BASE + 'patterns/checkbox/#keyboardinteraction'],
+    'switch': ['APG', KB_APG_BASE + 'patterns/switch/#keyboardinteraction'],
+    disclosure: ['APG', KB_APG_BASE + 'patterns/disclosure/#keyboardinteraction'],
+    accordion: ['APG', KB_APG_BASE + 'patterns/accordion/#keyboardinteraction'],
+    tooltip: ['APG', KB_APG_BASE + 'patterns/tooltip/#keyboardinteraction'],
+    slider: ['APG', KB_APG_BASE + 'patterns/slider/#keyboardinteraction'],
+    spinbutton: ['APG', KB_APG_BASE + 'patterns/spinbutton/#keyboardinteraction'],
+    radio: ['APG', KB_APG_BASE + 'patterns/radio/#keyboardinteraction'],
+    tabs: ['APG', KB_APG_BASE + 'patterns/tabs/#keyboardinteraction'],
+    toolbar: ['APG', KB_APG_BASE + 'patterns/toolbar/#keyboardinteraction'],
+    listbox: ['APG', KB_APG_BASE + 'patterns/listbox/#keyboardinteraction'],
+    treeview: ['APG', KB_APG_BASE + 'patterns/treeview/#keyboardinteraction'],
+    grid: ['APG', KB_APG_BASE + 'patterns/grid/'],
+    menubar: ['APG', KB_APG_BASE + 'patterns/menubar/#keyboardinteraction'],
+    'menu-button': ['APG', KB_APG_BASE + 'patterns/menu-button/#keyboardinteraction'],
+    combobox: ['APG', KB_APG_BASE + 'patterns/combobox/#keyboardinteraction'],
+    'dialog-modal': ['APG', KB_APG_BASE + 'patterns/dialog-modal/#keyboardinteraction'],
+    alertdialog: ['APG', KB_APG_BASE + 'patterns/alertdialog/#keyboardinteraction'],
+    popover: ['WCAG 2.4.3', 'https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html'],
+    datepicker: ['APG example', KB_APG_BASE + 'patterns/dialog-modal/examples/datepicker-dialog/'],
+    table: ['APG', KB_APG_BASE + 'patterns/table/'],
+    trap: ['WCAG 2.1.2', 'https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html'],
+    status: ['WCAG 4.1.3', 'https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html']
+  };
+  var KB_KEYS = {
+    button: [
+      [['Tab'], 'one stop for each button.'],
+      [['Enter', 'Space'], 'activates it. Focus stays on the button unless the action moves it, for example into a dialog.']
+    ],
+    toggle: [
+      [['Tab'], 'one stop.'],
+      [['Enter', 'Space'], 'toggles it between pressed and not pressed. The state changes; the text stays the same.']
+    ],
+    link: [
+      [['Tab'], 'one stop.'],
+      [['Enter'], 'follows the link and moves focus to the page it opens.'],
+      [['Space'], 'scrolls the page. It does not activate a link, which is one way to tell a link from a button.']
+    ],
+    checkbox: [
+      [['Tab'], 'one stop for each checkbox. A group of checkboxes is not a composite widget.'],
+      [['Space'], 'checks or unchecks it. On All channels, Space checks all of them when the state is mixed, and clears all of them when all are checked.'],
+      [['Enter'], 'nothing. Enter is not a checkbox key.']
+    ],
+    'switch': [
+      [['Tab'], 'one stop.'],
+      [['Space'], 'switches it on or off.'],
+      [['Enter'], 'optional in the APG. This switch is a native checkbox, so Enter does nothing.']
+    ],
+    disclosure: [
+      [['Tab'], 'one stop for Advanced options. When it is open, the checkbox inside follows it in the Tab order.'],
+      [['Enter', 'Space'], 'shows or hides the content. Focus stays on the control.']
+    ],
+    accordion: [
+      [['Tab', 'Shift+Tab'], 'move between the three headers, and through the controls of an open panel.'],
+      [['Enter', 'Space'], 'expands the header and collapses the one that was open.'],
+      [['Arrow keys', 'Home', 'End'], 'not part of the APG pattern. A library that adds them goes beyond the pattern, and that is fine.']
+    ],
+    tooltip: [
+      [['Tab'], 'moves to the info button and shows its tooltip. The tooltip itself is not a stop.'],
+      [['Escape'], 'dismisses the tooltip. Focus stays on the button.'],
+      [['Tab', 'Shift+Tab'], 'moving focus away dismisses it. Hovering over the tooltip keeps it open.']
+    ],
+    slider: [
+      [['Tab'], 'one stop, on the thumb.'],
+      [['Right Arrow', 'Up Arrow'], 'one step up (5).'],
+      [['Left Arrow', 'Down Arrow'], 'one step down.'],
+      [['Page Up', 'Page Down'], 'a larger step. The browser decides how large for a native range.'],
+      [['Home', 'End'], 'the minimum and the maximum.']
+    ],
+    spinbutton: [
+      [['Tab'], 'one stop, in the text field. The stepper arrows the browser draws are not stops.'],
+      [['Up Arrow', 'Down Arrow'], 'one step up or down.'],
+      [['Typing'], 'edits the value. Left Arrow and Right Arrow move the caret.'],
+      [['Home', 'End'], 'the APG uses them for the minimum and the maximum. A native number field moves the caret to the start or the end instead.']
+    ],
+    radio: [
+      [['Tab'], 'one stop for the whole group, on the selected card, or on the first card when none is selected.'],
+      [['Right Arrow', 'Down Arrow'], 'the next card, and selects it. Wraps from the last card to the first.'],
+      [['Left Arrow', 'Up Arrow'], 'the previous card, and selects it. Wraps.'],
+      [['Space'], 'selects the focused card if it is not selected yet.']
+    ],
+    tabs: [
+      [['Tab'], 'one stop, on the active tab. The next stop is its panel.'],
+      [['Right Arrow', 'Left Arrow'], 'the next or previous tab, and shows its panel. Wraps at both ends.'],
+      [['Home', 'End'], 'the first and the last tab.'],
+      [['Up Arrow', 'Down Arrow'], 'nothing. The list is horizontal, so they keep scrolling the page.']
+    ],
+    toolbar: [
+      [['Tab'], 'one stop, on the control that last had focus, or the first one.'],
+      [['Right Arrow', 'Left Arrow'], 'the next or previous control, wrapping at the ends. In the alignment group the arrows only move focus; they do not change the alignment.'],
+      [['Home', 'End'], 'the first and the last control.'],
+      [['Enter', 'Space'], 'the control’s own key: Enter or Space for the format buttons and Insert link, Space for an alignment option.']
+    ],
+    listbox: [
+      [['Tab'], 'one stop, on the selected option. This is a native select with five visible rows, so the browser sets the keys.'],
+      [['Down Arrow', 'Up Arrow'], 'the next or previous option, and selects it.'],
+      [['Home', 'End'], 'the first and the last option.'],
+      [['Typing'], 'jumps to the next option that starts with the typed characters.']
+    ],
+    treeview: [
+      [['Tab'], 'one stop, on the selected node.'],
+      [['Down Arrow', 'Up Arrow'], 'the next or previous visible node, without opening or closing anything.'],
+      [['Right Arrow'], 'opens a closed node. On an open node, moves to its first child.'],
+      [['Left Arrow'], 'closes an open node. On a closed node or a leaf, moves to its parent.'],
+      [['Home', 'End'], 'the first and the last visible node.'],
+      [['Enter'], 'selects the node.'],
+      [['A letter'], 'the next node that starts with it.'],
+      [['*'], 'opens every sibling of the current node.']
+    ],
+    grid: [
+      [['Tab'], 'one stop, on one cell; Tab again leaves the grid. When a cell holds a link or a checkbox, focus lands on that.'],
+      [['Arrow keys'], 'one cell in each direction. They stop at the edges.'],
+      [['Home', 'End'], 'the first and the last cell of the row.'],
+      [['Ctrl+Home', 'Ctrl+End'], 'the first and the last cell of the grid.'],
+      [['Page Down', 'Page Up'], 'two rows down or up.'],
+      [['Enter', 'Space'], 'work on the link or the checkbox that has focus. The cells themselves cannot be edited.']
+    ],
+    menubar: [
+      [['Tab'], 'one stop, on the first menu.'],
+      [['Right Arrow', 'Left Arrow'], 'the next or previous menu. When a menu is open, closes it and opens the neighbour.'],
+      [['Down Arrow', 'Enter', 'Space'], 'open the menu on its first item.'],
+      [['Up Arrow'], 'opens the menu on its last item.'],
+      [['Down Arrow', 'Up Arrow'], 'inside a menu: the next or previous item, wrapping.'],
+      [['Home', 'End'], 'the first and the last item.'],
+      [['Enter'], 'activates the item and closes the menu.'],
+      [['Escape'], 'closes the menu and returns focus to its name in the menubar.'],
+      [['A letter'], 'the next item that starts with it.']
+    ],
+    menubutton: [
+      [['Tab'], 'one stop, for the button. The menu is not in the Tab order.'],
+      [['Enter', 'Space', 'Down Arrow'], 'open the menu with focus on the first item.'],
+      [['Up Arrow'], 'opens it with focus on the last item.'],
+      [['Down Arrow', 'Up Arrow'], 'inside the menu: the next or previous item, wrapping.'],
+      [['Home', 'End'], 'the first and the last item.'],
+      [['Enter'], 'activates the item and closes the menu.'],
+      [['Escape'], 'closes the menu and returns focus to the button. Tab closes it and moves on.'],
+      [['A letter'], 'the next item that starts with it.']
+    ],
+    select: [
+      [['Tab'], 'one stop. This is a native select, so the browser and the operating system set the keys. Expected:'],
+      [['Down Arrow', 'Up Arrow'], 'the next or previous option.'],
+      [['Alt+Down Arrow', 'Space'], 'open the list.'],
+      [['Enter'], 'accepts the highlighted option and closes the list.'],
+      [['Escape'], 'closes the list. The field keeps focus.'],
+      [['Typing'], 'jumps to the option that starts with the typed characters.']
+    ],
+    autocomplete: [
+      [['Tab'], 'one stop. A native input with a datalist, so the browser sets the keys. Expected:'],
+      [['Typing'], 'filters the suggestions.'],
+      [['Down Arrow'], 'moves into the list, to the first suggestion. Up Arrow: to the last.'],
+      [['Enter'], 'accepts the highlighted suggestion.'],
+      [['Escape'], 'closes the list. The field keeps focus.']
+    ],
+    dialog: [
+      [['Enter', 'Space'], 'on Publish agent: opens the dialog. Focus moves to the first field.'],
+      [['Tab', 'Shift+Tab'], 'cycle through the controls of the dialog and wrap. The page behind it is unreachable.'],
+      [['Escape'], 'closes the dialog. Focus returns to Publish agent.'],
+      [['Enter'], 'in a field: submits, like Publish. Cancel and Close also close and return focus.']
+    ],
+    alertdialog: [
+      [['Enter', 'Space'], 'on Delete agent: opens it. Focus starts on Cancel, the least destructive action.'],
+      [['Tab', 'Shift+Tab'], 'between Cancel and Delete agent, wrapping.'],
+      [['Escape'], 'closes it without deleting. Focus returns to Delete agent.'],
+      [['Enter', 'Space'], 'on Delete agent inside the dialog: confirms.']
+    ],
+    popover: [
+      [['Enter', 'Space'], 'on Share: opens the popover. Focus moves to the link field.'],
+      [['Tab', 'Shift+Tab'], 'through Copy link and Done, and out again. Nothing is trapped, and the stops come right after Share.'],
+      [['Escape'], 'closes it. Focus returns to Share. Done closes it with the same return.']
+    ],
+    date: [
+      [['Tab'], 'one stop. A native date field, so the browser sets the keys. In Chrome, Tab and Shift+Tab also move between day, month and year.'],
+      [['Up Arrow', 'Down Arrow'], 'change the focused part.'],
+      [['Space', 'Enter'], 'open the calendar in Chrome. Arrows move by day and by week, Enter selects, Escape closes.'],
+      [['Typing'], 'enters the digits.']
+    ],
+    table: [
+      [['Tab'], 'only the two sort buttons are stops. The table itself has no keys.'],
+      [['Enter', 'Space'], 'sorts by that column. A second press reverses the order. The result is announced.'],
+      [['Screen reader'], 'moves between the cells itself, for example NVDA with Ctrl+Alt+Arrow keys.']
+    ],
+    editor: [
+      [['Tab'], 'inserts two spaces instead of leaving. Allowed only because a standard key leads out, and the way out is written next to the editor.'],
+      [['Escape'], 'then Tab: leaves the editor.'],
+      [['Shift+Tab'], 'leaves too, to the previous stop.']
+    ],
+    status: [
+      [['Enter', 'Space'], 'on Sync settings: triggers the action.'],
+      [['No keys'], 'for the message. Focus does not move to it, and a live region announces it when it appears.']
+    ]
+  };
+  var KB_VERSIONS = [
+    { version: '2.4', date: '2026-11-03', shown: '3 Nov 2026', by: 'Priya_CX', note: 'Voice agents and WhatsApp templates' },
+    { version: '2.3', date: '2026-10-12', shown: '12 Oct 2026', by: 'Alex_Dev', note: 'Handover rules' },
+    { version: '2.2', date: '2026-09-21', shown: '21 Sep 2026', by: 'Jamie_Ops', note: 'Fallback answers' },
+    { version: '2.1', date: '2026-08-30', shown: '30 Aug 2026', by: 'Alex_Dev', note: 'First published version' }
+  ];
+  var KB_TZ = ['Europe/Berlin', 'Europe/London', 'Europe/Madrid', 'America/New_York', 'America/Los_Angeles', 'Asia/Kolkata', 'Asia/Tokyo', 'Australia/Sydney'];
+  var kb = { toastTimer: null, docClick: null, menu: null, sort: { key: 'version', dir: 'desc' }, escapeArmed: false, trigger: null, drag: false };
+
+  function kbEl(id) { return document.getElementById('kb-' + id); }
+  function kbSlice(list) { return Array.prototype.slice.call(list); }
+  function kbToast(message) {
+    var toast = kbEl('toast');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(kb.toastTimer);
+    kb.toastTimer = setTimeout(function () { toast.classList.remove('show'); toast.textContent = ''; }, 4000);
+  }
+  function kbKeysHtml(id) {
+    return '<ul>' + KB_KEYS[id].map(function (row) {
+      return '<li>' + row[0].map(function (k) { return '<kbd>' + esc(k) + '</kbd>'; }).join(' ') + ' ' + esc(row[1]) + '</li>';
+    }).join('') + '</ul>';
+  }
+  function kbKeysText(id) {
+    return KB_KEYS[id].map(function (row) { return row[0].join(' or ') + ': ' + row[1]; }).join(' ');
+  }
+  function kbRenderInfo(page) {
+    var slots = kbSlice(page.querySelectorAll('[data-keys]'));
+    slots.forEach(function (slot, n) {
+      var id = slot.getAttribute('data-keys'), name = slot.getAttribute('data-name');
+      
+      var wrap = document.createElement('div'), tipId = 'kb-keys-' + n;
+      wrap.className = 'tip-wrap';
+      wrap.innerHTML = '<button type="button" class="icon-btn kb-info" aria-label="Keys for ' + esc(name) + '" aria-describedby="' + tipId + '">' + ICON_INFO + '</button>' +
+        '<div class="tip kb-tip" role="tooltip" id="' + tipId + '">' + kbKeysHtml(id) + '</div>';
+      slot.parentNode.replaceChild(wrap, slot);
+    });
+    kbSlice(page.querySelectorAll('h3[data-apg]')).forEach(function (h) {
+      var ref = KB_APG[h.getAttribute('data-apg')];
+      if (!ref) return;
+      h.insertAdjacentHTML('beforeend', '<a class="kb-apg" href="' + ref[1] + '" target="_blank" rel="noopener">' + ref[0] + '<span class="visually-hidden"> pattern reference (opens in a new tab)</span>' + ICON_EXT + '</a>');
+    });
+  }
+  function kbRenderVersions() {
+    var table = kbEl('versions');
+    if (!table) return;
+    var rows = KB_VERSIONS.slice().sort(function (a, b) {
+      var result = a[kb.sort.key] < b[kb.sort.key] ? -1 : a[kb.sort.key] > b[kb.sort.key] ? 1 : 0;
+      return kb.sort.dir === 'asc' ? result : -result;
+    });
+    table.querySelector('tbody').innerHTML = rows.map(function (r) {
+      return '<tr><td>' + esc(r.version) + '</td><td>' + esc(r.shown) + '</td><td>' + esc(r.by) + '</td><td>' + esc(r.note) + '</td></tr>';
+    }).join('');
+    kbSlice(table.querySelectorAll('thead th')).forEach(function (th) {
+      var control = th.querySelector('[data-kb-sort]') || th;
+      var key = control.getAttribute('data-kb-sort');
+      if (!key) return;
+      var active = key === kb.sort.key;
+      th.classList.toggle('sorted', active);
+      
+      if (active) th.setAttribute('aria-sort', kb.sort.dir === 'asc' ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort');
+      
+      control.querySelector('svg').innerHTML = !active ? '<path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/>' :
+        (kb.sort.dir === 'asc' ? '<path d="M12 20V4M6 10l6-6 6 6"/>' : '<path d="M12 4v16M6 14l6 6 6-6"/>');
+    });
+  }
+  function kbSort(key) {
+    kb.sort = { key: key, dir: kb.sort.key === key ? (kb.sort.dir === 'asc' ? 'desc' : 'asc') : 'desc' };
+    kbRenderVersions();
+    
+    var button = kbEl('versions').querySelector('[data-kb-sort="' + key + '"]');
+    if (button) button.focus();
+    announce('Sorted by ' + (key === 'version' ? 'Version' : 'Published') + ', ' + (kb.sort.dir === 'asc' ? 'oldest first' : 'newest first'));
+  }
+  function kbInsertSpaces(ta) {
+    var start = ta.selectionStart, end = ta.selectionEnd;
+    ta.value = ta.value.slice(0, start) + '  ' + ta.value.slice(end);
+    ta.selectionStart = ta.selectionEnd = start + 2;
+  }
+  function kbTypeahead(items, from, key) {
+    for (var i = 1; i <= items.length; i++) {
+      var candidate = items[(from + i) % items.length];
+      if (candidate.textContent.trim().charAt(0).toLowerCase() === key.toLowerCase()) return candidate;
+    }
+    return null;
+  }
+  
+  function kbMenuItems(menu) { return kbSlice(menu.querySelectorAll('[role="menuitem"]')); }
+  function kbCloseMenu(returnFocus) {
+    if (!kb.menu) return;
+    var current = kb.menu;
+    kb.menu = null;
+    current.menu.hidden = true;
+    current.button.setAttribute('aria-expanded', 'false');
+    if (returnFocus) current.button.focus();
+  }
+  function kbOpenMenu(button, last) {
+    var menu = document.getElementById(button.getAttribute('aria-controls'));
+    kbCloseMenu(false);
+    menu.hidden = false;
+    button.setAttribute('aria-expanded', 'true');
+    kb.menu = { button: button, menu: menu };
+    var items = kbMenuItems(menu);
+    items[last ? items.length - 1 : 0].focus();
+  }
+  function kbMenuNavigate(e, items) {
+    var index = items.indexOf(e.target), target = null;
+    if (e.key === 'ArrowDown') target = items[(index + 1) % items.length];
+    else if (e.key === 'ArrowUp') target = items[(index - 1 + items.length) % items.length];
+    else if (e.key === 'Home') target = items[0];
+    else if (e.key === 'End') target = items[items.length - 1];
+    else if (e.key.length === 1 && e.key !== ' ' && !e.ctrlKey && !e.metaKey && !e.altKey) target = kbTypeahead(items, index, e.key);
+    if (!target) return false;
+    e.preventDefault();
+    target.focus();
+    return true;
+  }
+  function kbMenuButton(page) {
+    var button = kbEl('more'), menu = kbEl('more-menu');
+    button.addEventListener('click', function () {
+      if (kb.menu && kb.menu.button === button) kbCloseMenu(true); else kbOpenMenu(button, false);
+    });
+    button.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      kbOpenMenu(button, e.key === 'ArrowUp');
+    });
+    menu.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.stopPropagation(); kbCloseMenu(true); return; }
+      if (e.key === 'Tab') { kbCloseMenu(false); return; }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.target.click(); return; }
+      kbMenuNavigate(e, kbMenuItems(menu));
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('[role="menuitem"]')) kbCloseMenu(true);
+    });
+  }
+  function kbMenubar(page) {
+    var bar = kbEl('menubar');
+    var tops = kbSlice(bar.querySelectorAll(':scope > li > [role="menuitem"]'));
+    function topItem(el) {
+      var item = el.closest('[role="menuitem"]');
+      return item && item.parentElement.parentElement === bar ? item : null;
+    }
+    function focusTop(item) {
+      tops.forEach(function (t) { t.tabIndex = t === item ? 0 : -1; });
+      item.focus();
+    }
+    function neighbour(item, step) { return tops[(tops.indexOf(item) + step + tops.length) % tops.length]; }
+    bar.addEventListener('click', function (e) {
+      var top = topItem(e.target);
+      if (top) {
+        if (kb.menu && kb.menu.button === top) kbCloseMenu(true); else { focusTop(top); kbOpenMenu(top, false); }
+        return;
+      }
+      var item = e.target.closest('.sub [role="menuitem"]');
+      if (item) {
+        var owner = kb.menu && kb.menu.button;
+        kbCloseMenu(false);
+        if (owner) focusTop(owner);
+      }
+    });
+    bar.addEventListener('keydown', function (e) {
+      var top = topItem(e.target);
+      if (top) {
+        var wasOpen = !!kb.menu;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          var next = neighbour(top, e.key === 'ArrowRight' ? 1 : -1);
+          focusTop(next);
+          if (wasOpen) kbOpenMenu(next, false);
+        } else if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          kbOpenMenu(top, false);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          kbOpenMenu(top, true);
+        } else if (e.key === 'Home' || e.key === 'End') {
+          e.preventDefault();
+          focusTop(tops[e.key === 'Home' ? 0 : tops.length - 1]);
+        } else if (e.key === 'Escape') {
+          kbCloseMenu(false);
+        } else if (e.key.length === 1 && e.key !== ' ') {
+          var match = kbTypeahead(tops, tops.indexOf(top), e.key);
+          if (match) { e.preventDefault(); focusTop(match); }
+        }
+        return;
+      }
+      var item = e.target.closest('.sub [role="menuitem"]');
+      if (!item || !kb.menu) return;
+      var owner = kb.menu.button;
+      if (e.key === 'Escape') { e.stopPropagation(); kbCloseMenu(false); focusTop(owner); return; }
+      if (e.key === 'Tab') { kbCloseMenu(false); return; }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        var other = neighbour(owner, e.key === 'ArrowRight' ? 1 : -1);
+        focusTop(other);
+        kbOpenMenu(other, false);
+        return;
+      }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); item.click(); return; }
+      kbMenuNavigate(e, kbMenuItems(kb.menu.menu));
+    });
+  }
+  function kbTabs(page) {
+    var list = page.querySelector('[role="tablist"]');
+    var tabs = kbSlice(list.querySelectorAll('[role="tab"]'));
+    function activate(tab) {
+      tabs.forEach(function (t) {
+        var selected = t === tab;
+        t.setAttribute('aria-selected', selected ? 'true' : 'false');
+        t.tabIndex = selected ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !selected;
+      });
+      tab.focus();
+    }
+    list.addEventListener('click', function (e) {
+      var tab = e.target.closest('[role="tab"]');
+      if (tab) activate(tab);
+    });
+    list.addEventListener('keydown', function (e) {
+      var index = tabs.indexOf(e.target), target = null;
+      if (index < 0) return;
+      if (e.key === 'ArrowRight') target = tabs[(index + 1) % tabs.length];
+      else if (e.key === 'ArrowLeft') target = tabs[(index - 1 + tabs.length) % tabs.length];
+      else if (e.key === 'Home') target = tabs[0];
+      else if (e.key === 'End') target = tabs[tabs.length - 1];
+      if (!target) return;
+      e.preventDefault();
+      activate(target);
+    });
+  }
+  function kbToolbar(page) {
+    var bar = page.querySelector('[role="toolbar"]');
+    var controls = kbSlice(bar.querySelectorAll('button, input'));
+    function setCurrent(control) { controls.forEach(function (c) { c.tabIndex = c === control ? 0 : -1; }); }
+    setCurrent(controls[0]);
+    bar.addEventListener('focusin', function (e) { if (controls.indexOf(e.target) !== -1) setCurrent(e.target); });
+    bar.addEventListener('keydown', function (e) {
+      var index = controls.indexOf(e.target), target = null;
+      if (index < 0) return;
+      if (e.key === 'ArrowRight') target = controls[(index + 1) % controls.length];
+      else if (e.key === 'ArrowLeft') target = controls[(index - 1 + controls.length) % controls.length];
+      else if (e.key === 'Home') target = controls[0];
+      else if (e.key === 'End') target = controls[controls.length - 1];
+      else if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.target.type === 'radio') { e.preventDefault(); return; }
+      if (!target) return;
+      e.preventDefault();
+      setCurrent(target);
+      target.focus();
+    });
+    bar.addEventListener('click', function (e) {
+      var toggle = e.target.closest('[aria-pressed]');
+      if (toggle) toggle.setAttribute('aria-pressed', toggle.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    });
+  }
+  function kbTree(page) {
+    var tree = page.querySelector('[role="tree"]');
+    function parentOf(li) { return li.parentElement.closest('[role="treeitem"]'); }
+    function visible() {
+      return kbSlice(tree.querySelectorAll('[role="treeitem"]')).filter(function (li) {
+        for (var p = parentOf(li); p; p = parentOf(p)) if (p.getAttribute('aria-expanded') === 'false') return false;
+        return true;
+      });
+    }
+    function focusNode(li) {
+      kbSlice(tree.querySelectorAll('[role="treeitem"]')).forEach(function (n) { n.tabIndex = n === li ? 0 : -1; });
+      li.focus();
+    }
+    function select(li) {
+      kbSlice(tree.querySelectorAll('[role="treeitem"]')).forEach(function (n) { n.setAttribute('aria-selected', n === li ? 'true' : 'false'); });
+    }
+    function expandable(li) { return li.hasAttribute('aria-expanded'); }
+    function isOpen(li) { return li.getAttribute('aria-expanded') === 'true'; }
+    tree.addEventListener('click', function (e) {
+      var node = e.target.closest('.node');
+      if (!node) return;
+      var li = node.parentElement;
+      select(li);
+      focusNode(li);
+      if (expandable(li)) li.setAttribute('aria-expanded', isOpen(li) ? 'false' : 'true');
+    });
+    tree.addEventListener('keydown', function (e) {
+      var li = e.target;
+      if (!li.matches || !li.matches('[role="treeitem"]')) return;
+      var items = visible(), index = items.indexOf(li), target = null;
+      if (e.key === 'ArrowDown') target = items[index + 1];
+      else if (e.key === 'ArrowUp') target = items[index - 1];
+      else if (e.key === 'Home') target = items[0];
+      else if (e.key === 'End') target = items[items.length - 1];
+      else if (e.key === 'ArrowRight') {
+        if (expandable(li) && !isOpen(li)) li.setAttribute('aria-expanded', 'true');
+        else if (expandable(li)) target = li.querySelector('[role="treeitem"]');
+      } else if (e.key === 'ArrowLeft') {
+        if (expandable(li) && isOpen(li)) li.setAttribute('aria-expanded', 'false');
+        else target = parentOf(li);
+      } else if (e.key === 'Enter') { select(li); }
+      else if (e.key === '*') {
+        kbSlice(li.parentElement.children).forEach(function (sibling) { if (expandable(sibling)) sibling.setAttribute('aria-expanded', 'true'); });
+      } else if (e.key.length === 1 && e.key !== ' ' && !e.ctrlKey && !e.metaKey && !e.altKey) target = kbTypeahead(items, index, e.key);
+      else return;
+      e.preventDefault();
+      if (target) focusNode(target);
+    });
+  }
+  function kbGrid(page) {
+    var grid = kbEl('grid');
+    var rows = kbSlice(grid.querySelectorAll('tbody tr')).map(function (tr) { return kbSlice(tr.children); });
+    var pos = { r: 0, c: 0 };
+    function target(td) { return td.querySelector('a, input, button') || td; }
+    function setTabs() {
+      rows.forEach(function (cells, r) { cells.forEach(function (td, c) { target(td).tabIndex = r === pos.r && c === pos.c ? 0 : -1; }); });
+    }
+    setTabs();
+    grid.addEventListener('focusin', function (e) {
+      var td = e.target.closest('td');
+      if (!td) return;
+      rows.forEach(function (cells, r) { var c = cells.indexOf(td); if (c !== -1) pos = { r: r, c: c }; });
+      setTabs();
+    });
+    grid.addEventListener('keydown', function (e) {
+      if (!e.target.closest('td')) return;
+      var r = pos.r, c = pos.c, last = rows.length - 1, lastCol = rows[0].length - 1;
+      if (e.key === 'ArrowRight') c++;
+      else if (e.key === 'ArrowLeft') c--;
+      else if (e.key === 'ArrowDown') r++;
+      else if (e.key === 'ArrowUp') r--;
+      else if (e.key === 'Home') { c = 0; if (e.ctrlKey) r = 0; }
+      else if (e.key === 'End') { c = lastCol; if (e.ctrlKey) r = last; }
+      else if (e.key === 'PageDown') r += 2;
+      else if (e.key === 'PageUp') r -= 2;
+      else return;
+      e.preventDefault();
+      pos = { r: Math.max(0, Math.min(last, r)), c: Math.max(0, Math.min(lastCol, c)) };
+      setTabs();
+      target(rows[pos.r][pos.c]).focus();
+    });
+  }
+  function kbDialogs(page) {
+    ['publish', 'delete'].forEach(function (id) {
+      var dialog = kbEl(id);
+      trapTab(dialog);
+      dialog.addEventListener('close', function () {
+        if (dialog.returnValue === 'publish') kbToast('Agent published.');
+        dialog.returnValue = '';
+        if (kb.trigger) kb.trigger.focus();
+        kb.trigger = null;
+      });
+    });
+    var pop = kbEl('share');
+    pop.addEventListener('toggle', function (e) {
+      if (e.newState !== 'open') return;
+      var rect = kbEl('share-btn').getBoundingClientRect();
+      pop.style.top = (rect.bottom + 6) + 'px';
+      pop.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 340)) + 'px';
+    });
+  }
+  function kbChips(page) {
+    var all = kbEl('all-channels'), chips = kbSlice(page.querySelectorAll('input[name="kb-channel"]'));
+    function sync() {
+      var checked = chips.filter(function (c) { return c.checked; }).length;
+      all.checked = checked === chips.length;
+      all.indeterminate = checked > 0 && checked < chips.length;
+    }
+    chips.forEach(function (c) { c.addEventListener('change', sync); });
+    all.addEventListener('change', function () { chips.forEach(function (c) { c.checked = all.checked; }); all.indeterminate = false; });
+    sync();
+  }
+
+  function initComponents() {
+    var page = viewEl.querySelector('.kb');
+    kb.menu = null;
+    kb.trigger = null;
+    kb.escapeArmed = false;
+    kb.sort = { key: 'version', dir: 'desc' };
+    kbRenderInfo(page);
+    kbRenderVersions();
+    var editor = page.querySelector('[data-editor]');
+    editor.addEventListener('keydown', function (e) {
+      
+      if (e.key === 'Escape') { kb.escapeArmed = true; return; }
+      if (e.key === 'Tab' && !e.shiftKey && !kb.escapeArmed) { e.preventDefault(); kbInsertSpaces(editor); }
+      else if (e.key !== 'Tab') kb.escapeArmed = false;
+    });
+    editor.addEventListener('blur', function () { kb.escapeArmed = false; });
+    
+    var range = kbEl('creativity');
+    range.addEventListener('input', function () {
+      range.style.setProperty('--pct', range.value + '%');
+      kbEl('creativity-value').textContent = range.value;
+    });
+    kbChips(page);
+    kbTabs(page);
+    kbToolbar(page);
+    kbTree(page);
+    kbGrid(page);
+    kbMenuButton(page);
+    kbMenubar(page);
+    kbDialogs(page);
+    page.addEventListener('focusout', function (e) {
+      if (!kb.menu || !e.relatedTarget || e.relatedTarget === kb.menu.button) return;
+      if (!kb.menu.menu.contains(e.relatedTarget)) kbCloseMenu(false);
+    });
+    
+    page.addEventListener('click', function (e) {
+      var info = e.target.closest('.kb-info');
+      if (info && info.closest('.tip-wrap')) {
+        var wrap = info.closest('.tip-wrap');
+        kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { if (w !== wrap) w.classList.remove('tip-open'); });
+        wrap.classList.remove('tip-dismissed');
+        wrap.classList.toggle('tip-open');
+        return;
+      }
+      var toggle = e.target.closest('[data-toggle]');
+      if (toggle) {
+        
+        var muted = toggle.getAttribute('aria-pressed') !== 'true';
+        toggle.setAttribute('aria-pressed', muted ? 'true' : 'false');
+        
+        kbEl('mute-state').textContent = muted ? 'Notifications are muted.' : 'Notifications are on.';
+        return;
+      }
+      var copy = e.target.closest('[data-copy]');
+      if (copy) {
+        var field = document.getElementById(copy.getAttribute('data-copy'));
+        try { navigator.clipboard.writeText(field.value); } catch (err) { /* clipboard unavailable */ }
+        kbToast('Link copied.');
+        return;
+      }
+      
+      var open = e.target.closest('[data-open]');
+      if (open) {
+        kb.trigger = open;
+        var dialog = document.getElementById(open.getAttribute('data-open'));
+        dialog.returnValue = '';
+        dialog.showModal();
+        return;
+      }
+      var close = e.target.closest('[data-close]');
+      if (close) close.closest('dialog').close();
+      var sort = e.target.closest('button[data-kb-sort]');
+      if (sort) { kbSort(sort.getAttribute('data-kb-sort')); return; }
+      
+      var toast = e.target.closest('[data-toast]');
+      if (toast) kbToast(toast.getAttribute('data-toast'));
+    });
+    page.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
+    });
+    kb.docClick = function (e) {
+      if (!e.target.closest('.tip-wrap')) kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
+      
+      if (kb.menu && !e.target.closest('[role="menu"], [role="menubar"], #kb-more')) kbCloseMenu(false);
+    };
+    document.addEventListener('click', kb.docClick);
+  }
+  function teardownComponents() {
+    clearTimeout(kb.toastTimer);
+    if (kb.docClick) document.removeEventListener('click', kb.docClick);
+    kb.docClick = null;
+    kb.menu = null;
+    kb.trigger = null;
+    kb.drag = false;
+  }
+
   var views = {
     projects: function () {
       return { title: 'Agents', html:
@@ -1821,6 +3049,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     monitoring: function () {
       return { title: 'System overview', html: document.getElementById('monitoring-content').innerHTML };
     },
+    components: function () {
+      return { title: 'Components', html: document.getElementById('components-content').innerHTML };
+    },
     simple: function (title, text, back) {
       return { title: title, html: (back ? backButton(back) : '') + '<div class="view-header"><h1>' + esc(title) + '</h1></div><p>' + text + '</p>' };
     }
@@ -1849,6 +3080,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (section === 'monitoring') {
       if (parts.length === 1) return views.monitoring();
       if (parts[1] === 'incidents' && parts.length === 3) return views.simple('Incident #' + parts[2], 'Incident pages are not part of this prototype. This page exists so that the Details links have somewhere to go.', '#/monitoring');
+      return views.simple('Not found', 'That page does not exist.');
+    }
+    if (section === 'components') {
+      if (parts.length === 1) return views.components();
+      if (parts[1] === 'release-notes' && parts.length === 2) return views.simple('Release notes', 'Version 2.4 adds voice agents, WhatsApp message templates and the handover rules. This page exists so that the link on the Components page has somewhere to go.', '#/components');
       return views.simple('Not found', 'That page does not exist.');
     }
     if (section === 'agents') {
@@ -1894,8 +3130,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     var result = resolve(parts);
     closePopover(false);
     teardownMonitoring();
+    teardownComponents();
     viewEl.innerHTML = result.html;
     if (parts[0] === 'monitoring' && parts.length === 1) initMonitoring();
+    if (parts[0] === 'components' && parts.length === 1) initComponents();
     updateNav(parts[0]);
     document.getElementById('page-footer').hidden = parts[0] !== 'settings';
     if (anchor && document.getElementById(anchor)) document.getElementById(anchor).scrollIntoView();
