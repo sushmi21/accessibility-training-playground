@@ -346,6 +346,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb fieldset > .kb-options { clear: both; }
 .kb .kb-info { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 28px; height: 28px; color: var(--primary); }
 .kb .kb-info svg { width: 18px; height: 18px; }
+.kb .kb-tipdemo { width: 28px; height: 28px; color: #374151; }
+.kb .kb-tipdemo svg { width: 18px; height: 18px; }
 .kb .kb-tip { top: auto; bottom: 100%; left: auto; right: 0; width: max-content; max-width: min(360px, calc(100vw - 48px)); margin: 0 0 8px; }
 .kb .kb-tip::before { top: auto; bottom: -5px; left: auto; right: 9px; }
 .kb .kb-tip::after { top: 100%; }
@@ -1064,7 +1066,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
           <h3 data-apg="tooltip">Tooltip</h3>
           <div class="kb-head"><span class="kb-label">System prompt</span>
 
-            <span class="tip-wrap"><button type="button" class="icon-btn info kb-tipdemo" aria-label="What is the system prompt?" aria-describedby="kb-tipdemo-tip">ⓘ</button><span class="tip" role="tooltip" id="kb-tipdemo-tip">The instructions the agent follows in every conversation. Users never see them.</span></span>
+            <span class="tip-wrap"><button type="button" class="icon-btn info kb-tipdemo" aria-label="What is the system prompt?" aria-describedby="kb-tipdemo-tip"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8.01"/></svg></button><span class="tip" role="tooltip" id="kb-tipdemo-tip">The instructions the agent follows in every conversation. Users never see them.</span></span>
 
             <span data-keys="tooltip" data-name="the tooltip pattern"></span></div>
           <p class="kb-note">The text appears on hover and on focus. Escape hides it and the focus stays. The info buttons at the bottom of every card work the same way.</p>
