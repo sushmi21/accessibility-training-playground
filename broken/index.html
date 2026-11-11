@@ -23,6 +23,10 @@ main:focus-visible { outline-offset: -3px; }
 .skip-link:focus { transform: none; }
 .topbar { display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 16px; background: var(--topbar); color: #fff; }
 .topbar-nav { display: flex; align-items: center; gap: 8px; }
+@media (max-width: 400px) {
+  .topbar { padding: 0 8px; }
+  .topbar .logo { width: 28px; object-fit: cover; object-position: left; } /* only the mark fits at 320 px (1.4.10); the alt text stays */
+}
 .logo { display: block; width: 150px; height: 28px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--text); font: inherit; font-weight: 600; line-height: 1.25; text-decoration: none; cursor: pointer; }
 .btn:hover { background: #f3f4f6; }
@@ -352,6 +356,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb .kb-tip kbd { display: inline-block; margin: 1px 2px 1px 0; padding: 0 6px; border: 1px solid #6b7280; border-bottom-width: 2px; border-radius: 4px; background: #1f2937; color: #fff; font: inherit; font-size: 13px; font-weight: 600; line-height: 1.5; white-space: nowrap; }
 .kb .tip-wrap.tip-open .tip { display: block; }
 .kb .tip-wrap.tip-dismissed .tip { display: none; }
+.kb .tip-wrap.tip-below .kb-tip { top: 100%; bottom: auto; margin: 8px 0 0; }
+.kb .tip-wrap.tip-below .kb-tip::before { top: -5px; bottom: auto; }
+.kb .tip-wrap.tip-below .kb-tip::after { top: -8px; }
 .kb .kb-note { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
 .kb .kb-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
 .kb .kb-stack { display: flex; flex-direction: column; gap: 10px; }
@@ -427,7 +434,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb .kb-cal .cal-grid button:hover { background: #f3f4f6; }
 .kb .kb-cal .cal-grid button.sel { background: var(--primary); color: #fff; font-weight: 700; }
 /* composites */
-.kb [role="tablist"], .kb .kb-tablist { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; border-bottom: 2px solid var(--border); }
+.kb [role="tablist"], .kb .kb-tablist { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; border-bottom: 2px solid var(--border); }
 .kb .kb-tab { margin: 0 0 -2px; padding: 8px 14px; border: 0; border-bottom: 3px solid transparent; border-radius: 6px 6px 0 0; background: none; color: var(--muted); font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
 .kb .kb-tab:hover { background: #f3f4f6; color: var(--text); }
 .kb .kb-tab[aria-selected="true"], .kb .kb-tab.active { color: var(--primary-dark); border-bottom-color: var(--primary); }
@@ -966,7 +973,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
     <section class="kb-group" aria-labelledby="kb-g1">
       <h2 id="kb-g1">One Tab stop each: Enter or Space does the work</h2>
-      <p>Each of these is one stop in the Tab order. Enter or Space does the work, and no other key is needed.</p>
+      <p>Each of these is one stop in the Tab order. Enter or Space does the work: Enter for the link, Space for a checkbox or the switch, either one for the rest. The tooltip adds Escape to dismiss it.</p>
       <div class="kb-grid">
         <div class="kb-card">
           <h3 data-apg="button">Button</h3>
@@ -2279,10 +2286,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       [['Home', 'End'], 'the first and the last cell of the row.'],
       [['Ctrl+Home', 'Ctrl+End'], 'the first and the last cell of the grid.'],
       [['Page Down', 'Page Up'], 'two rows down or up.'],
-      [['Enter', 'Space'], 'work on the link or the checkbox that has focus. The cells themselves cannot be edited.']
+      [['Enter'], 'follows the link in an Agent cell.'],
+      [['Space'], 'checks or unchecks the Enabled checkbox. The other cells cannot be edited.']
     ],
     menubar: [
-      [['Tab'], 'one stop, on the first menu.'],
+      [['Tab'], 'one stop: on File the first time, then on the menu that last had focus.'],
       [['Right Arrow', 'Left Arrow'], 'the next or previous menu. When a menu is open, closes it and opens the neighbour.'],
       [['Down Arrow', 'Enter', 'Space'], 'open the menu on its first item.'],
       [['Up Arrow'], 'opens the menu on its last item.'],
@@ -2331,13 +2339,13 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     ],
     popover: [
       [['Enter', 'Space'], 'on Share: opens the popover. Focus moves to the link field.'],
-      [['Tab', 'Shift+Tab'], 'through Copy link and Done, and out again. Nothing is trapped, and the stops come right after Share.'],
+      [['Tab', 'Shift+Tab'], 'through Copy link and Done, right after Share in the Tab order. Nothing is trapped: Tab past Done closes the popover and moves on.'],
       [['Escape'], 'closes it. Focus returns to Share. Done closes it with the same return.']
     ],
     date: [
-      [['Tab'], 'one stop. A native date field, so the browser sets the keys. In Chrome, Tab and Shift+Tab also move between day, month and year.'],
+      [['Tab', 'Shift+Tab'], 'a native date field, so the browser sets the keys. In Chrome it is four stops: day, month, year and the calendar button.'],
       [['Up Arrow', 'Down Arrow'], 'change the focused part.'],
-      [['Space', 'Enter'], 'open the calendar in Chrome. Arrows move by day and by week, Enter selects, Escape closes.'],
+      [['Space', 'Enter'], 'on the calendar button: open the calendar. Arrows move by day and by week, Enter selects, Escape closes.'],
       [['Typing'], 'enters the digits.']
     ],
     table: [
@@ -2346,7 +2354,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       [['Screen reader'], 'moves between the cells itself, for example NVDA with Ctrl+Alt+Arrow keys.']
     ],
     editor: [
-      [['Tab'], 'inserts two spaces instead of leaving. Allowed only because a standard key leads out, and the way out is written next to the editor.'],
+      [['Tab'], 'inserts two spaces instead of leaving. That is allowed because Shift+Tab still leaves, and the way out is written next to the editor.'],
       [['Escape'], 'then Tab: leaves the editor.'],
       [['Shift+Tab'], 'leaves too, to the previous stop.']
     ],
@@ -2660,6 +2668,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     page.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
     });
+    
     kb.docClick = function (e) {
       if (!e.target.closest('.tip-wrap')) kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
       
