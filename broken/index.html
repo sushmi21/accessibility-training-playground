@@ -425,6 +425,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb .kb-suggest { position: absolute; left: 0; right: 0; top: 100%; z-index: 20; margin: 4px 0 0; padding: 4px; list-style: none; background: #fff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
 .kb .kb-suggest li { padding: 7px 10px; border-radius: 6px; cursor: pointer; }
 .kb .kb-suggest li:hover { background: #f3f4f6; }
+.kb .kb-suggest { max-height: 248px; overflow-y: auto; }
+.kb .kb-suggest [role="option"] { border: 2px solid transparent; }
+.kb .kb-suggest [role="option"][aria-selected="true"] { border-color: var(--primary); background: #dbeafe; color: var(--primary-dark); font-weight: 600; }
 .kb .kb-date-wrap { position: relative; display: inline-flex; gap: 6px; }
 .kb .kb-cal { position: absolute; left: 0; top: 100%; z-index: 20; width: 260px; margin-top: 4px; padding: 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
 .kb .kb-cal .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-weight: 600; }
@@ -2319,11 +2322,13 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       [['Typing'], 'jumps to the option that starts with the typed characters.']
     ],
     autocomplete: [
-      [['Tab'], 'one stop. A native input with a datalist, so the browser sets the keys. Expected:'],
-      [['Typing'], 'filters the suggestions.'],
-      [['Down Arrow'], 'moves into the list, to the first suggestion. Up Arrow: to the last.'],
-      [['Enter'], 'accepts the highlighted suggestion.'],
-      [['Escape'], 'closes the list. The field keeps focus.']
+      [['Tab'], 'one stop, in the field. The list is not in the Tab order: focus stays in the field while the highlight moves through the list.'],
+      [['Typing'], 'filters the time zones and opens the list. Nothing is highlighted until you press an arrow.'],
+      [['Down Arrow', 'Up Arrow'], 'open the list on the first or the last time zone, then move the highlight, wrapping at the ends.'],
+      [['Alt+Down Arrow'], 'opens the list without highlighting anything.'],
+      [['Enter'], 'puts the highlighted time zone in the field and closes the list.'],
+      [['Escape'], 'closes the list and keeps the text. When the list is already closed, clears the field.'],
+      [['Left Arrow', 'Right Arrow', 'Home', 'End'], 'move the caret in the text, and take the highlight off the list.']
     ],
     dialog: [
       [['Enter', 'Space'], 'on Publish agent: opens the dialog. Focus moves to the first field.'],

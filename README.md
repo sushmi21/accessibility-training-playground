@@ -44,10 +44,11 @@ with an info button at the bottom right of each card whose tooltip lists the
 keys the control answers to. The accessible version is the reference here:
 native HTML wherever an element exists (checkboxes styled as chips, radio
 buttons styled as cards, `details` for the disclosure and the accordion,
-`select` for the listbox and the select-only combobox, a `datalist` for the
-editable one, `input type="range"`, `type="number"` and `type="date"`, `dialog`
-and the `popover` attribute), and the ARIA pattern where there is none (tabs,
-toolbar, tree view, grid, menubar, menu button, tooltip). It covers keyboard
+`select` for the listbox and the select-only combobox, `input type="range"`,
+`type="number"` and `type="date"`, `dialog` and the `popover` attribute), and
+the ARIA pattern where there is none or where the native popup cannot be
+styled (tabs, toolbar, tree view, grid, menubar, menu button, tooltip, and the
+editable combobox with list autocomplete instead of a `datalist`). It covers keyboard
 operation (2.1.1), no keyboard trap (2.1.2), focus order (2.4.3), focus visible
 (2.4.7), on focus and on input (3.2.1, 3.2.2) and content on hover or focus
 (1.4.13).

@@ -428,6 +428,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb .kb-suggest { position: absolute; left: 0; right: 0; top: 100%; z-index: 20; margin: 4px 0 0; padding: 4px; list-style: none; background: #fff; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
 .kb .kb-suggest li { padding: 7px 10px; border-radius: 6px; cursor: pointer; }
 .kb .kb-suggest li:hover { background: #f3f4f6; }
+.kb .kb-suggest { max-height: 248px; overflow-y: auto; }
+.kb .kb-suggest [role="option"] { border: 2px solid transparent; }
+.kb .kb-suggest [role="option"][aria-selected="true"] { border-color: var(--primary); background: #dbeafe; color: var(--primary-dark); font-weight: 600; }
 .kb .kb-date-wrap { position: relative; display: inline-flex; gap: 6px; }
 .kb .kb-cal { position: absolute; left: 0; top: 100%; z-index: 20; width: 260px; margin-top: 4px; padding: 10px; background: #fff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
 .kb .kb-cal .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-weight: 600; }
@@ -1275,18 +1278,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         <div class="kb-card">
           <h3 data-apg="combobox">Editable combobox</h3>
           <div class="kb-head"><label for="kb-tz">Time zone</label><span data-keys="autocomplete" data-name="the Time zone field"></span></div>
-
-          <input type="text" id="kb-tz" class="kb-text" list="kb-tz-list" autocomplete="off">
-          <datalist id="kb-tz-list">
-            <option value="Europe/Berlin"></option>
-            <option value="Europe/London"></option>
-            <option value="Europe/Madrid"></option>
-            <option value="America/New_York"></option>
-            <option value="America/Los_Angeles"></option>
-            <option value="Asia/Kolkata"></option>
-            <option value="Asia/Tokyo"></option>
-            <option value="Australia/Sydney"></option>
-          </datalist>
+          <div class="kb-combo">
+            <input type="text" id="kb-tz" class="kb-text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="kb-tz-list" autocomplete="off">
+            <ul class="kb-suggest" id="kb-tz-list" role="listbox" aria-label="Time zones" hidden></ul>
+          </div>
 
           <p class="kb-note">Start typing a region or a city.</p>
         </div>
@@ -2484,11 +2479,13 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       [['Typing'], 'jumps to the option that starts with the typed characters.']
     ],
     autocomplete: [
-      [['Tab'], 'one stop. A native input with a datalist, so the browser sets the keys. Expected:'],
-      [['Typing'], 'filters the suggestions.'],
-      [['Down Arrow'], 'moves into the list, to the first suggestion. Up Arrow: to the last.'],
-      [['Enter'], 'accepts the highlighted suggestion.'],
-      [['Escape'], 'closes the list. The field keeps focus.']
+      [['Tab'], 'one stop, in the field. The list is not in the Tab order: focus stays in the field while the highlight moves through the list.'],
+      [['Typing'], 'filters the time zones and opens the list. Nothing is highlighted until you press an arrow.'],
+      [['Down Arrow', 'Up Arrow'], 'open the list on the first or the last time zone, then move the highlight, wrapping at the ends.'],
+      [['Alt+Down Arrow'], 'opens the list without highlighting anything.'],
+      [['Enter'], 'puts the highlighted time zone in the field and closes the list.'],
+      [['Escape'], 'closes the list and keeps the text. When the list is already closed, clears the field.'],
+      [['Left Arrow', 'Right Arrow', 'Home', 'End'], 'move the caret in the text, and take the highlight off the list.']
     ],
     dialog: [
       [['Enter', 'Space'], 'on Publish agent: opens the dialog. Focus moves to the first field.'],
@@ -2902,6 +2899,58 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       }, 0);
     });
   }
+  // Editable combobox with list autocomplete (APG): DOM focus stays in the field, aria-activedescendant points to the highlighted option.
+  function kbCombobox(page) {
+    var input = kbEl('tz'), list = kbEl('tz-list'), active = -1, options = [];
+    function render() {
+      var q = input.value.trim().toLowerCase();
+      var matches = KB_TZ.filter(function (tz) { return !q || tz.toLowerCase().indexOf(q) !== -1; });
+      list.innerHTML = matches.map(function (tz, i) { return '<li role="option" id="kb-tz-opt-' + i + '" aria-selected="false">' + esc(tz) + '</li>'; }).join('');
+      options = kbSlice(list.children);
+      active = -1;
+      input.removeAttribute('aria-activedescendant');
+      return options.length;
+    }
+    function open() { if (!options.length) return false; list.hidden = false; input.setAttribute('aria-expanded', 'true'); return true; }
+    function close() { list.hidden = true; input.setAttribute('aria-expanded', 'false'); highlight(-1); }
+    function highlight(i) {
+      if (options[active]) options[active].setAttribute('aria-selected', 'false');
+      active = i;
+      if (options[i]) {
+        options[i].setAttribute('aria-selected', 'true');
+        input.setAttribute('aria-activedescendant', options[i].id);
+        options[i].scrollIntoView({ block: 'nearest' });
+      } else input.removeAttribute('aria-activedescendant');
+    }
+    function accept(i) { input.value = options[i].textContent; close(); }
+    input.addEventListener('input', function () { if (render()) open(); else close(); });
+    input.addEventListener('keydown', function (e) {
+      var isOpen = !list.hidden;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!isOpen) { render(); if (!open()) return; if (e.altKey) return; highlight(e.key === 'ArrowDown' ? 0 : options.length - 1); return; }
+        if (e.altKey) { if (e.key === 'ArrowUp') close(); return; }
+        var n = options.length;
+        highlight(active < 0 ? (e.key === 'ArrowDown' ? 0 : n - 1) : (active + (e.key === 'ArrowDown' ? 1 : -1) + n) % n);
+      } else if (e.key === 'Enter') {
+        if (isOpen && active >= 0) { e.preventDefault(); accept(active); }
+        else if (isOpen) close();
+      } else if (e.key === 'Escape') {
+        if (isOpen) { e.preventDefault(); e.stopPropagation(); close(); }
+        else if (input.value) { e.preventDefault(); input.value = ''; render(); }
+      } else if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(e.key) !== -1) {
+        highlight(-1);
+      }
+    });
+    input.addEventListener('click', function () { if (list.hidden) { render(); open(); } });
+    input.addEventListener('blur', function () { close(); });
+    list.addEventListener('mousedown', function (e) { e.preventDefault(); });
+    list.addEventListener('click', function (e) {
+      var li = e.target.closest('[role="option"]');
+      if (li) accept(options.indexOf(li));
+    });
+    render();
+  }
   // Open a keys tooltip below its button when there is no room above it under the sticky top bar.
   function kbPlaceTip(wrap) {
     var tip = wrap.querySelector('.kb-tip');
@@ -2952,6 +3001,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     kbMenuButton(page);
     kbMenubar(page);
     kbDialogs(page);
+    kbCombobox(page);
     page.addEventListener('focusout', function (e) {
       if (!kb.menu || !e.relatedTarget || e.relatedTarget === kb.menu.button) return;
       if (!kb.menu.menu.contains(e.relatedTarget)) kbCloseMenu(false);
