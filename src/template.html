@@ -3645,7 +3645,9 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         var wrap = info.closest('.tip-wrap');
         kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { if (w !== wrap) w.classList.remove('tip-open'); });
         wrap.classList.remove('tip-dismissed');
-        wrap.classList.toggle('tip-open');
+        // Enter and Space also fire click (detail 0). Focus already shows the tooltip, so they only bring it back
+        // after Escape; pinning it open is for pointer and touch clicks only.
+        if (e.detail !== 0) wrap.classList.toggle('tip-open');
         return;
       }
       var toggle = e.target.closest('[data-toggle]');
@@ -3698,6 +3700,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         var wrap = e.target.closest && e.target.closest('.kb-foot .tip-wrap');
         if (wrap) kbPlaceTip(wrap);
       });
+    });
+    // A tooltip pinned by a click closes once focus leaves its button.
+    page.addEventListener('focusout', function (e) {
+      var wrap = e.target.closest && e.target.closest('.kb-foot .tip-wrap');
+      if (wrap && !wrap.contains(e.relatedTarget)) wrap.classList.remove('tip-open');
     });
     /*ENDIF*/
     kb.docClick = function (e) {
