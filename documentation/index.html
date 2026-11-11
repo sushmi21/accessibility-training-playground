@@ -223,29 +223,21 @@ ol li, ul li { margin: 4px 0; }
       <ol>
         <li><strong>One rule.</strong> Tab moves between components, arrow keys move inside a component, Enter or Space activates, Escape dismisses. What WCAG requires (2.1.1, 2.1.2, 2.4.3, 2.4.7, 3.2.1, 3.2.2) and what the APG adds as convention.</li>
         <li><strong>The cheat sheet.</strong> How to read a pattern row: the native element, the Tab stops, the keys that move focus, activate and dismiss, and Home, End and type-ahead.</li>
-        <li><strong>Demo: the Components page.</strong> One composite widget and one popup on the accessible version, with the info button next to each control.</li>
-        <li><strong>Mission.</strong> Participants explore the Components page of the accessible version with the keyboard only, then look for what is missing on the seeded version.</li>
-        <li><strong>Debrief.</strong> Which keys surprised you, which seeded bugs did you find, and which of them fail WCAG rather than the APG.</li>
+        <li><strong>The APG.</strong> What the ARIA Authoring Practices Guide is and how a pattern page is built: the keyboard interaction, the roles, states and properties, and the examples.</li>
+        <li><strong>Mission.</strong> Participants explore the Components page of the accessible version with the keyboard only: they try each control first, then read its keys.</li>
+        <li><strong>Debrief.</strong> Which keys surprised you, which controls you could not work out without the panel, and which keys WCAG requires rather than the APG.</li>
       </ol>
 
-      <h4>Mission: learn the keys on the accessible version, then find what is missing on the seeded one</h4>
-      <p>This time you start on the <a href="../accessible/#/components">Components page of the accessible version</a>. It shows every control pattern from the keyboard cheat sheet, grouped the way the cheat sheet groups them, and the info button next to each control lists the keys it answers to. Put the mouse away.</p>
-
-      <h5>Part 1: the accessible version</h5>
+      <h4>Mission: try every control, then read its keys</h4>
+      <p>You work on the <a href="../accessible/#/components">Components page of the accessible version</a>. It shows every control pattern from the keyboard cheat sheet, grouped the way the cheat sheet groups them. Next to each control sits a Keys button. It opens a panel in the bottom left corner with the keys the control answers to, and it opens only when you press it, so nothing shows while you Tab past. Put the mouse away, and press the Keys button only after you tried the control.</p>
       <ol>
-        <li>Tab through the page once. Count the stops in each card and compare the count with what the info button says. A composite widget, such as the radio cards, the tabs, the toolbar, the tree, the grid or the menubar, is one stop, however many items it holds.</li>
-        <li>In each card, press every key the info button lists and watch two things: where the focus ring is, and whether the state on screen changed with it. Note anything that was not obvious to you.</li>
-        <li>Open each popup: the menu button, the menubar, the two dialogs and the popover. Press Escape and look where the focus went.</li>
+        <li>Tab to the control and try to operate it with the keys you expect: the arrows, Home and End, Enter and Space, Escape. A composite widget such as the radio cards, the tabs, the toolbar, the tree, the grid or the menubar is one Tab stop, however many items it holds.</li>
+        <li>Then press the Keys button and compare its list with what you tried. Note every key you did not expect, and every key you expected that is not there.</li>
+        <li>For each popup (the menu button, the menubar, the two dialogs, the popover and the date field) press Escape and look where the focus went.</li>
         <li>Try the editor that uses Tab. Follow the way out that is written next to it.</li>
+        <li>Repeat for every card, group by group, in the order of the page.</li>
       </ol>
-
-      <h5>Part 2: the seeded version</h5>
-      <ol start="5">
-        <li>Open the <a href="../broken/#/components">Components page of the seeded version</a>. It looks the same. Tab through it once and write down what is different about the order and the number of stops.</li>
-        <li>Card by card, try the keys you learned in Part 1. For each control that does not answer, write down where it is, what is wrong, and whether it fails a WCAG success criterion or only the APG pattern.</li>
-        <li>Run axe DevTools on the seeded page. How many of your findings did it report?</li>
-      </ol>
-      <p class="note">A key that does nothing is a WCAG finding when it leaves something unreachable or inoperable (2.1.1), traps the focus (2.1.2), or moves it somewhere surprising (2.4.3, 3.2.1, 3.2.2). A missing convention key is a best practice: log it with the link to the APG pattern.</p>
+      <p class="note">A key that does nothing is a WCAG finding when it leaves something unreachable or inoperable (2.1.1), traps the focus (2.1.2), or moves it somewhere surprising (2.4.3, 3.2.1, 3.2.2). A missing convention key is a best practice: log it with the link to the APG pattern. The <a href="../broken/#/components">seeded version</a> has the same page with keyboard bugs; it is not part of this mission, but you can use it afterwards to practise finding what is missing.</p>
 
       <h4>Links for this session</h4>
       <ul>

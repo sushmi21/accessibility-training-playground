@@ -340,19 +340,21 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb .kb-head .hint { margin-left: auto; font-size: 14px; font-weight: 400; color: var(--muted); }
 .kb fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .kb legend { float: left; margin: 0 4px 8px 0; padding: 0; font-weight: 600; }
-.kb fieldset > .tip-wrap { float: left; margin-bottom: 8px; }
+.kb fieldset > .kb-keys, .kb fieldset > .kb-info { float: left; margin-bottom: 8px; }
 .kb fieldset > .kb-options { clear: both; }
-.kb .tip-wrap { display: inline-flex; }
+.kb .tip-wrap, .kb .kb-keys { display: inline-flex; }
 .kb .kb-info { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 28px; height: 28px; color: var(--primary); }
 .kb .kb-info svg { width: 18px; height: 18px; }
-.kb .kb-tip { left: 0; right: auto; width: max-content; max-width: min(360px, calc(100vw - 48px)); }
-.kb .kb-tip::before { left: 10px; right: auto; }
-.kb .kb-tip p { margin: 0 0 6px; font-weight: 600; }
-.kb .kb-tip ul { margin: 0; padding: 0; list-style: none; }
-.kb .kb-tip li { margin: 4px 0; }
-.kb .kb-tip kbd { display: inline-block; margin: 1px 2px 1px 0; padding: 0 6px; border: 1px solid #6b7280; border-bottom-width: 2px; border-radius: 4px; background: #1f2937; color: #fff; font: inherit; font-size: 13px; font-weight: 600; line-height: 1.5; white-space: nowrap; }
-.kb .tip-wrap.tip-open .tip { display: block; }
-.kb .tip-wrap.tip-dismissed .tip { display: none; }
+.kb .kb-keys-panel { position: fixed; left: 16px; bottom: 16px; z-index: 60; width: max-content; max-width: min(380px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; padding: 12px 14px 14px; border-radius: 8px; background: #111827; color: #fff; font-size: 14px; font-weight: 400; line-height: 1.4; text-align: left; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+.kb .kb-keys-panel :focus-visible { outline-color: var(--ring-on-dark); }
+.kb .kb-keys-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 6px; }
+.kb .kb-keys-head p { margin: 0; font-weight: 600; }
+.kb .kb-keys-close { flex: none; width: 28px; height: 28px; color: #fff; }
+.kb .kb-keys-close:hover { background: rgba(255, 255, 255, .15); }
+.kb .kb-keys-close svg { width: 16px; height: 16px; }
+.kb .kb-keys-panel ul { margin: 0; padding: 0; list-style: none; }
+.kb .kb-keys-panel li { margin: 4px 0; }
+.kb .kb-keys-panel kbd { display: inline-block; margin: 1px 2px 1px 0; padding: 0 6px; border: 1px solid #6b7280; border-bottom-width: 2px; border-radius: 4px; background: #1f2937; color: #fff; font: inherit; font-size: 13px; font-weight: 600; line-height: 1.5; white-space: nowrap; }
 .kb .kb-note { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
 .kb .kb-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
 .kb .kb-stack { display: flex; flex-direction: column; gap: 10px; }
@@ -489,7 +491,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb-toast.show { opacity: 1; }
 @media (max-width: 700px) {
   .kb .kb-cards { grid-template-columns: 1fr 1fr; }
-  .kb .kb-tip { max-width: calc(100vw - 48px); }
+  .kb .kb-keys-panel { left: 8px; right: 8px; bottom: 8px; width: auto; max-width: none; }
 }
 .kb .kb-disclosure summary, .kb .kb-disc-head { display: flex; align-items: center; gap: 6px; padding: 6px 0; font-weight: 600; cursor: pointer; }
 .kb .kb-disclosure summary { display: list-item; }
@@ -1060,8 +1062,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         </div>
         <div class="kb-card">
           <h3 data-apg="tooltip">Tooltip</h3>
-          <div class="kb-head"><span class="kb-label">The info buttons on this page</span><span data-keys="tooltip" data-name="the tooltip pattern"></span></div>
-          <p class="kb-note">Every info button on this page is a tooltip: a focusable trigger, a text that appears on focus and on hover, and Escape to dismiss it. This one describes itself.</p>
+          <div class="kb-head"><span class="kb-label">System prompt</span>
+
+            <span class="tip-wrap"><button type="button" class="icon-btn info kb-tipdemo" aria-label="What is the system prompt?" aria-describedby="kb-tipdemo-tip">ⓘ</button><span class="tip" role="tooltip" id="kb-tipdemo-tip">The instructions the agent follows in every conversation. Users never see them.</span></span>
+
+            <span data-keys="tooltip" data-name="the tooltip pattern"></span></div>
+          <p class="kb-note">The text appears on hover and on focus. Escape hides it and the focus stays. The Keys buttons on this page are not tooltips: they open a panel when you press them, so nothing shows while you Tab past.</p>
         </div>
       </div>
     </section>
@@ -2316,6 +2322,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
   // Components page (Session 5: keyboard interaction patterns). Every control with the keys it answers to.
   var ICON_INFO = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8.01"/></svg>';
+  var ICON_X = '<svg class=\"icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 6l12 12\"/><path d=\"M18 6 6 18\"/></svg>';
   var ICON_EXT = '<svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>';
   var KB_APG_BASE = 'https://www.w3.org/WAI/ARIA/apg/';
   var KB_APG = {
@@ -2539,15 +2546,28 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function kbKeysText(id) {
     return KB_KEYS[id].map(function (row) { return row[0].join(' or ') + ': ' + row[1]; }).join(' ');
   }
+  function kbOpenKeys(wrap) {
+    kbSlice(document.querySelectorAll('.kb-keys.open')).forEach(function (w) { if (w !== wrap) kbCloseKeys(w, false); });
+    wrap.classList.add('open');
+    wrap.querySelector('.kb-info').setAttribute('aria-expanded', 'true');
+    wrap.querySelector('.kb-keys-panel').hidden = false;
+  }
+  function kbCloseKeys(wrap, refocus) {
+    wrap.classList.remove('open');
+    wrap.querySelector('.kb-info').setAttribute('aria-expanded', 'false');
+    wrap.querySelector('.kb-keys-panel').hidden = true;
+    if (refocus) wrap.querySelector('.kb-info').focus();
+  }
   function kbRenderInfo(page) {
     var slots = kbSlice(page.querySelectorAll('[data-keys]'));
     slots.forEach(function (slot, n) {
       var id = slot.getAttribute('data-keys'), name = slot.getAttribute('data-name');
       
-      var wrap = document.createElement('div'), tipId = 'kb-keys-' + n;
-      wrap.className = 'tip-wrap';
-      wrap.innerHTML = '<button type="button" class="icon-btn kb-info" aria-label="Keys for ' + esc(name) + '" aria-describedby="' + tipId + '">' + ICON_INFO + '</button>' +
-        '<div class="tip kb-tip" role="tooltip" id="' + tipId + '">' + kbKeysHtml(id) + '</div>';
+      var wrap = document.createElement('div'), panelId = 'kb-keys-' + n;
+      wrap.className = 'kb-keys';
+      wrap.innerHTML = '<button type="button" class="icon-btn kb-info" aria-label="Keys for ' + esc(name) + '" aria-expanded="false" aria-controls="' + panelId + '">' + ICON_INFO + '</button>' +
+        '<div class="kb-keys-panel" id="' + panelId + '" hidden><div class="kb-keys-head"><p>Keys for ' + esc(name) + '</p>' +
+        '<button type="button" class="icon-btn kb-keys-close" aria-label="Close">' + ICON_X + '</button></div>' + kbKeysHtml(id) + '</div>';
       slot.parentNode.replaceChild(wrap, slot);
     });
     kbSlice(page.querySelectorAll('h3[data-apg]')).forEach(function (h) {
@@ -2921,14 +2941,14 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     });
     
     page.addEventListener('click', function (e) {
-      var info = e.target.closest('.kb-info');
-      if (info && info.closest('.tip-wrap')) {
-        var wrap = info.closest('.tip-wrap');
-        kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { if (w !== wrap) w.classList.remove('tip-open'); });
-        wrap.classList.remove('tip-dismissed');
-        wrap.classList.toggle('tip-open');
+      var keysBtn = e.target.closest('.kb-keys .kb-info');
+      if (keysBtn) {
+        var keysWrap = keysBtn.closest('.kb-keys');
+        if (keysWrap.classList.contains('open')) kbCloseKeys(keysWrap, false); else kbOpenKeys(keysWrap);
         return;
       }
+      var keysClose = e.target.closest('.kb-keys-close');
+      if (keysClose) { kbCloseKeys(keysClose.closest('.kb-keys'), true); return; }
       var toggle = e.target.closest('[data-toggle]');
       if (toggle) {
         
@@ -2963,10 +2983,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       if (toast) kbToast(toast.getAttribute('data-toast'));
     });
     page.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
+      if (e.key !== 'Escape' || !e.target.closest) return;
+      var keysWrap = e.target.closest('.kb-keys');
+      if (keysWrap && keysWrap.classList.contains('open')) kbCloseKeys(keysWrap, true);
     });
     kb.docClick = function (e) {
-      if (!e.target.closest('.tip-wrap')) kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
       
       if (kb.menu && !e.target.closest('[role="menu"], [role="menubar"], #kb-more')) kbCloseMenu(false);
     };
