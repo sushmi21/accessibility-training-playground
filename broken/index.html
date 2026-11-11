@@ -94,10 +94,11 @@ p, .p { margin: 8px 0; }
 .facts { margin: 8px 0; }
 .facts div { display: flex; gap: 16px; margin: 4px 0; }
 .facts dt { flex: none; width: 140px; font-weight: 600; }
-.facts dd { margin: 0; }
+.facts dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 480px) { .facts div { flex-direction: column; gap: 0; } } /* label above value at 320 px (1.4.10) */
 .email-preview { max-width: 560px; margin: 8px 0; padding: 12px 16px; border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: 8px; background: var(--panel); font-weight: 700; }
 .prose table { width: 100%; max-width: 560px; margin: 8px 0; border-collapse: collapse; }
-.prose th, .prose td { padding: 6px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.prose th, .prose td { overflow-wrap: anywhere; padding: 6px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
 .prose th { font-weight: 600; }
 .page-footer { flex: none; max-width: 1040px; margin: 8px 32px 0; padding: 12px 0 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
 .page-footer p { margin: 0 0 6px; }
@@ -120,16 +121,16 @@ p, .p { margin: 8px 0; }
 .empty { padding: 24px; margin: 16px 0; background: var(--panel); border: 1px dashed #9ca3af; border-radius: 8px; }
 .toolbar, .project-list { max-width: 1200px; }
 .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
-.toolbar-end { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.toolbar-end { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; max-width: 100%; }
 .segmented { display: inline-flex; gap: 2px; margin: 0; padding: 4px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
 .segmented label, .segmented button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--text); font: inherit; font-weight: 600; line-height: 1.25; cursor: pointer; }
 .segmented label:hover, .segmented button:hover { background: #f3f4f6; }
 .segmented input:checked + label, .segmented .selected { background: #e0e7ff; border-color: var(--primary); color: var(--primary-dark); }
 .segmented input:focus-visible + label { outline: 3px solid var(--ring); outline-offset: 2px; }
-.search { position: relative; display: block; }
+.search { position: relative; display: block; flex: 0 1 300px; min-width: 0; }
 .search .icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-.search input { width: 300px; max-width: 100%; box-sizing: border-box; padding-left: 38px; }
-.project-list.card-view .cards { max-width: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.search input { width: 100%; box-sizing: border-box; padding-left: 38px; }
+.project-list.card-view .cards { max-width: none; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
 .table-wrap { margin: 16px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); }
 .table { width: 100%; min-width: 720px; border-collapse: collapse; table-layout: fixed; font-size: 15px; }
 .table th, .table td { padding: 12px 16px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border); }
@@ -329,7 +330,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb .kb-group { margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--border); }
 .kb .kb-group > h2 { font-size: 1.25rem; font-weight: 700; margin: 0; }
 .kb .kb-group > p { max-width: 75ch; color: var(--muted); }
-.kb .kb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 12px; }
+.kb .kb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 16px; margin-top: 12px; }
 .kb .kb-card { min-width: 0; padding: 16px 20px 18px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
 .kb .kb-card.wide { grid-column: 1 / -1; }
 .kb .kb-card > h3 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
@@ -465,6 +466,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .kb .kb-tree .leaf .twisty { visibility: hidden; }
 .kb .kb-tree [aria-expanded="false"] > ul, .kb .kb-tree li.closed > ul { display: none; }
 .kb .kb-tree .doc { width: 16px; height: 16px; color: var(--muted); }
+.kb .kb-scroll { overflow-x: auto; }
+.kb .kb-scroll:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
 .kb table.kb-table { width: 100%; border-collapse: collapse; font-size: 15px; }
 .kb .kb-table caption { margin-bottom: 6px; text-align: left; font-weight: 600; }
 .kb .kb-table th, .kb .kb-table td { padding: 8px 10px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border); }
@@ -1176,6 +1179,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         <div class="kb-card wide">
           <h3 data-apg="grid">Grid</h3>
           <div class="kb-head"><span class="kb-label" id="kb-grid-label">Deployments</span><span data-keys="grid" data-name="the Deployments grid"></span></div>
+          <div class="kb-scroll">
           <table class="kb-table" role="grid" aria-labelledby="kb-grid-label" id="kb-grid">
             <thead><tr><th scope="col">Agent</th><th scope="col">Environment</th><th scope="col">Version</th><th scope="col">Region</th><th scope="col">Enabled</th></tr></thead>
             <tbody>
@@ -1187,6 +1191,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 
             </tbody>
           </table>
+          </div>
         </div>
         <div class="kb-card wide">
           <h3 data-apg="menubar">Menubar</h3>
@@ -1291,7 +1296,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       <div class="kb-grid">
         <div class="kb-card wide">
           <h3 data-apg="table">Table</h3>
-          <div class="kb-head"><span class="kb-label">Published versions</span><span data-keys="table" data-name="the Published versions table"></span></div>
+          <div class="kb-head"><span class="kb-label" id="kb-versions-label">Published versions</span><span data-keys="table" data-name="the Published versions table"></span></div>
+          <div class="kb-scroll" data-label="kb-versions-label">
           <table class="kb-table" id="kb-versions">
             <caption class="visually-hidden">Published versions</caption>
             <thead>
@@ -1306,6 +1312,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
             </thead>
             <tbody></tbody>
           </table>
+          </div>
         </div>
         <div class="kb-card">
           <h3 data-apg="trap">Editor that uses Tab</h3>
@@ -2354,7 +2361,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       [['Typing'], 'enters the digits.']
     ],
     table: [
-      [['Tab'], 'only the two sort buttons are stops. The table itself has no keys.'],
+      [['Tab'], 'the two sort buttons are the stops. The table itself has no keys.'],
+      [['Left Arrow', 'Right Arrow'], 'on a narrow screen the table scrolls sideways in its own box. That box becomes one more Tab stop, and the arrow keys scroll it.'],
       [['Enter', 'Space'], 'sorts by that column. A second press reverses the order. The result is announced.'],
       [['Screen reader'], 'moves between the cells itself, for example NVDA with Ctrl+Alt+Arrow keys.']
     ],
@@ -2636,6 +2644,16 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     
     kbBrokenHandlers(page);
     
+    // A wide table scrolls inside its own box, not the page (1.4.10 allows that for data tables).
+    // When it overflows and has no focusable cells, the box becomes a labelled region in the Tab order so it can be scrolled with the arrow keys.
+    page.querySelectorAll('.kb-scroll[data-label]').forEach(function (box) {
+      function sync() {
+        if (box.scrollWidth > box.clientWidth) { box.tabIndex = 0; box.setAttribute('role', 'region'); box.setAttribute('aria-labelledby', box.dataset.label); }
+        else { box.removeAttribute('tabindex'); box.removeAttribute('role'); box.removeAttribute('aria-labelledby'); }
+      }
+      sync();
+      new ResizeObserver(sync).observe(box);
+    });
     page.addEventListener('click', function (e) {
       var info = e.target.closest('.kb-foot .kb-info');
       if (info && info.closest('.tip-wrap')) {
