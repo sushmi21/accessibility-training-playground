@@ -51,6 +51,9 @@ styled (tabs, toolbar, tree view, grid, menubar, menu button, tooltip, and the
 editable combobox with list autocomplete instead of a `datalist`). It covers keyboard
 operation (2.1.1), no keyboard trap (2.1.2), focus order (2.4.3), focus visible
 (2.4.7), on focus and on input (3.2.1, 3.2.2) and content on hover or focus
-(1.4.13).
+(1.4.13). The tree view appears twice: single-select, where Enter selects a
+node, and multi-select (accessible version only, `aria-multiselectable`),
+where Space adds a node to the selection or removes it and Enter only opens or
+closes it, following the APG's recommended selection model.
 
 The list of seeded bugs is deliberately not in this repository.

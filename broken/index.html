@@ -2293,6 +2293,19 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       [['A letter'], 'the next node that starts with it.'],
       [['*'], 'opens every sibling of the current node.']
     ],
+    treemulti: [
+      [['Tab'], 'one stop, on the first visible selected node, or on the first node when none is selected.'],
+      [['Down Arrow', 'Up Arrow'], 'the next or previous visible node. Moving does not change the selection.'],
+      [['Space'], 'adds the node to the selection, or removes it. The other selected nodes stay selected.'],
+      [['Shift+Down Arrow', 'Shift+Up Arrow'], 'moves to the next or previous node and adds it to the selection, or removes it.'],
+      [['Ctrl+A'], 'selects every node. When all are selected, clears the selection.'],
+      [['Right Arrow'], 'opens a closed node. On an open node, moves to its first child.'],
+      [['Left Arrow'], 'closes an open node. On a closed node or a leaf, moves to its parent.'],
+      [['Enter'], 'opens or closes a parent node. In this tree it does not select; Space does.'],
+      [['Home', 'End'], 'the first and the last visible node.'],
+      [['A letter'], 'the next node that starts with it.'],
+      [['*'], 'opens every sibling of the current node.']
+    ],
     grid: [
       [['Tab'], 'one stop, on one cell; Tab again leaves the grid. When a cell holds a link or a checkbox, focus lands on that.'],
       [['Arrow keys'], 'one cell in each direction. They stop at the edges.'],
