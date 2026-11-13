@@ -64,6 +64,9 @@ h2 { font-size: 1.2rem; margin: 0; }
 p, .p { margin: 8px 0; }
 .pill { display: inline-block; margin: 0; padding: 1px 8px; border-radius: 999px; background: #e5e7eb; color: #374151; font-size: .8rem; font-weight: 700; line-height: 1.4; letter-spacing: .04em; text-transform: uppercase; vertical-align: 1px; }
 .muted { color: var(--muted); }
+.session-used { margin: 8px 0 12px; max-width: 95ch; padding: 10px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid #1d4ed8; border-radius: 8px; color: #1e3a8a; }
+.session-used a { color: #1d4ed8; font-weight: 600; text-decoration: underline; }
+.mon .session-used { margin: 0; max-width: none; }
 .cards { list-style: none; margin: 16px 0; padding: 0; display: grid; gap: 12px; max-width: 560px; }
 .card { position: relative; display: block; padding: 16px 20px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; color: inherit; text-decoration: none; }
 .card:hover { border-color: #9ca3af; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); background: rgba(29, 78, 216, .06); }
@@ -788,6 +791,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   <div class="prose">
     <div class="view-header"><h1>Settings</h1></div>
 
+    <p class="session-used">Used in Session 3 of the accessibility training: Landmarks, headings and language. <a href="../documentation/#session-3">Read the Session 3 plan and mission</a></p>
     <p class="muted">Your profile, preferences, notifications and security at a glance. Settings are managed by your workspace administrator.</p>
 
     <section aria-labelledby="recent-changes">
@@ -904,6 +908,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       <span class="sel">Production</span>
       <button type="button" class="btn mon-ghost" id="mon-about-button">About this design</button>
     </div>
+    <p class="session-used">Used in Session 4 of the accessibility training: Accessibility design review. <a href="../documentation/#session-4">Read the Session 4 plan and mission</a></p>
 
     <section class="brief" id="mon-brief" aria-labelledby="mon-brief-heading">
       <div>
@@ -1088,6 +1093,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
 <template id="components-content">
   <div class="kb">
     <div class="view-header"><h1>Components</h1></div>
+    <p class="session-used">Used in Session 5 of the accessibility training: Keyboard interaction patterns. <a href="../documentation/#session-5">Read the Session 5 plan and mission</a></p>
     <p class="lead">Every control Agent Studio uses, in one place, grouped the way the keyboard cheat sheet groups them. The info button at the bottom right of each card lists the keys the control answers to: Tab to the button or hover over it, and press Escape to dismiss the list. Nothing you change here is saved.</p>
 
     <section class="kb-group" aria-labelledby="kb-g1">
@@ -3637,6 +3643,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       return { title: 'Agents', html:
         '<div class="view-header"><h1 id="agents-heading">Agents</h1>' +
         '<button type="button" class="icon-btn" data-refresh aria-label="Refresh project list">' + ICON_REFRESH + '</button></div>' +
+        '<p class="session-used">Used in Session 2 of the accessibility training: ARIA, the accessibility tree and name, role, value. <a href="../documentation/#session-2">Read the Session 2 plan and mission</a></p>' +
         '<p class="muted">Pick a project or create a new one.</p>' +
         '<div class="toolbar">' +
         
