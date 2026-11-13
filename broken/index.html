@@ -585,6 +585,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .fm .fm-switch:checked::before { left: 23px; }
 .fm .fm-reveal { max-width: 480px; margin: 12px 0 0; padding: 0 0 0 18px; border-left: 3px solid #c7d2fe; }
 .fm .fm-reveal .field:first-child { margin-top: 0; }
+.fm .fm-phone-row { display: flex; gap: 8px; }
+.fm .fm-phone-row input { min-width: 0; }
+.fm .fm-phone-cc { flex: 0 0 6.5em; }
+.fm .fm-phone-number { flex: 1 1 auto; }
 
 .fm .fm-reveal.closed { height: 0; margin: 0; padding: 0; border: 0; overflow: hidden; opacity: 0; }
 
@@ -1545,8 +1549,11 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
             <textarea id="fm-support-details" name="support-details" rows="3"></textarea>
           </div>
           <div class="field">
-            <span class="fm-label-row"><label for="fm-phone">Phone number <span class="ast">*</span></label><span class="fm-info" title="We call only to arrange the support. Include the country code, for example +49 30 1234 5678."><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span></span>
-            <input id="fm-phone" name="phone" type="text" autocomplete="off">
+            <span class="fm-label-row"><label for="fm-phone-cc">Phone number <span class="ast">*</span></label><span class="fm-info" title="We call only to arrange the support. Country code first, then the number. For example, +49 and 30 1234 5678."><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span></span>
+            <div class="fm-phone-row">
+              <input id="fm-phone-cc" name="phone-cc" type="text" class="fm-phone-cc" autocomplete="off" maxlength="5">
+              <input id="fm-phone-number" name="phone-number" type="text" class="fm-phone-number" autocomplete="off">
+            </div>
           </div>
         </div>
       </div>
@@ -2963,7 +2970,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   // Every rule the form checks, in the order of the form. Hidden questions are not checked.
   function fmProblems(form) {
     var f = form.elements, out = [];
-    var email = f['email'].value.trim(), phone;
+    var email = f['email'].value.trim(), cc, num, ccBad, numBad;
     if (!f['name'].value.trim()) out.push({ key: 'name', message: 'Enter your full name' });
     if (!email) out.push({ key: 'email', message: 'Enter your email address' });
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) out.push({ key: 'email', message: 'Enter an email address in the format name@example.com' });
@@ -2974,10 +2981,16 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (!form.querySelector('input[name="attend"]:checked')) out.push({ key: 'attend', message: 'Choose how you will attend' });
     if (!form.querySelector('input[name="topics"]:checked')) out.push({ key: 'topics', message: 'Choose at least one topic' });
     if (fmEl('support').checked) {
-      phone = f['phone'].value.trim();
+      cc = f['phone-cc'].value.trim();
+      num = f['phone-number'].value.trim();
+      ccBad = !/^\+?\d{1,4}$/.test(cc);
+      numBad = !/^[0-9 -]+$/.test(num) || num.replace(/\D/g, '').length < 5;
       if (!f['support-type'].value) out.push({ key: 'support-type', message: 'Choose the type of support you need' });
-      if (!phone) out.push({ key: 'phone', message: 'Enter a phone number so we can arrange the support' });
-      else if (!/^\+?[0-9 ()-]+$/.test(phone) || phone.replace(/\D/g, '').length < 7) out.push({ key: 'phone', message: 'Enter a phone number with the country code, like +49 30 1234 5678' });
+      // One problem for the phone group, with the parts that are wrong.
+      if (ccBad || numBad) out.push({ key: 'phone', parts: [ccBad && 'fm-phone-cc', numBad && 'fm-phone-number'].filter(Boolean),
+        message: ccBad && numBad ? (!cc && !num ? 'Enter the country code and the phone number' : 'Enter the country code and the phone number, like +49 and 30 1234 5678')
+          : ccBad ? (cc ? 'Enter the country code as 1 to 4 digits, like +49' : 'Enter the country code, like +49')
+          : num ? 'Enter the phone number with digits only, like 30 1234 5678' : 'Enter the phone number' });
     }
     if (!f['agree'].checked) out.push({ key: 'agree', message: 'Agree to the code of conduct to register' });
     return out;
@@ -2999,7 +3012,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   }
   function fmMark(form, control) {
     if (!control.name || control.type === 'radio' || control.type === 'checkbox') return;
-    var bad = fmProblems(form).some(function (p) { return p.key === control.name; });
+    var key = control.name.indexOf('phone') === 0 ? 'phone' : control.name;
+    var bad = fmProblems(form).some(function (p) { return p.key === key; });
     control.classList.toggle('invalid', bad);
     if (control.name === 'email') fmEl('email-err').hidden = !(bad && control.value.trim());
   }
@@ -3018,6 +3032,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     fmRangeSync();
     fmEl('exp').addEventListener('input', fmRangeSync);
     fmEl('email2').addEventListener('paste', function (e) { e.preventDefault(); });
+    fmEl('phone-cc').addEventListener('input', function () { if (this.value.length >= 3) fmEl('phone-number').focus(); });
     fmEl('support').addEventListener('change', function () { fields.classList.toggle('closed', !this.checked); });
     form.addEventListener('focusout', function (e) { fmMark(form, e.target); });
     form.addEventListener('input', sync);
