@@ -184,11 +184,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .mon .sel { padding: 6px 12px; border: 1px solid var(--border); border-radius: 999px; background: #fff; color: var(--text); font-size: 15px; }
 .mon .mon-ghost, .mon-dlg .mon-ghost { padding: 6px 8px; border-color: transparent; background: transparent; color: var(--primary); }
 .mon .mon-ghost:hover { background: #eef2ff; }
-.mon .brief { display: flex; align-items: flex-start; gap: 16px; padding: 14px 18px; background: #fff8e8; border: 1px solid #f1d58c; border-radius: 10px; }
-.mon .brief h2 { margin: 0 0 6px; font-size: 1.05rem; }
-.mon .brief p { margin: 0 0 6px; max-width: 95ch; color: #5a4714; }
-.mon .brief ul { margin: 4px 0 0; padding-left: 18px; color: #5a4714; }
-.mon .brief .x { flex: none; margin-left: auto; padding: 6px 10px; border: 1px solid #d9be6a; border-radius: 8px; background: none; color: #5a4714; font: inherit; cursor: pointer; }
 .mon .notices { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; min-height: 58px; padding: 12px 18px; background: var(--panel); border: 1px solid var(--mon-line); border-radius: 10px; }
 .mon .notices .tag { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mon-accent); }
 .mon .notices .msg { min-width: 0; }
@@ -320,8 +315,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 }
 @media (max-width: 700px) {
   .mon .kpis { grid-template-columns: 1fr; }
-  .mon .brief { flex-wrap: wrap; }
-  
+    
   .mon .notices { grid-template-columns: auto 1fr; }
   .mon .notices .nctl { grid-column: 1 / 3; }
   .mon .mon-head { flex-wrap: wrap; }
@@ -910,20 +904,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     </div>
     <p class="session-used">Used in Session 4 of the accessibility training: Accessibility design review. <a href="../documentation/#session-4">Read the Session 4 plan and mission</a></p>
 
-    <section class="brief" id="mon-brief" aria-labelledby="mon-brief-heading">
-      <div>
-        <h2 id="mon-brief-heading">Design handoff brief</h2>
-
-        <p>This is the revised proposal for the Overview page of the internal monitoring tool, after design review. It uses the standard sidebar, table, dialog and form components from the component library.</p>
-        <ul>
-          <li>Provided: this desktop layout (1440 px) and the user journey: review metrics, filter services, inspect the response-time chart, edit an alert threshold, save.</li>
-          <li>Also specified: responsive behaviour follows the app shell (content stacks, tables scroll inside their card); the threshold dialog uses the standard inline validation pattern and shows the current P95 and trend; the chart has a text summary and a data-table view.</li>
-          <li>Notices and metrics are illustrative data.</li>
-        </ul>
-      </div>
-      <button type="button" class="x" id="mon-brief-hide" aria-label="Hide handoff brief">Hide</button>
-    </section>
-
     <section class="notices" aria-label="Notices">
       <span class="tag">Notice</span>
       <div class="msg" id="mon-notice"></div>
@@ -1000,11 +980,11 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       <div class="about">
         <div class="dialog-header"><h2 id="mon-about-title">About this design</h2></div>
 
-        <p>Revised proposal for the Overview page of the internal monitoring tool, after design review. Standard sidebar, table, dialog and form components from the component library.</p>
+        <p>This page is the same design after the accessibility review. The designer has changed it based on what the review found.</p>
         <ul>
-          <li><b>Provided:</b> this desktop layout (1440 px) and the user journey: review metrics, filter services, inspect the response-time chart, edit an alert threshold, save.</li>
-          <li><b>Also specified:</b> responsive behaviour follows the app shell (content stacks, tables scroll inside their card); the threshold dialog uses the standard inline validation pattern and shows the current P95 and trend; the chart has a text summary and a data-table view.</li>
-          <li>Notices and metrics are illustrative data.</li>
+          <li><b>What the designer gave you:</b> this layout for a desktop screen 1440 pixels wide, and the task the user does on it: check the metrics, filter the services, read the response-time chart, change an alert threshold and save it.</li>
+          <li><b>What the designer added after the review:</b> on a narrower screen or when zoomed in, the content stacks and wide tables scroll inside their card; the threshold dialog shows an error next to the field, together with the current response time and its trend; and the chart has a text summary and can be shown as a table.</li>
+          <li>The page uses the standard sidebar, table, dialog and form components. The numbers and notices are sample data.</li>
         </ul>
         <div class="actions"><button type="button" class="btn btn-primary" id="mon-about-close">Close</button></div>
       </div>
@@ -2593,10 +2573,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     });
     monEl('about-close').addEventListener('click', function () { aboutDialog.close(); });
     aboutDialog.addEventListener('close', function () { monEl('about-button').focus(); });
-    monEl('brief-hide').addEventListener('click', function () {
-      monEl('brief').hidden = true;
-      monEl('about-button').focus();
-    });
     monEl('load-more').addEventListener('click', monLoadMore);
   }
   function teardownMonitoring() {
