@@ -45,7 +45,7 @@ dd { margin: 0; }
 </header>
 <main id="main" aria-labelledby="page-title">
   <h1 id="page-title">Seeded bugs</h1>
-  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 104 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
+  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 81 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
   <p>For each bug you get where it is, what goes wrong for the user, how to find it, the WCAG 2.2 success criterion it fails (or that it is a best practice), and the right way to build it. The right way is what the <a href="../accessible/">accessible version</a> does, so you can inspect it there.</p>
   <p class="note">Automated tools find only some of these. Where a bug says axe DevTools, axe reports it; everything else you find with the keyboard, the accessibility tree, a screen reader or your eyes. A level A or AA criterion is a failure; a best practice is not, but users still notice it.</p>
   <p>Bugs on pages for sessions that have not happened yet, such as the New agent form, are not listed.</p>
@@ -55,7 +55,7 @@ dd { margin: 0; }
       <li><a href="#session-2">Session 2: Agents page</a> (17)</li>
       <li><a href="#session-3">Session 3: Settings page</a> (10)</li>
       <li><a href="#session-4">Session 4: Monitoring page</a> (32)</li>
-      <li><a href="#session-5">Session 5: Components page</a> (39)</li>
+      <li><a href="#session-5">Session 5: Components page</a> (16)</li>
     </ul>
   </nav>
 
@@ -619,19 +619,8 @@ dd { margin: 0; }
   <h2 id="session-5">Session 5: Components page</h2>
   <p>Every control, grouped the way the keyboard cheat sheet groups them. For each bug the WCAG line says whether the keyboard fails a success criterion or only misses a key the ARIA Authoring Practices Guide (APG) expects.</p>
   <p class="try">The page: <a href="../broken/#/components">seeded version</a> · <a href="../accessible/#/components">accessible version</a></p>
-  <h3>On every card</h3>
-  <ol class="bugs" start="1">
-    <li><h4>The info buttons work only with a mouse</h4>
-      <dl>
-        <div><dt>Where</dt><dd>The ⓘ at the bottom right of every card.</dd></div>
-        <div><dt>What is wrong</dt><dd>The icon is a plain element that Tab never reaches, and the list of keys is only in a mouse tooltip. Keyboard and screen reader users never get it.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab skips the icons.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
-        <div><dt>The right way</dt><dd>Each icon is a button named "Keys for …", with the key list in a tooltip that appears on hover and on focus and closes with Escape.</dd></div>
-      </dl></li>
-  </ol>
   <h3>One Tab stop each</h3>
-  <ol class="bugs" start="2">
+  <ol class="bugs" start="1">
     <li><h4>Save draft has no focus indicator</h4>
       <dl>
         <div><dt>Where</dt><dd>Button card: the blue Save draft button.</dd></div>
@@ -639,14 +628,6 @@ dd { margin: 0; }
         <div><dt>How to find it</dt><dd>Keyboard: Tab to it and look.</dd></div>
         <div><dt>WCAG 2.2</dt><dd>2.4.7 Focus Visible, AA</dd></div>
         <div><dt>The right way</dt><dd>Keep the focus outline. Never remove it with <code>outline: none</code> without a visible replacement.</dd></div>
-      </dl></li>
-    <li><h4>Reset is not a button</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Button card: Reset.</dd></div>
-        <div><dt>What is wrong</dt><dd>It is a <code>div</code> styled as a button. Tab skips it, Enter and Space do nothing, and a screen reader reads plain text.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard · Accessibility pane.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
-        <div><dt>The right way</dt><dd><code>&lt;button type="button"&gt;Reset&lt;/button&gt;</code>.</dd></div>
       </dl></li>
     <li><h4>Mute notifications cannot be switched with the keyboard</h4>
       <dl>
@@ -680,38 +661,6 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>Best practice: APG Checkbox pattern (Space toggles).</dd></div>
         <div><dt>The right way</dt><dd>Native checkboxes styled as chips. The browser gives them Space.</dd></div>
       </dl></li>
-    <li><h4>All channels does not follow the chips</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Checkbox card: All channels.</dd></div>
-        <div><dt>What is wrong</dt><dd>Checking it checks the chips, but checking the chips one by one never updates it, and it never shows a partly checked state.</dd></div>
-        <div><dt>How to find it</dt><dd>Mouse or keyboard: check some chips, then all of them.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Checkbox pattern (mixed state).</dd></div>
-        <div><dt>The right way</dt><dd>All channels is checked when every chip is, and partly checked (<code>indeterminate</code>) when only some are.</dd></div>
-      </dl></li>
-    <li><h4>The availability switch cannot be switched with the keyboard</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Switch card: Available outside business hours.</dd></div>
-        <div><dt>What is wrong</dt><dd>It gets focus, but Space and Enter do nothing.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab to it, press Space.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
-        <div><dt>The right way</dt><dd><code>&lt;input type="checkbox" role="switch"&gt;</code> with a label. Space works natively.</dd></div>
-      </dl></li>
-    <li><h4>Advanced options cannot be opened with the keyboard</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Disclosure card: Advanced options.</dd></div>
-        <div><dt>What is wrong</dt><dd>The header is a focusable <code>div</code> with no role. Enter and Space do nothing, so the checkbox inside cannot be reached, and there is no expanded or collapsed state.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard · Accessibility pane.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
-        <div><dt>The right way</dt><dd><code>&lt;details&gt;</code> with <code>&lt;summary&gt;</code>: the browser handles the keys and the state.</dd></div>
-      </dl></li>
-    <li><h4>The accordion headers jump the Tab order</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Accordion card: Greeting, Fallback answer, Handover rules.</dd></div>
-        <div><dt>What is wrong</dt><dd>They have <code>tabindex</code> 1, 2 and 3, so they are the first three Tab stops of the whole page, before the skip link and the navigation.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab from the address bar · axe DevTools with Best practices on (tabindex).</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
-        <div><dt>The right way</dt><dd>No positive <code>tabindex</code>. The accessible version uses <code>&lt;details&gt;</code> elements that share a <code>name</code>, so only one is open at a time.</dd></div>
-      </dl></li>
     <li><h4>The System prompt tooltip works only with a mouse</h4>
       <dl>
         <div><dt>Where</dt><dd>Tooltip card: the ⓘ next to System prompt.</dd></div>
@@ -722,7 +671,7 @@ dd { margin: 0; }
       </dl></li>
   </ol>
   <h3>Arrow keys change a value</h3>
-  <ol class="bugs" start="13">
+  <ol class="bugs" start="7">
     <li><h4>The Creativity slider ignores the keyboard</h4>
       <dl>
         <div><dt>Where</dt><dd>Slider card: Creativity.</dd></div>
@@ -731,25 +680,9 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
         <div><dt>The right way</dt><dd><code>&lt;input type="range"&gt;</code> with a label: the browser gives it all the slider keys.</dd></div>
       </dl></li>
-    <li><h4>Maximum turns is not a spin button</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Spin button card: Maximum turns, with − and +.</dd></div>
-        <div><dt>What is wrong</dt><dd>The Up and Down arrows do nothing in the field, − and + are extra Tab stops, and the value can go past its limits. Typing a value still works.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: the Up and Down arrows in the field.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Spinbutton pattern.</dd></div>
-        <div><dt>The right way</dt><dd><code>&lt;input type="number" min="1" max="50"&gt;</code>, with the arrow keys and the limits built in.</dd></div>
-      </dl></li>
   </ol>
   <h3>Composites: one Tab stop, the arrows inside</h3>
-  <ol class="bugs" start="15">
-    <li><h4>The Agent type cards cannot be chosen with the keyboard</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Radio group card: Chat, Voice, Email.</dd></div>
-        <div><dt>What is wrong</dt><dd>Each card is its own Tab stop, and Space and the arrow keys do nothing. Only a click changes the type.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A. The extra Tab stops are a best practice (APG Radio Group pattern).</dd></div>
-        <div><dt>The right way</dt><dd>Native radio buttons in a <code>fieldset</code> with a <code>legend</code>: one Tab stop, the arrows move and select.</dd></div>
-      </dl></li>
+  <ol class="bugs" start="8">
     <li><h4>The tabs do not say which one is selected</h4>
       <dl>
         <div><dt>Where</dt><dd>Tabs card: Overview, Prompt, Channels.</dd></div>
@@ -766,46 +699,6 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>Best practice: APG Tabs pattern.</dd></div>
         <div><dt>The right way</dt><dd>One Tab stop on the active tab. Left and Right, Home and End change the tab, and the next Tab goes to the panel.</dd></div>
       </dl></li>
-    <li><h4>The toolbar does not say which formats are on</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Toolbar card: B, I, U and the alignment buttons.</dd></div>
-        <div><dt>What is wrong</dt><dd>Bold, Italic, Underline and the chosen alignment are shown only by colour. A screen reader hears no pressed or selected state.</dd></div>
-        <div><dt>How to find it</dt><dd>Accessibility pane.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
-        <div><dt>The right way</dt><dd><code>aria-pressed</code> on Bold, Italic and Underline, and the alignment as a group of radio buttons.</dd></div>
-      </dl></li>
-    <li><h4>The toolbar is seven Tab stops instead of one</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Toolbar card.</dd></div>
-        <div><dt>What is wrong</dt><dd>There is no toolbar role and no name, every control is a Tab stop, and the arrow keys do nothing.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Toolbar pattern.</dd></div>
-        <div><dt>The right way</dt><dd><code>role="toolbar"</code> with a label: one Tab stop, the arrows move inside, Tab goes on.</dd></div>
-      </dl></li>
-    <li><h4>The Fallback agent list cannot be used with the keyboard</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Listbox card: Fallback agent.</dd></div>
-        <div><dt>What is wrong</dt><dd>Each option is a Tab stop, but Enter, Space and the arrows do not select. There are no listbox or option roles, and the selection is shown only by colour.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard · Accessibility pane.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
-        <div><dt>The right way</dt><dd><code>&lt;select size="5"&gt;</code> with a label: one Tab stop, the arrows select.</dd></div>
-      </dl></li>
-    <li><h4>The Knowledge sources tree has no keyboard support</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Tree view card: Knowledge sources.</dd></div>
-        <div><dt>What is wrong</dt><dd>Every node is a Tab stop, and the arrow keys and Enter do nothing, so folders open and close only with a mouse. No node can be selected.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab, the arrow keys, Enter.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A. The single Tab stop and the selection are a best practice (APG Tree View pattern).</dd></div>
-        <div><dt>The right way</dt><dd>One Tab stop. Up and Down move, Right and Left open and close, Enter selects, and Home, End and a letter jump.</dd></div>
-      </dl></li>
-    <li><h4>The Deployments grid is about forty Tab stops</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Grid card: Deployments.</dd></div>
-        <div><dt>What is wrong</dt><dd>It says <code>role="grid"</code>, but every cell is a Tab stop and the arrow keys do nothing. Everything can be reached, slowly.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Grid pattern.</dd></div>
-        <div><dt>The right way</dt><dd>One Tab stop. The arrows move cell by cell, and Tab leaves the grid.</dd></div>
-      </dl></li>
     <li><h4>The Flow editor menus open only on hover</h4>
       <dl>
         <div><dt>Where</dt><dd>Menubar card: File, Edit, View.</dd></div>
@@ -816,7 +709,7 @@ dd { margin: 0; }
       </dl></li>
   </ol>
   <h3>Popups: the focus moves in, Escape closes</h3>
-  <ol class="bugs" start="24">
+  <ol class="bugs" start="11">
     <li><h4>More actions does not say whether its menu is open</h4>
       <dl>
         <div><dt>Where</dt><dd>Menu button card: More actions.</dd></div>
@@ -841,14 +734,6 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>3.2.2 On Input, A</dd></div>
         <div><dt>The right way</dt><dd>Choosing only changes the value. Anything bigger happens after an explicit action, such as a button.</dd></div>
       </dl></li>
-    <li><h4>The Time zone suggestions are not exposed</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Editable combobox card: Time zone.</dd></div>
-        <div><dt>What is wrong</dt><dd>The suggestion list opens, but the arrows cannot reach it, Enter cannot pick and Escape does not close it. A screen reader does not know the list exists. Typing the whole value still works.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: type "eu", then Down Arrow, Enter, Escape · Accessibility pane.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A. The missing keys are a best practice (APG Combobox pattern).</dd></div>
-        <div><dt>The right way</dt><dd><code>role="combobox"</code> with <code>aria-expanded</code> and a listbox. The arrows move through the options, Enter accepts and Escape closes.</dd></div>
-      </dl></li>
     <li><h4>The Publish agent dialog does not take the focus</h4>
       <dl>
         <div><dt>Where</dt><dd>Modal dialog card: Publish agent.</dd></div>
@@ -865,81 +750,9 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>Best practice: APG Dialog (Modal) pattern.</dd></div>
         <div><dt>The right way</dt><dd>A native <code>&lt;dialog&gt;</code> closes on Escape, and a form inside it submits on Enter.</dd></div>
       </dl></li>
-    <li><h4>The Delete agent alert starts on the destructive button</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Alert dialog card: Delete agent.</dd></div>
-        <div><dt>What is wrong</dt><dd>The focus lands on Delete agent, so a quick Enter deletes, and Escape does not close the alert.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: open it, press Escape.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Alert Dialog pattern (focus the least destructive action).</dd></div>
-        <div><dt>The right way</dt><dd>The focus starts on Cancel, and Escape closes without deleting.</dd></div>
-      </dl></li>
-    <li><h4>Closing the Delete agent alert loses the focus</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Alert dialog card, after Cancel or Delete agent.</dd></div>
-        <div><dt>What is wrong</dt><dd>The focus does not return to the button that opened it.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: close it, then Tab.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
-        <div><dt>The right way</dt><dd>On close, the focus returns to the Delete agent button on the card.</dd></div>
-      </dl></li>
-    <li><h4>The Share popover is at the end of the Tab order</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Non-modal popover card: Share.</dd></div>
-        <div><dt>What is wrong</dt><dd>Opening the popover leaves the focus on Share, and its Copy link and Done buttons come only after everything else on the page.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Enter on Share, then Tab.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
-        <div><dt>The right way</dt><dd>The <code>popover</code> sits right after the Share button in the page, so Tab reaches it next.</dd></div>
-      </dl></li>
-    <li><h4>The Share popover ignores Escape</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Non-modal popover card.</dd></div>
-        <div><dt>What is wrong</dt><dd>Escape does not close it and Tabbing away leaves it open over the page. Share does not say whether it is open.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Escape.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Dialog pattern.</dd></div>
-        <div><dt>The right way</dt><dd>The native popover closes on Escape and returns the focus to Share.</dd></div>
-      </dl></li>
-    <li><h4>The calendar opens on focus and Escape does not close it</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Date picker card: Go-live date.</dd></div>
-        <div><dt>What is wrong</dt><dd>Tabbing into the field pops up a calendar over the page. Escape does not dismiss it and Tab does not close it.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab into the field, press Escape.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>1.4.13 Content on Hover or Focus, AA</dd></div>
-        <div><dt>The right way</dt><dd><code>&lt;input type="date"&gt;</code>: the browser's calendar opens only on request and closes with Escape.</dd></div>
-      </dl></li>
-    <li><h4>The calendar is 33 Tab stops with no arrow keys</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Date picker card: the calendar.</dd></div>
-        <div><dt>What is wrong</dt><dd>Every day is a Tab stop named only "1", "2"… with no month, the arrows do nothing, and the selected day is shown only by colour. Tab and Enter still pick a day.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard · screen reader.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Date Picker Dialog example.</dd></div>
-        <div><dt>The right way</dt><dd>The native date field. A custom one has one Tab stop, the arrows move by day and week, and every day has its full date as its name.</dd></div>
-      </dl></li>
   </ol>
   <h3>No keys of their own</h3>
-  <ol class="bugs" start="36">
-    <li><h4>The Published versions table cannot be sorted with the keyboard</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Table card: the Version and Published headers.</dd></div>
-        <div><dt>What is wrong</dt><dd>The headers are clickable but contain no button, so Tab skips them and only a mouse can sort.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
-        <div><dt>The right way</dt><dd>A <code>&lt;button&gt;</code> inside each sortable header.</dd></div>
-      </dl></li>
-    <li><h4>The Published versions table does not say how it is sorted</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Table card: the column headers.</dd></div>
-        <div><dt>What is wrong</dt><dd>The direction is shown only by an arrow. There is no <code>aria-sort</code>, and nothing is announced after sorting.</dd></div>
-        <div><dt>How to find it</dt><dd>Accessibility pane.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
-        <div><dt>The right way</dt><dd><code>aria-sort</code> on the sorted header, and a short announcement such as "Sorted by Version, newest first".</dd></div>
-      </dl></li>
-    <li><h4>The Custom CSS editor traps the keyboard</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Editor that uses Tab card: Custom CSS.</dd></div>
-        <div><dt>What is wrong</dt><dd>Tab and Shift+Tab both insert spaces and Escape does nothing, so a keyboard user cannot leave the field. Nothing explains a way out.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab into it, then try Tab, Shift+Tab, Escape.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.2 No Keyboard Trap, A</dd></div>
-        <div><dt>The right way</dt><dd>Escape followed by Tab leaves the editor, and that way out is written next to it.</dd></div>
-      </dl></li>
+  <ol class="bugs" start="16">
     <li><h4>The messages are not announced</h4>
       <dl>
         <div><dt>Where</dt><dd>Status message card: Sync settings, and every other message on the page.</dd></div>

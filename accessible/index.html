@@ -1125,7 +1125,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <h3 data-apg="switch">Switch</h3>
           <div class="kb-head"><span class="kb-label">Availability</span><span data-keys="switch" data-name="the availability switch"></span></div>
           <div class="kb-switch-row">
-
             <label for="kb-247">Available outside business hours</label>
             <input type="checkbox" role="switch" id="kb-247" class="kb-switch">
           </div>
@@ -1133,7 +1132,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="disclosure">Disclosure</h3>
           <div class="kb-head"><span class="kb-label">Logging</span><span data-keys="disclosure" data-name="the Advanced options disclosure"></span></div>
-
           <details class="kb-disclosure">
             <summary>Advanced options</summary>
             <div class="kb-stack">
@@ -1181,9 +1179,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="spinbutton">Spin button</h3>
           <div class="kb-head"><label for="kb-turns">Maximum turns</label><span data-keys="spinbutton" data-name="the Maximum turns field"></span></div>
-
           <input type="number" id="kb-turns" class="kb-num" min="1" max="50" step="1" value="10">
-
           <p class="kb-note">Between 1 and 50 turns before the agent hands over.</p>
         </div>
       </div>
@@ -1195,7 +1191,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       <div class="kb-grid">
         <div class="kb-card">
           <h3 data-apg="radio">Radio group</h3>
-
           <fieldset>
             <legend>Agent type</legend>
             <span data-keys="radio" data-name="the Agent type cards"></span>
@@ -1236,7 +1231,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
               <span class="tb-sep"></span>
               <button type="button" class="tb text" data-toast="A link would be inserted here.">Insert link</button>
             </div>
-
             <textarea id="kb-prompt" rows="4">You are Booking helper, the assistant of a chain of service centres. Book, change and cancel appointments. Hand over to a person when the visitor asks for one.</textarea>
           </div>
         </div>
@@ -1250,13 +1244,11 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
             <option>Returns and refunds</option>
             <option>Store locator</option>
           </select>
-
           <p class="kb-note">Takes over when this agent cannot answer.</p>
         </div>
         <div class="kb-card">
           <h3 data-apg="treeview">Tree view</h3>
           <div class="kb-head"><span class="kb-label" id="kb-tree-label">Knowledge sources</span><span data-keys="treeview" data-name="the Knowledge sources tree"></span></div>
-
           <ul class="kb-tree" role="tree" aria-labelledby="kb-tree-label">
             <li role="treeitem" aria-expanded="true" aria-selected="true" tabindex="0"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Product documentation</span>
               <ul role="group">
@@ -1312,12 +1304,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <table class="kb-table" role="grid" aria-labelledby="kb-grid-label" id="kb-grid">
             <thead><tr><th scope="col">Agent</th><th scope="col">Environment</th><th scope="col">Version</th><th scope="col">Region</th><th scope="col">Enabled</th></tr></thead>
             <tbody>
-
               <tr><td><a href="#/agents/1">Customer support bot</a></td><td>Production</td><td>2.4</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Customer support bot in Production"></td></tr>
               <tr><td><a href="#/agents/2">Internal IT helpdesk</a></td><td>Production</td><td>2.3</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Internal IT helpdesk in Production"></td></tr>
               <tr><td><a href="#/agents/5">Booking helper</a></td><td>Staging</td><td>2.4</td><td>US East</td><td><input type="checkbox" aria-label="Enabled, Booking helper in Staging"></td></tr>
               <tr><td><a href="#/agents/8">Store locator</a></td><td>Staging</td><td>2.4</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Store locator in Staging"></td></tr>
-
             </tbody>
           </table>
           </div>
@@ -1389,7 +1379,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
             <input type="text" id="kb-tz" class="kb-text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="kb-tz-list" autocomplete="off">
             <ul class="kb-suggest" id="kb-tz-list" role="listbox" aria-label="Time zones" hidden></ul>
           </div>
-
           <p class="kb-note">Start typing a region or a city.</p>
         </div>
         <div class="kb-card">
@@ -1405,7 +1394,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="popover">Non-modal popover</h3>
           <div class="kb-head"><span class="kb-label">Sharing</span><span data-keys="popover" data-name="the Share popover"></span></div>
-
           <button type="button" class="btn" id="kb-share-btn" popovertarget="kb-share">Share</button>
           <div id="kb-share" popover class="kb-popover" role="dialog" aria-labelledby="kb-share-title">
             <h4 id="kb-share-title">Share this agent</h4>
@@ -1416,7 +1404,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="datepicker">Date picker</h3>
           <div class="kb-head"><label for="kb-golive">Go-live date</label><span data-keys="date" data-name="the Go-live date field"></span></div>
-
           <input type="date" id="kb-golive" class="kb-text" value="2026-12-01">
         </div>
       </div>
@@ -1434,10 +1421,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
             <caption class="visually-hidden">Published versions</caption>
             <thead>
               <tr>
-
                 <th scope="col" class="sorted" aria-sort="descending"><button type="button" class="sort" data-kb-sort="version">Version<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16M6 14l6 6 6-6"/></svg></button></th>
                 <th scope="col"><button type="button" class="sort" data-kb-sort="date">Published<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/></svg></button></th>
-
                 <th scope="col">Published by</th>
                 <th scope="col">Note</th>
               </tr>
@@ -1449,7 +1434,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="trap">Editor that uses Tab</h3>
           <div class="kb-head"><label for="kb-css">Custom CSS</label><span data-keys="editor" data-name="the Custom CSS editor"></span></div>
-
           <p class="kb-note" id="kb-css-hint">Tab inserts two spaces. Press Escape, then Tab, to leave the editor.</p>
           <textarea id="kb-css" class="kb-code" rows="5" aria-describedby="kb-css-hint" data-editor>.chat-widget {
   --accent: #1d4ed8;
@@ -2830,12 +2814,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     var slots = kbSlice(page.querySelectorAll('[data-keys]'));
     slots.forEach(function (slot, n) {
       var id = slot.getAttribute('data-keys'), name = slot.getAttribute('data-name');
-      
       var info = document.createElement('div'), tipId = 'kb-keys-' + n;
       info.className = 'tip-wrap';
       info.innerHTML = '<button type="button" class="icon-btn kb-info" aria-label="Keys for ' + esc(name) + '" aria-describedby="' + tipId + '">' + ICON_INFO + '</button>' +
         '<div class="tip kb-tip" role="tooltip" id="' + tipId + '">' + kbKeysHtml(id) + '</div>';
-      
       var foot = document.createElement('div');
       foot.className = 'kb-foot';
       foot.appendChild(info);
@@ -2864,9 +2846,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       if (!key) return;
       var active = key === kb.sort.key;
       th.classList.toggle('sorted', active);
-      
       if (active) th.setAttribute('aria-sort', kb.sort.dir === 'asc' ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort');
-      
       control.querySelector('svg').innerHTML = !active ? '<path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/>' :
         (kb.sort.dir === 'asc' ? '<path d="M12 20V4M6 10l6-6 6 6"/>' : '<path d="M12 4v16M6 14l6 6 6-6"/>');
     });
@@ -2874,9 +2854,9 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   function kbSort(key) {
     kb.sort = { key: key, dir: kb.sort.key === key ? (kb.sort.dir === 'asc' ? 'desc' : 'asc') : 'desc' };
     kbRenderVersions();
-    
     var button = kbEl('versions').querySelector('[data-kb-sort="' + key + '"]');
     if (button) button.focus();
+    
     announce('Sorted by ' + (key === 'version' ? 'Version' : 'Published') + ', ' + (kb.sort.dir === 'asc' ? 'oldest first' : 'newest first'));
   }
   function kbInsertSpaces(ta) {
@@ -2891,7 +2871,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     }
     return null;
   }
-  
   function kbMenuItems(menu) { return kbSlice(menu.querySelectorAll('[role="menuitem"]')); }
   function kbCloseMenu(returnFocus) {
     if (!kb.menu) return;
@@ -3292,12 +3271,16 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     kbRenderVersions();
     var editor = page.querySelector('[data-editor]');
     editor.addEventListener('keydown', function (e) {
-      
       if (e.key === 'Escape') { kb.escapeArmed = true; return; }
       if (e.key === 'Tab' && !e.shiftKey && !kb.escapeArmed) { e.preventDefault(); kbInsertSpaces(editor); }
       else if (e.key !== 'Tab') kb.escapeArmed = false;
     });
     editor.addEventListener('blur', function () { kb.escapeArmed = false; });
+    kbToolbar(page);
+    kbSlice(page.querySelectorAll('[role="tree"]')).forEach(kbTree);
+    kbGrid(page);
+    kbDialogs(page);
+    kbCombobox(page);
     
     var range = kbEl('creativity');
     range.addEventListener('input', function () {
@@ -3306,13 +3289,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     });
     kbChips(page);
     kbTabs(page);
-    kbToolbar(page);
-    kbSlice(page.querySelectorAll('[role="tree"]')).forEach(kbTree);
-    kbGrid(page);
     kbMenuButton(page);
     kbMenubar(page);
-    kbDialogs(page);
-    kbCombobox(page);
     page.addEventListener('focusout', function (e) {
       if (!kb.menu || !e.relatedTarget || e.relatedTarget === kb.menu.button) return;
       if (!kb.menu.menu.contains(e.relatedTarget)) kbCloseMenu(false);
@@ -3368,14 +3346,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       if (close) close.closest('dialog').close();
       var sort = e.target.closest('button[data-kb-sort]');
       if (sort) { kbSort(sort.getAttribute('data-kb-sort')); return; }
-      
       var toast = e.target.closest('[data-toast]');
       if (toast) kbToast(toast.getAttribute('data-toast'));
     });
     page.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
     });
-    
     ['focusin', 'mouseover'].forEach(function (type) {
       page.addEventListener(type, function (e) {
         var wrap = e.target.closest && e.target.closest('.kb-foot .tip-wrap');
@@ -3387,7 +3363,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       var wrap = e.target.closest && e.target.closest('.kb-foot .tip-wrap');
       if (wrap && !wrap.contains(e.relatedTarget)) wrap.classList.remove('tip-open');
     });
-    
     kb.docClick = function (e) {
       if (!e.target.closest('.tip-wrap')) kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
       
@@ -4011,12 +3986,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       return;
     }
   });
-  
-  function onDialogClose() {
-    var current = pending;
-    pending = null;
-    if (current && current.trigger) current.trigger.focus();
-  }
+  // Keeps Tab inside a modal dialog instead of letting it reach the browser's own controls.
   function trapTab(dialogEl) {
     dialogEl.addEventListener('keydown', function (e) {
       if (e.key !== 'Tab') return;
@@ -4025,6 +3995,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
+  }
+  
+  function onDialogClose() {
+    var current = pending;
+    pending = null;
+    if (current && current.trigger) current.trigger.focus();
   }
   confirmDialog.addEventListener('close', onDialogClose);
   renameDialog.addEventListener('close', onDialogClose);

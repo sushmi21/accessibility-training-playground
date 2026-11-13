@@ -1197,7 +1197,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <div class="kb-row">
 <!--IF BROKEN-->
             <button type="button" class="btn btn-primary no-ring" data-toast="Draft saved.">Save draft</button>
-            <div class="btn" data-toast="Draft reset.">Reset</div>
+            <button type="button" class="btn" data-toast="Draft reset.">Reset</button>
 <!--ELSE-->
             <button type="button" class="btn btn-primary" data-toast="Draft saved.">Save draft</button>
             <button type="button" class="btn" data-toast="Draft reset.">Reset</button>
@@ -1252,28 +1252,14 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <h3 data-apg="switch">Switch</h3>
           <div class="kb-head"><span class="kb-label">Availability</span><span data-keys="switch" data-name="the availability switch"></span></div>
           <div class="kb-switch-row">
-<!--IF BROKEN-->
-            <span class="kb-label" id="kb-247-label">Available outside business hours</span>
-            <div class="kb-switch" role="switch" tabindex="0" aria-checked="false" aria-labelledby="kb-247-label"></div>
-<!--ELSE-->
             <label for="kb-247">Available outside business hours</label>
             <input type="checkbox" role="switch" id="kb-247" class="kb-switch">
-<!--ENDIF-->
           </div>
         </div>
 
         <div class="kb-card">
           <h3 data-apg="disclosure">Disclosure</h3>
           <div class="kb-head"><span class="kb-label">Logging</span><span data-keys="disclosure" data-name="the Advanced options disclosure"></span></div>
-<!--IF BROKEN-->
-          <div class="kb-disc">
-            <div class="kb-disc-head" tabindex="0" data-disclose="kb-adv"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Advanced options</div>
-            <div id="kb-adv" class="kb-stack" hidden>
-              <label class="kb-check"><input type="checkbox">Log conversations for quality review</label>
-              <p class="kb-note">Logs are kept for 30 days and then deleted.</p>
-            </div>
-          </div>
-<!--ELSE-->
           <details class="kb-disclosure">
             <summary>Advanced options</summary>
             <div class="kb-stack">
@@ -1281,28 +1267,16 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
               <p class="kb-note">Logs are kept for 30 days and then deleted.</p>
             </div>
           </details>
-<!--ENDIF-->
         </div>
 
         <div class="kb-card">
           <h3 data-apg="accordion">Accordion</h3>
           <div class="kb-head"><span class="kb-label">Conversation rules</span><span data-keys="accordion" data-name="the Conversation rules accordion"></span></div>
-<!--IF BROKEN-->
-          <div class="kb-acc">
-            <h4><button type="button" class="kb-acc-btn" aria-expanded="true" aria-controls="kb-acc-1" tabindex="1">Greeting</button></h4>
-            <div id="kb-acc-1" class="kb-acc-panel"><p>The agent greets by name when the visitor is signed in, and asks how it can help.</p></div>
-            <h4><button type="button" class="kb-acc-btn" aria-expanded="false" aria-controls="kb-acc-2" tabindex="2">Fallback answer</button></h4>
-            <div id="kb-acc-2" class="kb-acc-panel" hidden><p>After two misunderstood messages the agent offers the three most common topics as buttons.</p></div>
-            <h4><button type="button" class="kb-acc-btn" aria-expanded="false" aria-controls="kb-acc-3" tabindex="3">Handover rules</button></h4>
-            <div id="kb-acc-3" class="kb-acc-panel" hidden><p>Conversations are handed to a human when the visitor asks for one, or after a third fallback.</p></div>
-          </div>
-<!--ELSE-->
           <div class="kb-acc">
             <details name="kb-rules" open><summary>Greeting</summary><p>The agent greets by name when the visitor is signed in, and asks how it can help.</p></details>
             <details name="kb-rules"><summary>Fallback answer</summary><p>After two misunderstood messages the agent offers the three most common topics as buttons.</p></details>
             <details name="kb-rules"><summary>Handover rules</summary><p>Conversations are handed to a human when the visitor asks for one, or after a third fallback.</p></details>
           </div>
-<!--ENDIF-->
         </div>
 
         <div class="kb-card">
@@ -1342,11 +1316,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="spinbutton">Spin button</h3>
           <div class="kb-head"><label for="kb-turns">Maximum turns</label><span data-keys="spinbutton" data-name="the Maximum turns field"></span></div>
-<!--IF BROKEN-->
-          <div class="kb-stepper"><button type="button" data-step="-1" aria-label="Decrease">−</button><input type="text" inputmode="numeric" id="kb-turns" class="kb-num" value="10"><button type="button" data-step="1" aria-label="Increase">+</button></div>
-<!--ELSE-->
           <input type="number" id="kb-turns" class="kb-num" min="1" max="50" step="1" value="10">
-<!--ENDIF-->
           <p class="kb-note">Between 1 and 50 turns before the agent hands over.</p>
         </div>
 
@@ -1360,14 +1330,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
 
         <div class="kb-card">
           <h3 data-apg="radio">Radio group</h3>
-<!--IF BROKEN-->
-          <div class="kb-head"><span class="kb-label" id="kb-type-label">Agent type</span><span data-keys="radio" data-name="the Agent type cards"></span></div>
-          <div class="kb-cards" role="radiogroup" aria-labelledby="kb-type-label">
-            <div class="kb-choice"><div class="kb-fake" role="radio" aria-checked="true" tabindex="0" data-radio>Chat<span class="desc">Text on the website</span></div></div>
-            <div class="kb-choice"><div class="kb-fake" role="radio" aria-checked="false" tabindex="0" data-radio>Voice<span class="desc">Phone and voice apps</span></div></div>
-            <div class="kb-choice"><div class="kb-fake" role="radio" aria-checked="false" tabindex="0" data-radio>Email<span class="desc">Replies to a shared inbox</span></div></div>
-          </div>
-<!--ELSE-->
           <fieldset>
             <legend>Agent type</legend>
             <span data-keys="radio" data-name="the Agent type cards"></span>
@@ -1377,7 +1339,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
               <div class="kb-choice"><input type="radio" class="visually-hidden" name="kb-type" id="kb-type-email" value="email"><label for="kb-type-email">Email<span class="desc">Replies to a shared inbox</span></label></div>
             </div>
           </fieldset>
-<!--ENDIF-->
         </div>
 
         <div class="kb-card">
@@ -1408,21 +1369,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <h3 data-apg="toolbar">Toolbar</h3>
           <div class="kb-head"><label for="kb-prompt">Prompt</label><span data-keys="toolbar" data-name="the prompt formatting toolbar"></span></div>
           <div class="kb-editor">
-<!--IF BROKEN-->
-            <div class="kb-toolbar">
-              <button type="button" class="tb" data-format="bold" title="Bold"><b>B</b></button>
-              <button type="button" class="tb" data-format="italic" title="Italic"><i>I</i></button>
-              <button type="button" class="tb" data-format="underline" title="Underline"><u>U</u></button>
-              <span class="tb-sep"></span>
-              <span class="kb-align">
-                <button type="button" class="tb on" data-align="left" title="Align left"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="18" y2="18"/></svg></button>
-                <button type="button" class="tb" data-align="center" title="Align centre"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="5" y1="18" x2="19" y2="18"/></svg></button>
-                <button type="button" class="tb" data-align="right" title="Align right"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="4" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="6" y1="18" x2="20" y2="18"/></svg></button>
-              </span>
-              <span class="tb-sep"></span>
-              <button type="button" class="tb text" data-toast="A link would be inserted here.">Insert link</button>
-            </div>
-<!--ELSE-->
             <div role="toolbar" class="kb-toolbar" aria-label="Prompt formatting" aria-controls="kb-prompt">
               <button type="button" class="tb" aria-pressed="false" aria-label="Bold" data-format="bold"><b>B</b></button>
               <button type="button" class="tb" aria-pressed="false" aria-label="Italic" data-format="italic"><i>I</i></button>
@@ -1437,23 +1383,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
               <span class="tb-sep"></span>
               <button type="button" class="tb text" data-toast="A link would be inserted here.">Insert link</button>
             </div>
-<!--ENDIF-->
             <textarea id="kb-prompt" rows="4">You are Booking helper, the assistant of a chain of service centres. Book, change and cancel appointments. Hand over to a person when the visitor asks for one.</textarea>
           </div>
         </div>
 
         <div class="kb-card">
           <h3 data-apg="listbox">Listbox</h3>
-<!--IF BROKEN-->
-          <div class="kb-head"><span class="kb-label" id="kb-fallback-label">Fallback agent</span><span data-keys="listbox" data-name="the Fallback agent list"></span></div>
-          <ul class="kb-list" aria-labelledby="kb-fallback-label">
-            <li tabindex="0" data-option>None</li>
-            <li tabindex="0" class="selected" data-option>Customer support bot</li>
-            <li tabindex="0" data-option>Internal IT helpdesk</li>
-            <li tabindex="0" data-option>Returns and refunds</li>
-            <li tabindex="0" data-option>Store locator</li>
-          </ul>
-<!--ELSE-->
           <div class="kb-head"><label for="kb-fallback">Fallback agent</label><span data-keys="listbox" data-name="the Fallback agent list"></span></div>
           <select id="kb-fallback" size="5">
             <option>None</option>
@@ -1462,36 +1397,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
             <option>Returns and refunds</option>
             <option>Store locator</option>
           </select>
-<!--ENDIF-->
           <p class="kb-note">Takes over when this agent cannot answer.</p>
         </div>
 
         <div class="kb-card">
           <h3 data-apg="treeview">Tree view</h3>
           <div class="kb-head"><span class="kb-label" id="kb-tree-label">Knowledge sources</span><span data-keys="treeview" data-name="the Knowledge sources tree"></span></div>
-<!--IF BROKEN-->
-          <ul class="kb-tree" role="tree" aria-labelledby="kb-tree-label">
-            <li role="treeitem" aria-expanded="true" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Product documentation</span>
-              <ul role="group">
-                <li role="treeitem" class="leaf" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Getting started</span></li>
-                <li role="treeitem" class="leaf" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Billing FAQ</span></li>
-                <li role="treeitem" aria-expanded="false" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>API reference</span>
-                  <ul role="group">
-                    <li role="treeitem" class="leaf" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Endpoints</span></li>
-                    <li role="treeitem" class="leaf" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Authentication</span></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li role="treeitem" aria-expanded="false" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Support articles</span>
-              <ul role="group">
-                <li role="treeitem" class="leaf" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Returns policy</span></li>
-                <li role="treeitem" class="leaf" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Delivery times</span></li>
-              </ul>
-            </li>
-            <li role="treeitem" class="leaf" tabindex="0" data-node><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Release notes</span></li>
-          </ul>
-<!--ELSE-->
           <ul class="kb-tree" role="tree" aria-labelledby="kb-tree-label">
             <li role="treeitem" aria-expanded="true" aria-selected="true" tabindex="0"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Product documentation</span>
               <ul role="group">
@@ -1513,7 +1424,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
             </li>
             <li role="treeitem" class="leaf" aria-selected="false" tabindex="-1"><span class="node"><svg class="icon twisty" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="9 6 15 12 9 18"/></svg>Release notes</span></li>
           </ul>
-<!--ENDIF-->
         </div>
 
 <!--IF BROKEN-->
@@ -1553,17 +1463,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <table class="kb-table" role="grid" aria-labelledby="kb-grid-label" id="kb-grid">
             <thead><tr><th scope="col">Agent</th><th scope="col">Environment</th><th scope="col">Version</th><th scope="col">Region</th><th scope="col">Enabled</th></tr></thead>
             <tbody>
-<!--IF BROKEN-->
-              <tr><td tabindex="0"><a href="#/agents/1">Customer support bot</a></td><td tabindex="0">Production</td><td tabindex="0">2.4</td><td tabindex="0">EU Central</td><td tabindex="0"><input type="checkbox" checked aria-label="Enabled, Customer support bot in Production"></td></tr>
-              <tr><td tabindex="0"><a href="#/agents/2">Internal IT helpdesk</a></td><td tabindex="0">Production</td><td tabindex="0">2.3</td><td tabindex="0">EU Central</td><td tabindex="0"><input type="checkbox" checked aria-label="Enabled, Internal IT helpdesk in Production"></td></tr>
-              <tr><td tabindex="0"><a href="#/agents/5">Booking helper</a></td><td tabindex="0">Staging</td><td tabindex="0">2.4</td><td tabindex="0">US East</td><td tabindex="0"><input type="checkbox" aria-label="Enabled, Booking helper in Staging"></td></tr>
-              <tr><td tabindex="0"><a href="#/agents/8">Store locator</a></td><td tabindex="0">Staging</td><td tabindex="0">2.4</td><td tabindex="0">EU Central</td><td tabindex="0"><input type="checkbox" checked aria-label="Enabled, Store locator in Staging"></td></tr>
-<!--ELSE-->
               <tr><td><a href="#/agents/1">Customer support bot</a></td><td>Production</td><td>2.4</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Customer support bot in Production"></td></tr>
               <tr><td><a href="#/agents/2">Internal IT helpdesk</a></td><td>Production</td><td>2.3</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Internal IT helpdesk in Production"></td></tr>
               <tr><td><a href="#/agents/5">Booking helper</a></td><td>Staging</td><td>2.4</td><td>US East</td><td><input type="checkbox" aria-label="Enabled, Booking helper in Staging"></td></tr>
               <tr><td><a href="#/agents/8">Store locator</a></td><td>Staging</td><td>2.4</td><td>EU Central</td><td><input type="checkbox" checked aria-label="Enabled, Store locator in Staging"></td></tr>
-<!--ENDIF-->
             </tbody>
           </table>
           </div>
@@ -1668,17 +1571,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="combobox">Editable combobox</h3>
           <div class="kb-head"><label for="kb-tz">Time zone</label><span data-keys="autocomplete" data-name="the Time zone field"></span></div>
-<!--IF BROKEN-->
-          <div class="kb-combo">
-            <input type="text" id="kb-tz" class="kb-text" autocomplete="off" data-suggest>
-            <ul class="kb-suggest" hidden></ul>
-          </div>
-<!--ELSE-->
           <div class="kb-combo">
             <input type="text" id="kb-tz" class="kb-text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="kb-tz-list" autocomplete="off">
             <ul class="kb-suggest" id="kb-tz-list" role="listbox" aria-label="Time zones" hidden></ul>
           </div>
-<!--ENDIF-->
           <p class="kb-note">Start typing a region or a city.</p>
         </div>
 
@@ -1697,29 +1593,18 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="popover">Non-modal popover</h3>
           <div class="kb-head"><span class="kb-label">Sharing</span><span data-keys="popover" data-name="the Share popover"></span></div>
-<!--IF BROKEN-->
-          <button type="button" class="btn" id="kb-share-btn" data-fakepop="kb-share">Share</button>
-<!--ELSE-->
           <button type="button" class="btn" id="kb-share-btn" popovertarget="kb-share">Share</button>
           <div id="kb-share" popover class="kb-popover" role="dialog" aria-labelledby="kb-share-title">
             <h4 id="kb-share-title">Share this agent</h4>
             <div class="field"><label for="kb-share-link">Link</label><input type="text" id="kb-share-link" readonly value="https://studio.example.com/agents/5" autofocus></div>
             <div class="actions"><button type="button" class="btn btn-primary" data-copy="kb-share-link">Copy link</button><button type="button" class="btn" popovertarget="kb-share" popovertargetaction="hide">Done</button></div>
           </div>
-<!--ENDIF-->
         </div>
 
         <div class="kb-card">
           <h3 data-apg="datepicker">Date picker</h3>
           <div class="kb-head"><label for="kb-golive">Go-live date</label><span data-keys="date" data-name="the Go-live date field"></span></div>
-<!--IF BROKEN-->
-          <div class="kb-date-wrap">
-            <input type="text" id="kb-golive" class="kb-text" placeholder="DD.MM.YYYY" value="01.12.2026" autocomplete="off" data-calendar>
-            <div class="kb-cal" id="kb-cal" hidden></div>
-          </div>
-<!--ELSE-->
           <input type="date" id="kb-golive" class="kb-text" value="2026-12-01">
-<!--ENDIF-->
         </div>
 
       </div>
@@ -1738,13 +1623,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
             <caption class="visually-hidden">Published versions</caption>
             <thead>
               <tr>
-<!--IF BROKEN-->
-                <th scope="col" class="sortable sorted" data-kb-sort="version">Version<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16M6 14l6 6 6-6"/></svg></th>
-                <th scope="col" class="sortable" data-kb-sort="date">Published<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/></svg></th>
-<!--ELSE-->
                 <th scope="col" class="sorted" aria-sort="descending"><button type="button" class="sort" data-kb-sort="version">Version<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v16M6 14l6 6 6-6"/></svg></button></th>
                 <th scope="col"><button type="button" class="sort" data-kb-sort="date">Published<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/></svg></button></th>
-<!--ENDIF-->
                 <th scope="col">Published by</th>
                 <th scope="col">Note</th>
               </tr>
@@ -1757,18 +1637,11 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="kb-card">
           <h3 data-apg="trap">Editor that uses Tab</h3>
           <div class="kb-head"><label for="kb-css">Custom CSS</label><span data-keys="editor" data-name="the Custom CSS editor"></span></div>
-<!--IF BROKEN-->
-          <textarea id="kb-css" class="kb-code" rows="5" data-editor>.chat-widget {
-  --accent: #1d4ed8;
-  border-radius: 12px;
-}</textarea>
-<!--ELSE-->
           <p class="kb-note" id="kb-css-hint">Tab inserts two spaces. Press Escape, then Tab, to leave the editor.</p>
           <textarea id="kb-css" class="kb-code" rows="5" aria-describedby="kb-css-hint" data-editor>.chat-widget {
   --accent: #1d4ed8;
   border-radius: 12px;
 }</textarea>
-<!--ENDIF-->
         </div>
 
         <div class="kb-card">
@@ -1790,18 +1663,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="actions"><button type="button" class="btn" data-close>Cancel</button><button type="button" class="btn btn-primary" data-close data-toast="Agent published.">Publish</button></div>
       </div>
     </div>
-    <div class="dialog-backdrop kb-dialog-fake" id="kb-delete" hidden>
-      <div class="dialog" role="alertdialog" aria-labelledby="kb-delete-title" aria-describedby="kb-delete-text" data-trap>
-        <div class="dialog-header"><h2 id="kb-delete-title">Delete this agent?</h2></div>
-        <p id="kb-delete-text">This removes Booking helper and its conversation history. It cannot be undone.</p>
-        <div class="actions"><button type="button" class="btn" data-close>Cancel</button><button type="button" class="btn btn-danger" data-close data-toast="Agent deleted." data-first>Delete agent</button></div>
-      </div>
-    </div>
-    <div id="kb-share" class="kb-popover kb-popover-fake" hidden>
-      <h4>Share this agent</h4>
-      <div class="field"><label for="kb-share-link">Link</label><input type="text" id="kb-share-link" readonly value="https://studio.example.com/agents/5"></div>
-      <div class="actions"><button type="button" class="btn btn-primary" data-copy="kb-share-link">Copy link</button><button type="button" class="btn" data-fakepop-close="kb-share">Done</button></div>
-    </div>
 <!--ELSE-->
     <dialog id="kb-publish" aria-labelledby="kb-publish-title">
       <form method="dialog">
@@ -1811,12 +1672,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="actions"><button type="button" class="btn" data-close>Cancel</button><button type="submit" class="btn btn-primary" value="publish">Publish</button></div>
       </form>
     </dialog>
+<!--ENDIF-->
     <dialog id="kb-delete" role="alertdialog" aria-labelledby="kb-delete-title" aria-describedby="kb-delete-text">
       <div class="dialog-header"><h2 id="kb-delete-title">Delete this agent?</h2></div>
       <p id="kb-delete-text">This removes Booking helper and its conversation history. It cannot be undone.</p>
       <div class="actions"><button type="button" class="btn" data-close autofocus>Cancel</button><button type="button" class="btn btn-danger" data-close data-toast="Agent deleted.">Delete agent</button></div>
     </dialog>
-<!--ENDIF-->
     <div class="kb-toast" id="kb-toast" {{broken:|accessible:role="status"}}></div>
   </div>
 </template>
@@ -3349,17 +3210,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     var slots = kbSlice(page.querySelectorAll('[data-keys]'));
     slots.forEach(function (slot, n) {
       var id = slot.getAttribute('data-keys'), name = slot.getAttribute('data-name');
-      /*IF BROKEN*/
-      var info = document.createElement('span');
-      info.className = 'kb-info';
-      info.title = kbKeysText(id);
-      info.innerHTML = ICON_INFO;
-      /*ELSE*/
       var info = document.createElement('div'), tipId = 'kb-keys-' + n;
       info.className = 'tip-wrap';
       info.innerHTML = '<button type="button" class="icon-btn kb-info" aria-label="Keys for ' + esc(name) + '" aria-describedby="' + tipId + '">' + ICON_INFO + '</button>' +
         '<div class="tip kb-tip" role="tooltip" id="' + tipId + '">' + kbKeysHtml(id) + '</div>';
-      /*ENDIF*/
       var foot = document.createElement('div');
       foot.className = 'kb-foot';
       foot.appendChild(info);
@@ -3388,10 +3242,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       if (!key) return;
       var active = key === kb.sort.key;
       th.classList.toggle('sorted', active);
-      /*IF BROKEN*/
-      /*ELSE*/
       if (active) th.setAttribute('aria-sort', kb.sort.dir === 'asc' ? 'ascending' : 'descending'); else th.removeAttribute('aria-sort');
-      /*ENDIF*/
       control.querySelector('svg').innerHTML = !active ? '<path d="M8 20V4M5 7l3-3 3 3"/><path d="M16 4v16M13 17l3 3 3-3"/>' :
         (kb.sort.dir === 'asc' ? '<path d="M12 20V4M6 10l6-6 6 6"/>' : '<path d="M12 4v16M6 14l6 6 6-6"/>');
     });
@@ -3399,10 +3250,9 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   function kbSort(key) {
     kb.sort = { key: key, dir: kb.sort.key === key ? (kb.sort.dir === 'asc' ? 'desc' : 'asc') : 'desc' };
     kbRenderVersions();
-    /*IF BROKEN*/
-    /*ELSE*/
     var button = kbEl('versions').querySelector('[data-kb-sort="' + key + '"]');
     if (button) button.focus();
+    /*IF BROKEN*//*ELSE*/
     announce('Sorted by ' + (key === 'version' ? 'Version' : 'Published') + ', ' + (kb.sort.dir === 'asc' ? 'oldest first' : 'newest first'));
     /*ENDIF*/
   }
@@ -3418,8 +3268,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     }
     return null;
   }
-  /*IF BROKEN*/
-  /*ELSE*/
   function kbMenuItems(menu) { return kbSlice(menu.querySelectorAll('[role="menuitem"]')); }
   function kbCloseMenu(returnFocus) {
     if (!kb.menu) return;
@@ -3712,7 +3560,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     });
   }
   function kbDialogs(page) {
-    ['publish', 'delete'].forEach(function (id) {
+    [{{broken:|accessible:'publish', }}'delete'].forEach(function (id) {
       var dialog = kbEl(id);
       trapTab(dialog);
       dialog.addEventListener('close', function () {
@@ -3809,7 +3657,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     all.addEventListener('change', function () { chips.forEach(function (c) { c.checked = all.checked; }); all.indeterminate = false; });
     sync();
   }
-  /*ENDIF*/
   /*IF BROKEN*/
   function kbSliderFromPointer(slider, clientX) {
     var rect = slider.getBoundingClientRect();
@@ -3818,19 +3665,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     slider.querySelector('.thumb').style.left = pct + '%';
     slider.setAttribute('aria-valuenow', String(pct));
     kbEl('creativity-value').textContent = String(pct);
-  }
-  function kbRenderCalendar() {
-    var cal = kbEl('cal'), days = '';
-    for (var d = 1; d <= 31; d++) days += '<button type="button" data-day="' + d + '"' + (d === 1 ? ' class="sel"' : '') + '>' + d + '</button>';
-    cal.innerHTML = '<div class="cal-head"><button type="button" class="icon-btn" title="Previous month">‹</button><span>December 2026</span><button type="button" class="icon-btn" title="Next month">›</button></div>' +
-      '<div class="cal-grid"><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span><span></span>' + days + '</div>';
-    cal.hidden = false;
-  }
-  function kbSuggest(input) {
-    var list = input.nextElementSibling, q = input.value.trim().toLowerCase();
-    var matches = q ? KB_TZ.filter(function (tz) { return tz.toLowerCase().indexOf(q) !== -1; }) : KB_TZ;
-    list.innerHTML = matches.map(function (tz) { return '<li>' + esc(tz) + '</li>'; }).join('');
-    list.hidden = !matches.length;
   }
   function kbFakeDialog(id, open) {
     var backdrop = document.getElementById(id);
@@ -3843,39 +3677,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     slider.addEventListener('pointerdown', function (e) { kb.drag = true; slider.setPointerCapture(e.pointerId); kbSliderFromPointer(slider, e.clientX); });
     slider.addEventListener('pointermove', function (e) { if (kb.drag) kbSliderFromPointer(slider, e.clientX); });
     slider.addEventListener('pointerup', function () { kb.drag = false; });
-    var tz = page.querySelector('[data-suggest]');
-    tz.addEventListener('input', function () { kbSuggest(tz); });
-    tz.addEventListener('focus', function () { kbSuggest(tz); });
-    tz.addEventListener('blur', function () { setTimeout(function () { tz.nextElementSibling.hidden = true; }, 150); });
-    tz.nextElementSibling.addEventListener('mousedown', function (e) {
-      var li = e.target.closest('li');
-      if (!li) return;
-      e.preventDefault();
-      tz.value = li.textContent;
-      tz.nextElementSibling.hidden = true;
-    });
-    var date = page.querySelector('[data-calendar]');
-    date.addEventListener('focus', kbRenderCalendar);
-    kbEl('cal').addEventListener('click', function (e) {
-      var day = e.target.closest('[data-day]');
-      if (!day) return;
-      date.value = (day.getAttribute('data-day').length === 1 ? '0' : '') + day.getAttribute('data-day') + '.12.2026';
-      kbEl('cal').hidden = true;
-    });
     kbEl('lang').addEventListener('change', function () {
       var heading = viewEl.querySelector('h1');
       heading.setAttribute('tabindex', '-1');
       document.getElementById('main').scrollTop = 0;
       heading.focus();
       kbToast('Language applied. The page was reloaded.');
-    });
-    var trap = page.querySelector('[data-trap]');
-    trap.addEventListener('keydown', function (e) {
-      if (e.key !== 'Tab') return;
-      var items = trap.querySelectorAll('button');
-      var first = items[0], last = items[items.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
     page.addEventListener('keydown', function (e) {
       var chip = e.target.closest('[data-channel]');
@@ -3886,47 +3693,23 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         chip.setAttribute('aria-checked', e.target.checked ? 'true' : 'false');
         chip.classList.toggle('checked', e.target.checked);
       });
+      e.target.indeterminate = false;
     });
+    kbSyncAllChannels(page);
+  }
+  function kbSyncAllChannels(page) {
+    var chips = kbSlice(page.querySelectorAll('[data-channel]'));
+    var on = chips.filter(function (c) { return c.getAttribute('aria-checked') === 'true'; }).length;
+    kbEl('all-channels').checked = on === chips.length;
+    kbEl('all-channels').indeterminate = on > 0 && on < chips.length;
   }
   function kbBrokenClick(e, page) {
-    var step = e.target.closest('[data-step]');
-    if (step) {
-      var field = kbEl('turns');
-      field.value = String((parseInt(field.value, 10) || 0) + parseInt(step.getAttribute('data-step'), 10));
-      return true;
-    }
     var chip = e.target.closest('[data-channel]');
     if (chip) {
       var on = chip.getAttribute('aria-checked') !== 'true';
       chip.setAttribute('aria-checked', on ? 'true' : 'false');
       chip.classList.toggle('checked', on);
-      return true;
-    }
-    var sw = e.target.closest('[role="switch"]');
-    if (sw) {
-      sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
-      return true;
-    }
-    var radio = e.target.closest('[data-radio]');
-    if (radio) {
-      kbSlice(page.querySelectorAll('[data-radio]')).forEach(function (r) { r.setAttribute('aria-checked', r === radio ? 'true' : 'false'); });
-      return true;
-    }
-    var disclose = e.target.closest('[data-disclose]');
-    if (disclose) {
-      var panel = document.getElementById(disclose.getAttribute('data-disclose'));
-      panel.hidden = !panel.hidden;
-      disclose.classList.toggle('open', !panel.hidden);
-      return true;
-    }
-    var acc = e.target.closest('.kb-acc-btn');
-    if (acc) {
-      var expand = acc.getAttribute('aria-expanded') !== 'true';
-      kbSlice(page.querySelectorAll('.kb-acc-btn')).forEach(function (b) {
-        var open = b === acc && expand;
-        b.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.getElementById(b.getAttribute('aria-controls')).hidden = !open;
-      });
+      kbSyncAllChannels(page);
       return true;
     }
     var tab = e.target.closest('.kb-tab[data-tab]');
@@ -3938,40 +3721,11 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       });
       return true;
     }
-    var format = e.target.closest('[data-format]');
-    if (format) { format.classList.toggle('on'); return true; }
-    var align = e.target.closest('[data-align]');
-    if (align) {
-      kbSlice(page.querySelectorAll('[data-align]')).forEach(function (b) { b.classList.toggle('on', b === align); });
-      return true;
-    }
-    var option = e.target.closest('[data-option]');
-    if (option) {
-      kbSlice(page.querySelectorAll('[data-option]')).forEach(function (o) { o.classList.toggle('selected', o === option); });
-      return true;
-    }
-    var node = e.target.closest('[data-node]');
-    if (node && e.target.closest('.node') && e.target.closest('.node').parentElement === node) {
-      if (node.hasAttribute('aria-expanded')) node.setAttribute('aria-expanded', node.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
-      return true;
-    }
     if (e.target.closest('#kb-more')) { kbEl('more-menu').hidden = !kbEl('more-menu').hidden; return true; }
-    var open = e.target.closest('[data-open]');
-    if (open) { kbFakeDialog(open.getAttribute('data-open'), true); return true; }
-    var close = e.target.closest('[data-close]');
+    var open = e.target.closest('[data-open="kb-publish"]');
+    if (open) { kbFakeDialog('kb-publish', true); return true; }
+    var close = e.target.closest('.kb-dialog-fake [data-close]');
     if (close) { close.closest('.kb-dialog-fake').hidden = true; return true; }
-    var fakepop = e.target.closest('[data-fakepop]');
-    if (fakepop) {
-      var pop = kbEl('share'), rect = fakepop.getBoundingClientRect();
-      pop.style.top = (rect.bottom + 6) + 'px';
-      pop.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 340)) + 'px';
-      pop.hidden = !pop.hidden;
-      return true;
-    }
-    var popClose = e.target.closest('[data-fakepop-close]');
-    if (popClose) { kbEl('share').hidden = true; return true; }
-    var th = e.target.closest('th[data-kb-sort]');
-    if (th) { kbSort(th.getAttribute('data-kb-sort')); return true; }
     return false;
   }
   /*ELSE*/
@@ -3987,15 +3741,16 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     kbRenderVersions();
     var editor = page.querySelector('[data-editor]');
     editor.addEventListener('keydown', function (e) {
-      /*IF BROKEN*/
-      if (e.key === 'Tab') { e.preventDefault(); kbInsertSpaces(editor); }
-      /*ELSE*/
       if (e.key === 'Escape') { kb.escapeArmed = true; return; }
       if (e.key === 'Tab' && !e.shiftKey && !kb.escapeArmed) { e.preventDefault(); kbInsertSpaces(editor); }
       else if (e.key !== 'Tab') kb.escapeArmed = false;
-      /*ENDIF*/
     });
     editor.addEventListener('blur', function () { kb.escapeArmed = false; });
+    kbToolbar(page);
+    kbSlice(page.querySelectorAll('[role="tree"]')).forEach(kbTree);
+    kbGrid(page);
+    kbDialogs(page);
+    kbCombobox(page);
     /*IF BROKEN*/
     kbBrokenHandlers(page);
     /*ELSE*/
@@ -4006,13 +3761,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     });
     kbChips(page);
     kbTabs(page);
-    kbToolbar(page);
-    kbSlice(page.querySelectorAll('[role="tree"]')).forEach(kbTree);
-    kbGrid(page);
     kbMenuButton(page);
     kbMenubar(page);
-    kbDialogs(page);
-    kbCombobox(page);
     page.addEventListener('focusout', function (e) {
       if (!kb.menu || !e.relatedTarget || e.relatedTarget === kb.menu.button) return;
       if (!kb.menu.menu.contains(e.relatedTarget)) kbCloseMenu(false);
@@ -4063,7 +3813,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         if (toasted) kbToast(toasted.getAttribute('data-toast'));
         return;
       }
-      /*ELSE*/
+      /*ENDIF*/
       var open = e.target.closest('[data-open]');
       if (open) {
         kb.trigger = open;
@@ -4076,14 +3826,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       if (close) close.closest('dialog').close();
       var sort = e.target.closest('button[data-kb-sort]');
       if (sort) { kbSort(sort.getAttribute('data-kb-sort')); return; }
-      /*ENDIF*/
       var toast = e.target.closest('[data-toast]');
       if (toast) kbToast(toast.getAttribute('data-toast'));
     });
     page.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
     });
-    /*IF BROKEN*//*ELSE*/
     ['focusin', 'mouseover'].forEach(function (type) {
       page.addEventListener(type, function (e) {
         var wrap = e.target.closest && e.target.closest('.kb-foot .tip-wrap');
@@ -4095,13 +3843,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       var wrap = e.target.closest && e.target.closest('.kb-foot .tip-wrap');
       if (wrap && !wrap.contains(e.relatedTarget)) wrap.classList.remove('tip-open');
     });
-    /*ENDIF*/
     kb.docClick = function (e) {
       if (!e.target.closest('.tip-wrap')) kbSlice(page.querySelectorAll('.tip-wrap.tip-open')).forEach(function (w) { w.classList.remove('tip-open'); });
       /*IF BROKEN*/
       if (!e.target.closest('#kb-more, #kb-more-menu') && kbEl('more-menu')) kbEl('more-menu').hidden = true;
-      if (!e.target.closest('#kb-share, [data-fakepop]') && kbEl('share')) kbEl('share').hidden = true;
-      if (!e.target.closest('.kb-date-wrap') && kbEl('cal')) kbEl('cal').hidden = true;
       /*ELSE*/
       if (kb.menu && !e.target.closest('[role="menu"], [role="menubar"], #kb-more')) kbCloseMenu(false);
       /*ENDIF*/
@@ -4835,13 +4580,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (e.key === 'Enter' && e.target.matches('tr[data-route]')) location.hash = e.target.getAttribute('data-route');
     /*ENDIF*/
   });
-  /*IF BROKEN*/
-  /*ELSE*/
-  function onDialogClose() {
-    var current = pending;
-    pending = null;
-    if (current && current.trigger) current.trigger.focus();
-  }
+  // Keeps Tab inside a modal dialog instead of letting it reach the browser's own controls.
   function trapTab(dialogEl) {
     dialogEl.addEventListener('keydown', function (e) {
       if (e.key !== 'Tab') return;
@@ -4850,6 +4589,13 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
+  }
+  /*IF BROKEN*/
+  /*ELSE*/
+  function onDialogClose() {
+    var current = pending;
+    pending = null;
+    if (current && current.trigger) current.trigger.focus();
   }
   confirmDialog.addEventListener('close', onDialogClose);
   renameDialog.addEventListener('close', onDialogClose);
