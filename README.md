@@ -18,8 +18,8 @@ python3 build.py
 
 The site root forwards to the accessible version, which opens on its Home page:
 the primer and reading list, with links to the seeded version and to
-`documentation/index.html`, where the session plans and missions live. Those two
-pages are plain HTML and are not generated.
+`documentation/index.html`, where the session plans and missions live. Those
+pages and `documentation/answers.html` are plain HTML and are not generated.
 
 The playground covers name, role and state (WCAG 4.1.2), ARIA overriding native
 semantics, text alternatives, keyboard access, bypass blocks (2.4.1), page titles
@@ -56,4 +56,7 @@ node, and multi-select (accessible version only, `aria-multiselectable`),
 where Space adds a node to the selection or removes it and Enter only opens or
 closes it, following the APG's recommended selection model.
 
-The list of seeded bugs is deliberately not in this repository.
+`documentation/answers.html` lists the seeded bugs of the pages whose sessions
+have been held, with the WCAG criterion and the right way for each, so people
+can check their own findings. Pages for sessions still to come are left out
+until their session has run.

@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Seeded bugs – Accessibility training playground</title>
+<style>
+:root { color-scheme: light; }
+body { margin: 0; padding: 0 16px 48px; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #111827; background: #f4f5f7; }
+.site-header { max-width: 760px; margin: 0 auto; padding: 16px 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.site-header .brand { font-weight: 700; color: #111827; text-decoration: none; }
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+main { max-width: 760px; margin: 0 auto; background: #fff; padding: 32px; border: 1px solid #d1d5db; border-radius: 12px; }
+h1 { font-size: 1.8rem; margin: 0 0 8px; }
+h2 { font-size: 1.4rem; margin: 48px 0 8px; padding-top: 16px; border-top: 2px solid #e5e7eb; }
+h3 { font-size: 1.15rem; margin: 28px 0 8px; }
+ol.bugs > li h3, ol.bugs > li h4 { font-size: 1.05rem; margin: 0 0 6px; }
+a { color: #1d4ed8; }
+:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+code { font-size: .9em; background: #f3f4f6; padding: 1px 4px; border-radius: 4px; overflow-wrap: anywhere; }
+.note { padding: 12px 16px; background: #fef3c7; border-left: 4px solid #d97706; border-radius: 4px; }
+.try { color: #374151; }
+ol.bugs { padding-left: 2em; }
+ol.bugs > li::marker { font-weight: 700; color: #374151; }
+ol.bugs > li { margin: 16px 0; padding: 14px 16px; border: 1px solid #d1d5db; border-radius: 8px; }
+dl { margin: 0; }
+dl > div { display: grid; grid-template-columns: 9.5em 1fr; gap: 0 12px; padding: 4px 0; border-top: 1px solid #f3f4f6; }
+dt { font-weight: 600; color: #374151; }
+dd { margin: 0; }
+@media (max-width: 560px) { main { padding: 20px 16px; } dl > div { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header" aria-labelledby="brand">
+  <a class="brand" id="brand" href="../accessible/#/home">Accessibility training playground</a>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="../accessible/#/home">Home</a></li>
+      <li><a href="./">Documentation</a></li>
+      <li><a href="../accessible/">Accessible version</a></li>
+      <li><a href="../broken/">Seeded version</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main" aria-labelledby="page-title">
+  <h1 id="page-title">Seeded bugs</h1>
+  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 104 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
+  <p>For each bug you get where it is, what goes wrong for the user, how to find it, the WCAG 2.2 success criterion it fails (or that it is a best practice), and the right way to build it. The right way is what the <a href="../accessible/">accessible version</a> does, so you can inspect it there.</p>
+  <p class="note">Automated tools find only some of these. Where a bug says axe DevTools, axe reports it; everything else you find with the keyboard, the accessibility tree, a screen reader or your eyes. A level A or AA criterion is a failure; a best practice is not, but users still notice it.</p>
+  <p>Bugs on pages for sessions that have not happened yet, such as the New agent form, are not listed.</p>
+  <nav aria-label="On this page">
+    <ul>
+      <li><a href="#every-page">On every page</a> (6)</li>
+      <li><a href="#session-2">Session 2: Agents page</a> (17)</li>
+      <li><a href="#session-3">Session 3: Settings page</a> (10)</li>
+      <li><a href="#session-4">Session 4: Monitoring page</a> (32)</li>
+      <li><a href="#session-5">Session 5: Components page</a> (39)</li>
+    </ul>
+  </nav>
+
+  <section aria-labelledby="every-page">
+  <h2 id="every-page">On every page</h2>
+  <p>These bugs are in the top bar and the page frame of the seeded version, so you meet them on every screen. They count for every session. The Home page has no bugs of its own: these six are all you will find there.</p>
+  <ol class="bugs" start="1">
+    <li><h3>No skip link</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The first Tab stop on every page.</dd></div>
+        <div><dt>What is wrong</dt><dd>There is no "Skip to main content" link. A keyboard user has to Tab through the logo, Documentation, Help and the whole sidebar on every page before reaching the content.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: press Tab once after the page loads.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.1 Bypass Blocks, A</dd></div>
+        <div><dt>The right way</dt><dd>The first element on the page is a link, <code>&lt;a href="#main"&gt;Skip to main content&lt;/a&gt;</code>. It appears when it gets focus and moves the focus into <code>main</code>.</dd></div>
+      </dl></li>
+    <li><h3>The logo has no text alternative</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The Agent Studio logo at the top left.</dd></div>
+        <div><dt>What is wrong</dt><dd>The image has no <code>alt</code> attribute, so a screen reader reads the file name or just "image".</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (image-alt) · Accessibility pane · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.1.1 Non-text Content, A</dd></div>
+        <div><dt>The right way</dt><dd><code>alt="Agent Studio"</code>: the alt text repeats the text in the logo.</dd></div>
+      </dl></li>
+    <li><h3>The Help button is hidden from screen readers</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The round question mark button at the top right.</dd></div>
+        <div><dt>What is wrong</dt><dd>The button has <code>aria-hidden="true"</code> and no name. Keyboard users can Tab to it, but a screen reader announces nothing: a focus stop with nothing to say.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (aria-hidden-focus) · Accessibility pane · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd>No <code>aria-hidden</code> on the button, and the name "Help" with <code>aria-label</code>. Only the icon inside it is hidden. Removing the button from the Tab order, as axe suggests, would take it away from keyboard users.</dd></div>
+      </dl></li>
+    <li><h3>Documentation is a fake link</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The Documentation button in the top bar.</dd></div>
+        <div><dt>What is wrong</dt><dd>It is a <code>span</code> with <code>role="link"</code>, opened by script. Enter works, but it has no address, so the browser's link features (open in new tab, copy link) do not work, and nothing says it opens in a new tab.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane or Elements panel · mouse: right-click shows no link menu.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: use the native element (the first rule of ARIA).</dd></div>
+        <div><dt>The right way</dt><dd>A real <code>&lt;a href&gt;</code> that says "(opens in a new tab)" in its name.</dd></div>
+      </dl></li>
+    <li><h3>The page title never changes</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The browser tab, on every page.</dd></div>
+        <div><dt>What is wrong</dt><dd>The title stays the same whichever page you open. Screen reader users get no confirmation of where they are, and tabs and history all look alike.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye: look at the browser tab while you move between pages.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.2 Page Titled, A</dd></div>
+        <div><dt>The right way</dt><dd>Every page sets its own title, for example "Agents – Agent Studio playground".</dd></div>
+      </dl></li>
+    <li><h3>Focus stays behind after you open another page</h3>
+      <dl>
+        <div><dt>Where</dt><dd>After a sidebar link, an agent card, a table row or a Back button.</dd></div>
+        <div><dt>What is wrong</dt><dd>The content changes but the focus does not follow. Either it stays on the sidebar link, so a screen reader announces nothing new, or it drops to the top of the document.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: press Enter on a link, then Tab, and see where you are.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>After a page change, the focus moves to the new page's main heading, so its name is read and Tab continues in the new content.</dd></div>
+      </dl></li>
+  </ol>
+  </section>
+
+  <section aria-labelledby="session-2">
+  <h2 id="session-2">Session 2: Agents page</h2>
+  <p>The Agents page in Card view and List view, the More actions menu, the Rename and Delete dialogs, and an agent page opened from the list. The New agent form belongs to a later session and is not listed.</p>
+  <p class="try">The page: <a href="../broken/#/agents">seeded version</a> · <a href="../accessible/#/agents">accessible version</a></p>
+  <ol class="bugs" start="1">
+    <li><h3>The Refresh button has no name</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The round arrow button next to the Agents heading.</dd></div>
+        <div><dt>What is wrong</dt><dd>The icon-only button has no accessible name. A screen reader says only "button".</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (button-name) · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-label="Refresh project list"</code> on the button; the icon stays hidden.</dd></div>
+      </dl></li>
+    <li><h3>The Card and List switch does not say which view is on</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The Card and List toggle above the agents.</dd></div>
+        <div><dt>What is wrong</dt><dd>Two plain buttons. Only the colour shows the current view, so a screen reader hears "Card, button" and "List, button" with no selected state, and nothing groups them.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: no pressed or checked state · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd>A <code>fieldset</code> with the hidden legend "View" and two radio buttons styled as a switch. The checked state is native and the arrow keys move between them.</dd></div>
+      </dl></li>
+    <li><h3>Search results are not announced</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The Search Agents box.</dd></div>
+        <div><dt>What is wrong</dt><dd>Typing filters the agents silently. A screen reader user does not hear how many agents match, or that none do.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader: type in the box and listen.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.3 Status Messages, AA</dd></div>
+        <div><dt>The right way</dt><dd>A hidden status region (<code>role="status"</code>) says "3 agents match" shortly after typing stops.</dd></div>
+      </dl></li>
+    <li><h3>The New agent button is called "Agents"</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The greyed-out New agent button at the top right.</dd></div>
+        <div><dt>What is wrong</dt><dd>The button's name comes from <code>aria-labelledby</code>, which points at the page heading, so its accessible name is "Agents". It does not say what the button does, and a voice control user who says "click New agent" gets nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: expand Name to see which source wins.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.5.3 Label in Name, A</dd></div>
+        <div><dt>The right way</dt><dd>No <code>aria-label</code> and no <code>aria-labelledby</code>: the visible text "New agent" is the name.</dd></div>
+      </dl></li>
+    <li><h3>Why New agent is unavailable is shown only on hover</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The New agent button and its tooltip "You do not have permissions at the moment."</dd></div>
+        <div><dt>What is wrong</dt><dd>The button is disabled, so Tab skips it, and the reason is only in a mouse tooltip. Keyboard and screen reader users never learn why they cannot create an agent.</dd></div>
+        <div><dt>How to find it</dt><dd>Mouse: hover the button · keyboard: Tab skips it.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice / usability (disabled controls are allowed to be skipped, but the reason must reach everyone).</dd></div>
+        <div><dt>The right way</dt><dd>The control stays focusable with <code>aria-disabled="true"</code>, and a real tooltip appears on hover and on focus and closes with Escape.</dd></div>
+      </dl></li>
+    <li><h3>The card list is not a proper list</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Card view, the grid of agent cards.</dd></div>
+        <div><dt>What is wrong</dt><dd>The <code>ul</code> contains links directly instead of list items, so screen readers may not announce the list or its size correctly.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (list).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>Each card is an <code>li</code> inside the <code>ul</code>.</dd></div>
+      </dl></li>
+    <li><h3>The whole card is one link with a button inside</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Card view, each agent card.</dd></div>
+        <div><dt>What is wrong</dt><dd>The whole card is one link, so its name is everything in it: name, description, "More actions" and the last-edited line. The More actions button sits inside that link: a control inside a control.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: read the link's name · screen reader: links list.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd>Only the agent name is a link. The More actions button sits next to it, inside the list item.</dd></div>
+      </dl></li>
+    <li><h3>Table rows are fake links</h3>
+      <dl>
+        <div><dt>Where</dt><dd>List view, each row.</dd></div>
+        <div><dt>What is wrong</dt><dd>Each row has <code>role="link"</code> and <code>tabindex="0"</code>. That replaces the row role, so screen readers lose the table structure, and the whole row becomes one long link name with a button inside.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: the row role is gone · keyboard: the whole row gets focus.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A · 4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd>The row stays a normal table row and the agent name in the first cell is a real link.</dd></div>
+      </dl></li>
+    <li><h3>The sort order is shown only by an arrow</h3>
+      <dl>
+        <div><dt>Where</dt><dd>List view, the Name and Last edited column headers.</dd></div>
+        <div><dt>What is wrong</dt><dd>After sorting, only the arrow icon changes. Screen readers do not say "sorted ascending" or "descending".</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: no sort property on the header.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-sort="ascending"</code> or <code>"descending"</code> on the sorted header, and the status region says how the list is now sorted.</dd></div>
+      </dl></li>
+    <li><h3>Every More actions button has the same name</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The three-dots button on each card and row.</dd></div>
+        <div><dt>What is wrong</dt><dd>All of them are called "More actions". In a list of buttons you cannot tell which agent each one belongs to.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader: buttons list · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: unique, descriptive names.</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-label="More actions for Customer support bot"</code>, with the agent's name.</dd></div>
+      </dl></li>
+    <li><h3>More actions does not say whether its menu is open</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The three-dots button on each card and row.</dd></div>
+        <div><dt>What is wrong</dt><dd>The button has no <code>aria-expanded</code>, so a screen reader user does not hear that a menu opened.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: no expanded state.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-expanded="false"</code> or <code>"true"</code>, updated when the menu opens and closes, and <code>aria-controls</code> pointing at the menu.</dd></div>
+      </dl></li>
+    <li><h3>The More actions menu does not work like a menu</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The menu with Rename and Delete.</dd></div>
+        <div><dt>What is wrong</dt><dd>It says <code>role="menu"</code>, but the focus stays on the button when it opens. The arrow keys do nothing, Rename and Delete are ordinary Tab stops, and Tabbing away leaves the menu open.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: open the menu, then try the arrow keys and Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Menu Button pattern. Partly 2.4.3 Focus Order, A.</dd></div>
+        <div><dt>The right way</dt><dd>Opening the menu moves the focus to the first item. The arrow keys, Home, End and a letter move inside it, and Tab or Escape closes it.</dd></div>
+      </dl></li>
+    <li><h3>Escape closes the menu but loses the focus</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The More actions menu, after you Tab into it and press Escape.</dd></div>
+        <div><dt>What is wrong</dt><dd>The menu disappears together with the focused item, so the focus drops to the top of the page.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab into the menu, press Escape, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>Escape closes the menu and puts the focus back on the More actions button.</dd></div>
+      </dl></li>
+    <li><h3>Rename and Delete are not real dialogs</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The Rename agent and Delete agent dialogs.</dd></div>
+        <div><dt>What is wrong</dt><dd>The focus does not move into the dialog, and the page behind is not blocked: Tab and the screen reader both reach the content behind the dark overlay.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: open Rename, then press Tab a few times.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>A native <code>&lt;dialog&gt;</code> opened with <code>showModal()</code>. The page behind becomes inert and the focus goes to the name field (Rename) or to Cancel (Delete, the safe choice).</dd></div>
+      </dl></li>
+    <li><h3>Closing a dialog loses the focus</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Rename and Delete, after Cancel, the close button or Escape.</dd></div>
+        <div><dt>What is wrong</dt><dd>The focus is not returned to the button that opened the dialog. The user has to find their place in the list again.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: open a dialog, cancel, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>When the dialog closes, the focus goes back to the More actions button that opened it.</dd></div>
+      </dl></li>
+    <li><h3>Focus is lost after Save or Delete</h3>
+      <dl>
+        <div><dt>Where</dt><dd>After renaming or deleting an agent.</dd></div>
+        <div><dt>What is wrong</dt><dd>The list is rebuilt and the focus drops to the top of the page, with no hint of what changed.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: rename an agent, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>After Rename the focus goes to the renamed agent. After Delete it goes to the next agent, or to the heading if the list is empty.</dd></div>
+      </dl></li>
+    <li><h3>The current name is not selected in Rename</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The Agent name field in the Rename dialog.</dd></div>
+        <div><dt>What is wrong</dt><dd>The old name is not selected, so a keyboard user has to clear it by hand before typing.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice / usability.</dd></div>
+        <div><dt>The right way</dt><dd>The text is selected when the dialog opens, so typing replaces it.</dd></div>
+      </dl></li>
+  </ol>
+  </section>
+
+  <section aria-labelledby="session-3">
+  <h2 id="session-3">Session 3: Settings page</h2>
+  <p>Page structure: landmarks, headings, link names and language. The page only displays information, so every bug is in how it is built.</p>
+  <p class="try">The page: <a href="../broken/#/settings">seeded version</a> · <a href="../accessible/#/settings">accessible version</a></p>
+  <ol class="bugs" start="1">
+    <li><h3>A second main area inside the first</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The whole middle column, from the Settings title down.</dd></div>
+        <div><dt>What is wrong</dt><dd>The content column has <code>role="main"</code>, but it already sits inside the page's real <code>&lt;main&gt;</code>. A screen reader user finds two main areas, one inside the other, and cannot tell which is the page.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools with Best practices on (landmark-no-duplicate-main, landmark-main-is-top-level) · Landmarks bookmarklet · ANDI.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: one main per page, not inside another landmark.</dd></div>
+        <div><dt>The right way</dt><dd>Only the one <code>&lt;main&gt;</code>. The column is a plain <code>div</code>.</dd></div>
+      </dl></li>
+    <li><h3>The Settings title is not a heading</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The large Settings title at the top.</dd></div>
+        <div><dt>What is wrong</dt><dd>It looks like the page heading, but it is a styled <code>div</code>. The page has no level 1 heading, and a screen reader user pressing H never hears what the page is.</dd></div>
+        <div><dt>How to find it</dt><dd>Headings bookmarklet · ANDI · axe DevTools with Best practices on (page-has-heading-one).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;h1&gt;Settings&lt;/h1&gt;</code>.</dd></div>
+      </dl></li>
+    <li><h3>Preferences looks like a heading but is not one</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The Preferences section title, between Profile and Notifications.</dd></div>
+        <div><dt>What is wrong</dt><dd>It looks exactly like the other section headings but is a paragraph. It is missing from every heading list, so the time zone, date format and email language seem to belong to Profile.</dd></div>
+        <div><dt>How to find it</dt><dd>Compare the headings list with what you see. No tool reports it.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;h2&gt;Preferences&lt;/h2&gt;</code>, the same level as the other sections.</dd></div>
+      </dl></li>
+    <li><h3>German text is not marked as German</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Preferences: the value "Deutsch" and the email preview below it.</dd></div>
+        <div><dt>What is wrong</dt><dd>The page is in English and these parts have no language of their own. A screen reader reads the German preview with English pronunciation, which nobody can understand.</dd></div>
+        <div><dt>How to find it</dt><dd>Read the page, then check the element in the Elements panel. The Lang bookmarklet shows only what is declared. No tool reports a missing <code>lang</code>.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.1.2 Language of Parts, AA</dd></div>
+        <div><dt>The right way</dt><dd><code>lang="de"</code> on "Deutsch" and on the preview, so the screen reader switches to a German voice for those parts. The page itself, <code>&lt;html lang="en"&gt;</code>, is correct.</dd></div>
+      </dl></li>
+    <li><h3>The word "off" is a heading</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Notifications: the grey OFF badge in "The weekly usage digest is switched off."</dd></div>
+        <div><dt>What is wrong</dt><dd>The badge is an <code>h6</code>, used to make it bold. A screen reader lists a level 6 heading called "off" in the middle of a sentence.</dd></div>
+        <div><dt>How to find it</dt><dd>Headings bookmarklet · axe DevTools with Best practices on (heading-order).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>A <code>span</code> with the badge style: the same look, no heading.</dd></div>
+      </dl></li>
+    <li><h3>Active sessions skips a heading level</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Security: the Active sessions heading above the devices table.</dd></div>
+        <div><dt>What is wrong</dt><dd>It is an <code>h4</code> straight under the <code>h2</code> Security, while the next heading, Recommendations, is an <code>h3</code>. The levels suggest a structure that is not there.</dd></div>
+        <div><dt>How to find it</dt><dd>Headings bookmarklet · axe DevTools with Best practices on (heading-order).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: no skipped heading levels.</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;h3&gt;Active sessions&lt;/h3&gt;</code>, the same level as Recommendations.</dd></div>
+      </dl></li>
+    <li><h3>The recommendation headings skip a level</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Security, under Recommendations: Two-factor authentication, Session timeout, API keys.</dd></div>
+        <div><dt>What is wrong</dt><dd>They are <code>h5</code> straight under the <code>h3</code> Recommendations, with no level 4 between.</dd></div>
+        <div><dt>How to find it</dt><dd>Headings bookmarklet · axe DevTools with Best practices on (heading-order).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: no skipped heading levels.</dd></div>
+        <div><dt>The right way</dt><dd><code>h4</code> for all three. The indent comes from CSS, not from the heading level.</dd></div>
+      </dl></li>
+    <li><h3>Three links all say only "Learn more"</h3>
+      <dl>
+        <div><dt>Where</dt><dd>Security: the Learn more link under each recommendation.</dd></div>
+        <div><dt>What is wrong</dt><dd>In a links list, or tabbing from link to link, a screen reader user hears "Learn more" three times and cannot tell where each one goes.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader: links list · ANDI Links module.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice (2.4.9 Link Purpose (Link Only), AAA). 2.4.4 at AA is met, because the heading just above gives the context.</dd></div>
+        <div><dt>The right way</dt><dd>Hidden extra text inside the link, for example "Learn more about two-factor authentication".</dd></div>
+      </dl></li>
+    <li><h3>The On this page navigation has no name</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The On this page links in the right-hand column.</dd></div>
+        <div><dt>What is wrong</dt><dd>The page has three navigations. Next to "Global" and "Main" this one is listed as just "navigation", with no hint of what it holds.</dd></div>
+        <div><dt>How to find it</dt><dd>Landmarks bookmarklet · ANDI · screen reader: landmarks list. axe does not report it.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: name every landmark whose role appears more than once.</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;nav aria-label="On this page"&gt;</code>.</dd></div>
+      </dl></li>
+    <li><h3>The footer is in no landmark</h3>
+      <dl>
+        <div><dt>Where</dt><dd>The footer at the bottom: the copyright line and the Privacy, Terms of use, Accessibility statement and Help links.</dd></div>
+        <div><dt>What is wrong</dt><dd>The footer is a plain <code>div</code>, outside every landmark. A screen reader user jumping between landmarks never reaches these links.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools with Best practices on (region) · Landmarks bookmarklet.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: all content inside landmarks.</dd></div>
+        <div><dt>The right way</dt><dd>A <code>&lt;footer&gt;</code> next to <code>&lt;main&gt;</code>, with the links in <code>&lt;nav aria-label="Footer"&gt;</code>.</dd></div>
+      </dl></li>
+  </ol>
+  </section>
+
+  <section aria-labelledby="session-4">
+  <h2 id="session-4">Session 4: Monitoring page</h2>
+  <p>A design handed over for review, so many findings are design decisions. Each one says what a reviewer would do: fix it in the design, clarify it with the designer or product manager, or implement it in code.</p>
+  <p class="try">The page: <a href="../broken/#/monitoring">seeded version</a> · <a href="../accessible/#/monitoring">accessible version</a></p>
+  <h3>The page as it loads</h3>
+  <ol class="bugs" start="1">
+    <li><h4>The notices rotate and cannot be paused</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Notice bar under the heading.</dd></div>
+        <div><dt>What is wrong</dt><dd>The notice changes every few seconds for ever, with no Pause, Previous or Next. Slow readers, screen reader users and magnifier users lose the text halfway. At high zoom the earlier notices cannot be reached at all. Review decision: fix.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye: wait a few seconds.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.2.2 Pause, Stop, Hide, A</dd></div>
+        <div><dt>The right way</dt><dd>Previous, Pause and Next buttons and "2 of 4". The rotation also stops while the pointer or the focus is in the bar.</dd></div>
+      </dl></li>
+    <li><h4>The notice is cut off on a narrow screen</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Notice bar at 320 px wide or 400% zoom.</dd></div>
+        <div><dt>What is wrong</dt><dd>The notice is forced onto one line and ends in "…", so most of it cannot be read. Review decision: fix, and clarify the narrow layout with the designer.</dd></div>
+        <div><dt>How to find it</dt><dd>Zoom to 400%, or make the window 320 CSS pixels wide.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.10 Reflow, AA</dd></div>
+        <div><dt>The right way</dt><dd>At narrow widths the notice wraps onto as many lines as it needs and the controls move to their own row.</dd></div>
+      </dl></li>
+    <li><h4>The metric labels have low contrast</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The four metric cards: the small label and the grey line under each number.</dd></div>
+        <div><dt>What is wrong</dt><dd>Light grey on white, about 2.5:1, too faint for many people to read. Review decision: fix.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (color-contrast) · contrast checker.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.3 Contrast (Minimum), AA</dd></div>
+        <div><dt>The right way</dt><dd>A darker grey with at least 4.5:1.</dd></div>
+      </dl></li>
+    <li><h4>The response-time chart has no text alternative</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The P95 response time chart.</dd></div>
+        <div><dt>What is wrong</dt><dd>The chart is named only "P95 response time chart". A screen reader user learns that a chart exists, but not its values or trend. Review decision: clarify how the data is offered, then implement.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: read the chart's name · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.1.1 Non-text Content, A</dd></div>
+        <div><dt>The right way</dt><dd>A short text summary above the chart, and a Show data as table button that reveals the values in a real table.</dd></div>
+      </dl></li>
+    <li><h4>The filters apply and close on every checkbox</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Services: the Filters button and its panel.</dd></div>
+        <div><dt>What is wrong</dt><dd>Ticking one checkbox filters the table at once, closes the panel and moves the focus. To pick two options you open the panel again and find your place again. Review decision: fix.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: open Filters, press Space on a checkbox.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.2.2 On Input, A</dd></div>
+        <div><dt>The right way</dt><dd>Checkboxes only change the selection. Apply filters and closes the panel, and Clear unticks everything.</dd></div>
+      </dl></li>
+    <li><h4>The service count is not announced</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Services: "Showing 6 of 6 services".</dd></div>
+        <div><dt>What is wrong</dt><dd>When the filters change, the count updates on screen, but a screen reader says nothing. Review decision: implement.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.3 Status Messages, AA</dd></div>
+        <div><dt>The right way</dt><dd>The count has <code>role="status"</code>, so the new number is read without moving the focus.</dd></div>
+      </dl></li>
+    <li><h4>The services table is clipped when zoomed</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Services table at 320 px wide or 400% zoom.</dd></div>
+        <div><dt>What is wrong</dt><dd>The right-hand columns, with the Edit buttons, are cut off and cannot be scrolled to. Nothing can be edited at that size. Review decision: fix.</dd></div>
+        <div><dt>How to find it</dt><dd>Zoom to 400%, or make the window 320 CSS pixels wide.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.10 Reflow, AA</dd></div>
+        <div><dt>The right way</dt><dd>The table scrolls sideways inside its card. Tables may scroll; losing functions is what fails.</dd></div>
+      </dl></li>
+    <li><h4>The threshold dialog has no error handling</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Edit on a service, then the Edit alert threshold dialog.</dd></div>
+        <div><dt>What is wrong</dt><dd>Only the browser's short bubble messages appear. A critical threshold lower than the warning one is saved silently, and the hint under Critical is not connected to its field. Review decision: clarify the rules, implement the messages.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: enter a critical value below the warning value, then Save.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.1 Error Identification, A · 3.3.3 Error Suggestion, AA · 3.3.2 Labels or Instructions, A</dd></div>
+        <div><dt>The right way</dt><dd>Each wrong field gets a message under it that says how to fix it, linked with <code>aria-describedby</code> and marked with <code>aria-invalid</code>. The focus moves to the first wrong field.</dd></div>
+      </dl></li>
+    <li><h4>The threshold dialog hides the current value</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Edit alert threshold dialog.</dd></div>
+        <div><dt>What is wrong</dt><dd>The dialog covers the table, so you have to remember the current response time while choosing a threshold. Review decision: clarify.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice / usability.</dd></div>
+        <div><dt>The right way</dt><dd>The dialog shows the current P95 and its trend next to the fields.</dd></div>
+      </dl></li>
+    <li><h4>The Threshold saved message is not announced</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The green message at the bottom right after Save.</dd></div>
+        <div><dt>What is wrong</dt><dd>It appears for a few seconds, but a screen reader does not read it, so a blind user does not know that the save worked. Review decision: implement.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.3 Status Messages, AA</dd></div>
+        <div><dt>The right way</dt><dd>The message has <code>role="status"</code>.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>After Load more panels</h3>
+  <p>The button at the bottom of the page adds a second batch of panels.</p>
+  <ol class="bugs" start="11">
+    <li><h4>Load more panels loses its name while loading</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Load more panels button, just after you press it.</dd></div>
+        <div><dt>What is wrong</dt><dd>The button text is replaced by an empty spinner, so for a moment the button has no name and nothing says that something is loading.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools right after the click (button-name) · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A · 4.1.3 Status Messages, AA</dd></div>
+        <div><dt>The right way</dt><dd>The button says "Loading…" and the status region announces "Loading more panels".</dd></div>
+      </dl></li>
+    <li><h4>Focus is lost when the panels appear</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Right after the second batch has loaded.</dd></div>
+        <div><dt>What is wrong</dt><dd>The focused button is removed, so the focus falls back to the top of the page.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: press Enter on Load more panels, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>The focus moves to the Incidents heading, and a status message says what was added.</dd></div>
+      </dl></li>
+    <li><h4>The session expires with no way to extend it</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The pink banner "Still there? Your session expires in 1:00".</dd></div>
+        <div><dt>What is wrong</dt><dd>A one-minute countdown runs out and there is no button to extend it. People who read or type slowly lose their session.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye: wait a minute.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.2.1 Timing Adjustable, A</dd></div>
+        <div><dt>The right way</dt><dd>A Stay signed in button restarts the timer and announces "Session extended".</dd></div>
+      </dl></li>
+    <li><h4>The Live dot blinks for ever</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents: the red dot before Live.</dd></div>
+        <div><dt>What is wrong</dt><dd>The dot blinks once a second without end and cannot be stopped, which distracts people with attention difficulties.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.2.2 Pause, Stop, Hide, A</dd></div>
+        <div><dt>The right way</dt><dd>The dot is steady.</dd></div>
+      </dl></li>
+    <li><h4>The incidents refresh every 20 seconds and cannot be stopped</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents: "Refreshes every 20 s".</dd></div>
+        <div><dt>What is wrong</dt><dd>Every 20 seconds the list resets: Show resolved is unticked, the table jumps back to page 1 and the keyboard focus is lost.</dd></div>
+        <div><dt>How to find it</dt><dd>Tick Show resolved or go to page 2, then wait 20 seconds.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.2.2 Pause, Stop, Hide, A · 2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>An Auto-refresh checkbox turns it off, and a refresh keeps the user's page, filter and focus.</dd></div>
+      </dl></li>
+    <li><h4>The instructions rely on colour and position</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents: the sentence under the heading.</dd></div>
+        <div><dt>What is wrong</dt><dd>"Incidents with a red dot … use the button on the right of the row" only works for someone who sees the colour and the layout.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.3 Sensory Characteristics, A · 1.4.1 Use of Color, A</dd></div>
+        <div><dt>The right way</dt><dd>"Incidents with severity Critical need attention. Use Acknowledge to take one."</dd></div>
+      </dl></li>
+    <li><h4>Severity is only a coloured dot</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents table: the Severity column.</dd></div>
+        <div><dt>What is wrong</dt><dd>There is no text, so a screen reader reads an empty cell and colour-blind users cannot tell Critical, Major and Minor apart.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.1 Use of Color, A · 1.1.1 Non-text Content, A</dd></div>
+        <div><dt>The right way</dt><dd>The word, Critical, Major or Minor, next to the dot.</dd></div>
+      </dl></li>
+    <li><h4>Acknowledge is invisible until you hover</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents table: the Acknowledge button in open rows.</dd></div>
+        <div><dt>What is wrong</dt><dd>The button is transparent until the mouse is over the row. Keyboard users Tab onto a control they cannot see, and touch users never see it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab through a row.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.7 Focus Visible, AA</dd></div>
+        <div><dt>The right way</dt><dd>Acknowledge is always visible.</dd></div>
+      </dl></li>
+    <li><h4>Focus is lost after Acknowledge</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents table, after pressing Acknowledge.</dd></div>
+        <div><dt>What is wrong</dt><dd>The row is redrawn without the button, so the focus drops to the top of the page, and the confirmation is not announced.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: press Enter on Acknowledge, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A · 4.1.3 Status Messages, AA</dd></div>
+        <div><dt>The right way</dt><dd>The focus moves to a control in the same row, and the confirmation is announced.</dd></div>
+      </dl></li>
+    <li><h4>Edit and Details are not specific</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents table: the pencil icon and the Details link in each row.</dd></div>
+        <div><dt>What is wrong</dt><dd>The pencil is named only by a mouse tooltip, and every row has the same "Edit" and "Details". In a list of links or buttons they all sound alike.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader: links or buttons list · ANDI.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice (2.4.9, AAA). At AA the row gives the context.</dd></div>
+        <div><dt>The right way</dt><dd>Visible text with hidden extra words: "Edit incident #4821", "Details for incident #4821".</dd></div>
+      </dl></li>
+    <li><h4>The incident count is not announced</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents: "Showing 1 to 3 of 4 open incidents".</dd></div>
+        <div><dt>What is wrong</dt><dd>Ticking Show resolved or changing the page updates the count silently.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.3 Status Messages, AA</dd></div>
+        <div><dt>The right way</dt><dd>The count has <code>role="status"</code>.</dd></div>
+      </dl></li>
+    <li><h4>The page buttons are tiny and the current page is shown only by colour</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents table: the page numbers under it.</dd></div>
+        <div><dt>What is wrong</dt><dd>The buttons are about 10 by 15 pixels, close together, hard to hit. The current page differs only in colour and is not exposed to screen readers.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.5.8 Target Size (Minimum), AA · 1.4.1 Use of Color, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>Buttons at least 32 by 32 pixels with space between them, and <code>aria-current="page"</code> plus a border on the current one.</dd></div>
+      </dl></li>
+    <li><h4>Focus is lost after changing page</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents: the page numbers.</dd></div>
+        <div><dt>What is wrong</dt><dd>Pressing a page number redraws the buttons, so the focus drops to the top of the page.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: press Enter on 2, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>The focus stays on the same page button.</dd></div>
+      </dl></li>
+    <li><h4>The incident timeline is buried in nested sections</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Incidents: "Incident #4821 details".</dd></div>
+        <div><dt>What is wrong</dt><dd>The timeline is three levels of collapsible sections, so every event needs another Enter, and there is no table structure to read.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice / usability: unnecessary effort.</dd></div>
+        <div><dt>The right way</dt><dd>One collapsible section with the affected services and a table of times and events.</dd></div>
+      </dl></li>
+    <li><h4>The comparison chart's lines are pale and told apart only by colour</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Compare services: the three-line chart and its legend.</dd></div>
+        <div><dt>What is wrong</dt><dd>The pastel lines are below 3:1 against white, and only colour links each line to the legend.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye · DevTools colour picker and a contrast checker.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.11 Non-text Contrast, AA · 1.4.1 Use of Color, A</dd></div>
+        <div><dt>The right way</dt><dd>Darker lines with different dash patterns, and a label at the end of each line.</dd></div>
+      </dl></li>
+    <li><h4>The comparison chart has no text alternative</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Compare services: the chart.</dd></div>
+        <div><dt>What is wrong</dt><dd>It is named only "P95 comparison chart", so a screen reader user gets no values.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.1.1 Non-text Content, A</dd></div>
+        <div><dt>The right way</dt><dd>A name that gives the content, for example the latest value of each service.</dd></div>
+      </dl></li>
+    <li><h4>Deploy notes are cut off</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Recent deploys: each deploy box.</dd></div>
+        <div><dt>What is wrong</dt><dd>The boxes have a fixed height. When the text wraps, at high zoom or with more text spacing, the end of the note is hidden.</dd></div>
+        <div><dt>How to find it</dt><dd>Zoom to 400% · a text spacing bookmarklet.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.4 Resize Text, AA · 1.4.12 Text Spacing, AA</dd></div>
+        <div><dt>The right way</dt><dd>A minimum height instead of a fixed one, so the box grows with its text.</dd></div>
+      </dl></li>
+    <li><h4>The Silence alerts fields have only placeholders</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Silence alerts: Duration and Reason.</dd></div>
+        <div><dt>What is wrong</dt><dd>There are no labels, only pale placeholder text that disappears when you type, and "*" is the only sign that a field is required.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye · ANDI. axe accepts a placeholder as a name, so it does not report this.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.2 Labels or Instructions, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>Visible labels with "(required)", and a hint linked to its field.</dd></div>
+      </dl></li>
+    <li><h4>Silence alerts errors are only a red border</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Silence alerts, after submitting with empty fields.</dd></div>
+        <div><dt>What is wrong</dt><dd>The wrong fields only turn red. There is no message, nothing is announced and the focus does not move.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: submit the empty form · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.1 Error Identification, A · 1.4.1 Use of Color, A</dd></div>
+        <div><dt>The right way</dt><dd>A text message under each wrong field, linked to it, and the focus on the first wrong field.</dd></div>
+      </dl></li>
+    <li><h4>Panels can only be reordered by dragging</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Arrange panels.</dd></div>
+        <div><dt>What is wrong</dt><dd>The order changes only by dragging with a mouse. Keyboard users, and people who cannot drag, cannot reorder the panels.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: there is nothing to operate.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.5.7 Dragging Movements, AA · 2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>Move up and Move down buttons on each panel, and an announcement of the new position.</dd></div>
+      </dl></li>
+    <li><h4>The Error budget info icon works only with a mouse</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Arrange panels: the ⓘ next to Error budget.</dd></div>
+        <div><dt>What is wrong</dt><dd>The explanation is only in a mouse tooltip on an element you cannot Tab to.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab skips it · mouse: hover.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>A real button with a tooltip that also appears on focus.</dd></div>
+      </dl></li>
+    <li><h4>The SLA badge is an image of text</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Arrange panels: the "SLA 99.9 %" badge.</dd></div>
+        <div><dt>What is wrong</dt><dd>The badge is a picture of text. It blurs when zoomed and ignores the user's text size, spacing and colour settings.</dd></div>
+        <div><dt>How to find it</dt><dd>Zoom in · Elements panel: it is an image.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.5 Images of Text, AA</dd></div>
+        <div><dt>The right way</dt><dd>Real text with a badge style.</dd></div>
+      </dl></li>
+  </ol>
+  </section>
+
+  <section aria-labelledby="session-5">
+  <h2 id="session-5">Session 5: Components page</h2>
+  <p>Every control, grouped the way the keyboard cheat sheet groups them. For each bug the WCAG line says whether the keyboard fails a success criterion or only misses a key the ARIA Authoring Practices Guide (APG) expects.</p>
+  <p class="try">The page: <a href="../broken/#/components">seeded version</a> · <a href="../accessible/#/components">accessible version</a></p>
+  <h3>On every card</h3>
+  <ol class="bugs" start="1">
+    <li><h4>The info buttons work only with a mouse</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The ⓘ at the bottom right of every card.</dd></div>
+        <div><dt>What is wrong</dt><dd>The icon is a plain element that Tab never reaches, and the list of keys is only in a mouse tooltip. Keyboard and screen reader users never get it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab skips the icons.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>Each icon is a button named "Keys for …", with the key list in a tooltip that appears on hover and on focus and closes with Escape.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>One Tab stop each</h3>
+  <ol class="bugs" start="2">
+    <li><h4>Save draft has no focus indicator</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Button card: the blue Save draft button.</dd></div>
+        <div><dt>What is wrong</dt><dd>When you Tab to it, no outline appears, so a keyboard user cannot see where the focus is.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab to it and look.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.7 Focus Visible, AA</dd></div>
+        <div><dt>The right way</dt><dd>Keep the focus outline. Never remove it with <code>outline: none</code> without a visible replacement.</dd></div>
+      </dl></li>
+    <li><h4>Reset is not a button</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Button card: Reset.</dd></div>
+        <div><dt>What is wrong</dt><dd>It is a <code>div</code> styled as a button. Tab skips it, Enter and Space do nothing, and a screen reader reads plain text.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;button type="button"&gt;Reset&lt;/button&gt;</code>.</dd></div>
+      </dl></li>
+    <li><h4>Mute notifications cannot be switched with the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Toggle button card: Mute notifications.</dd></div>
+        <div><dt>What is wrong</dt><dd>It gets focus, but Enter and Space do nothing. Only a click toggles it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab to it, press Enter or Space.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>A native <code>&lt;button&gt;</code>: the browser gives it Enter and Space.</dd></div>
+      </dl></li>
+    <li><h4>Mute notifications does not say whether it is on</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Toggle button card: Mute notifications.</dd></div>
+        <div><dt>What is wrong</dt><dd>The state is shown only by colour. A screen reader hears "button", with no pressed state.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-pressed="true"</code> or <code>"false"</code>, and the label stays the same.</dd></div>
+      </dl></li>
+    <li><h4>Read the release notes is not a real link</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Link card.</dd></div>
+        <div><dt>What is wrong</dt><dd>The <code>a</code> has no <code>href</code>. Tab skips it, it is not exposed as a link, and only a mouse click opens it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;a href="#/components/release-notes"&gt;</code>.</dd></div>
+      </dl></li>
+    <li><h4>The channel chips toggle with Enter instead of Space</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Checkbox card: Web chat, WhatsApp, Email, Voice.</dd></div>
+        <div><dt>What is wrong</dt><dd>The custom checkboxes toggle with Enter, and Space only scrolls the page. They work, but not with the key users expect.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: press Space, then Enter.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Checkbox pattern (Space toggles).</dd></div>
+        <div><dt>The right way</dt><dd>Native checkboxes styled as chips. The browser gives them Space.</dd></div>
+      </dl></li>
+    <li><h4>All channels does not follow the chips</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Checkbox card: All channels.</dd></div>
+        <div><dt>What is wrong</dt><dd>Checking it checks the chips, but checking the chips one by one never updates it, and it never shows a partly checked state.</dd></div>
+        <div><dt>How to find it</dt><dd>Mouse or keyboard: check some chips, then all of them.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Checkbox pattern (mixed state).</dd></div>
+        <div><dt>The right way</dt><dd>All channels is checked when every chip is, and partly checked (<code>indeterminate</code>) when only some are.</dd></div>
+      </dl></li>
+    <li><h4>The availability switch cannot be switched with the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Switch card: Available outside business hours.</dd></div>
+        <div><dt>What is wrong</dt><dd>It gets focus, but Space and Enter do nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab to it, press Space.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;input type="checkbox" role="switch"&gt;</code> with a label. Space works natively.</dd></div>
+      </dl></li>
+    <li><h4>Advanced options cannot be opened with the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Disclosure card: Advanced options.</dd></div>
+        <div><dt>What is wrong</dt><dd>The header is a focusable <code>div</code> with no role. Enter and Space do nothing, so the checkbox inside cannot be reached, and there is no expanded or collapsed state.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;details&gt;</code> with <code>&lt;summary&gt;</code>: the browser handles the keys and the state.</dd></div>
+      </dl></li>
+    <li><h4>The accordion headers jump the Tab order</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Accordion card: Greeting, Fallback answer, Handover rules.</dd></div>
+        <div><dt>What is wrong</dt><dd>They have <code>tabindex</code> 1, 2 and 3, so they are the first three Tab stops of the whole page, before the skip link and the navigation.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab from the address bar · axe DevTools with Best practices on (tabindex).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>No positive <code>tabindex</code>. The accessible version uses <code>&lt;details&gt;</code> elements that share a <code>name</code>, so only one is open at a time.</dd></div>
+      </dl></li>
+    <li><h4>The System prompt tooltip works only with a mouse</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Tooltip card: the ⓘ next to System prompt.</dd></div>
+        <div><dt>What is wrong</dt><dd>The icon cannot get focus and is hidden from screen readers. The explanation appears only on hover.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab skips it.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>A button named "What is the system prompt?", with a tooltip that appears on hover and on focus and closes with Escape.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>Arrow keys change a value</h3>
+  <ol class="bugs" start="13">
+    <li><h4>The Creativity slider ignores the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Slider card: Creativity.</dd></div>
+        <div><dt>What is wrong</dt><dd>It gets focus, but the arrow keys, Home, End, Page Up and Page Down do nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab to it, press the arrow keys.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;input type="range"&gt;</code> with a label: the browser gives it all the slider keys.</dd></div>
+      </dl></li>
+    <li><h4>Maximum turns is not a spin button</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Spin button card: Maximum turns, with − and +.</dd></div>
+        <div><dt>What is wrong</dt><dd>The Up and Down arrows do nothing in the field, − and + are extra Tab stops, and the value can go past its limits. Typing a value still works.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: the Up and Down arrows in the field.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Spinbutton pattern.</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;input type="number" min="1" max="50"&gt;</code>, with the arrow keys and the limits built in.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>Composites: one Tab stop, the arrows inside</h3>
+  <ol class="bugs" start="15">
+    <li><h4>The Agent type cards cannot be chosen with the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Radio group card: Chat, Voice, Email.</dd></div>
+        <div><dt>What is wrong</dt><dd>Each card is its own Tab stop, and Space and the arrow keys do nothing. Only a click changes the type.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A. The extra Tab stops are a best practice (APG Radio Group pattern).</dd></div>
+        <div><dt>The right way</dt><dd>Native radio buttons in a <code>fieldset</code> with a <code>legend</code>: one Tab stop, the arrows move and select.</dd></div>
+      </dl></li>
+    <li><h4>The tabs do not say which one is selected</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Tabs card: Overview, Prompt, Channels.</dd></div>
+        <div><dt>What is wrong</dt><dd>The tabs are links in a list with no tab roles. The active tab is shown only by colour.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>role="tablist"</code>, <code>role="tab"</code> with <code>aria-selected</code>, and <code>role="tabpanel"</code>.</dd></div>
+      </dl></li>
+    <li><h4>The tabs have no arrow keys</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Tabs card.</dd></div>
+        <div><dt>What is wrong</dt><dd>Each tab is a separate Tab stop, and the arrow keys, Home and End do nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab, then the arrow keys.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Tabs pattern.</dd></div>
+        <div><dt>The right way</dt><dd>One Tab stop on the active tab. Left and Right, Home and End change the tab, and the next Tab goes to the panel.</dd></div>
+      </dl></li>
+    <li><h4>The toolbar does not say which formats are on</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Toolbar card: B, I, U and the alignment buttons.</dd></div>
+        <div><dt>What is wrong</dt><dd>Bold, Italic, Underline and the chosen alignment are shown only by colour. A screen reader hears no pressed or selected state.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-pressed</code> on Bold, Italic and Underline, and the alignment as a group of radio buttons.</dd></div>
+      </dl></li>
+    <li><h4>The toolbar is seven Tab stops instead of one</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Toolbar card.</dd></div>
+        <div><dt>What is wrong</dt><dd>There is no toolbar role and no name, every control is a Tab stop, and the arrow keys do nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Toolbar pattern.</dd></div>
+        <div><dt>The right way</dt><dd><code>role="toolbar"</code> with a label: one Tab stop, the arrows move inside, Tab goes on.</dd></div>
+      </dl></li>
+    <li><h4>The Fallback agent list cannot be used with the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Listbox card: Fallback agent.</dd></div>
+        <div><dt>What is wrong</dt><dd>Each option is a Tab stop, but Enter, Space and the arrows do not select. There are no listbox or option roles, and the selection is shown only by colour.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;select size="5"&gt;</code> with a label: one Tab stop, the arrows select.</dd></div>
+      </dl></li>
+    <li><h4>The Knowledge sources tree has no keyboard support</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Tree view card: Knowledge sources.</dd></div>
+        <div><dt>What is wrong</dt><dd>Every node is a Tab stop, and the arrow keys and Enter do nothing, so folders open and close only with a mouse. No node can be selected.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab, the arrow keys, Enter.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A. The single Tab stop and the selection are a best practice (APG Tree View pattern).</dd></div>
+        <div><dt>The right way</dt><dd>One Tab stop. Up and Down move, Right and Left open and close, Enter selects, and Home, End and a letter jump.</dd></div>
+      </dl></li>
+    <li><h4>The Deployments grid is about forty Tab stops</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Grid card: Deployments.</dd></div>
+        <div><dt>What is wrong</dt><dd>It says <code>role="grid"</code>, but every cell is a Tab stop and the arrow keys do nothing. Everything can be reached, slowly.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Grid pattern.</dd></div>
+        <div><dt>The right way</dt><dd>One Tab stop. The arrows move cell by cell, and Tab leaves the grid.</dd></div>
+      </dl></li>
+    <li><h4>The Flow editor menus open only on hover</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Menubar card: File, Edit, View.</dd></div>
+        <div><dt>What is wrong</dt><dd>The menus open only when the mouse is over them. Enter, Space and Down Arrow do nothing, so a keyboard user never reaches New flow, Save, Undo and the rest.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab to File, press Enter or Down Arrow.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A · 4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>role="menubar"</code> with menu items that open their menus with the keyboard. Escape closes and returns the focus.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>Popups: the focus moves in, Escape closes</h3>
+  <ol class="bugs" start="24">
+    <li><h4>More actions does not say whether its menu is open</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Menu button card: More actions.</dd></div>
+        <div><dt>What is wrong</dt><dd>The button has no <code>aria-expanded</code>, so a screen reader cannot tell whether the menu is open.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-expanded</code> and <code>aria-controls</code> on the button.</dd></div>
+      </dl></li>
+    <li><h4>The More actions menu has no menu keys</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Menu button card: the menu.</dd></div>
+        <div><dt>What is wrong</dt><dd>Enter opens it, but the focus stays on the button, the arrows do nothing, the items are ordinary Tab stops, and Escape does not close it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Enter, Down Arrow, Escape, Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Menu Button pattern.</dd></div>
+        <div><dt>The right way</dt><dd>Opening moves the focus to the first item. The arrows move, Escape closes and returns the focus, and choosing an item or Tab closes the menu.</dd></div>
+      </dl></li>
+    <li><h4>Changing Default language throws you to the top</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Select-only combobox card: Default language.</dd></div>
+        <div><dt>What is wrong</dt><dd>Every change applies at once: the focus jumps to the page heading, the page scrolls up and a message appears.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: the arrow keys on the closed select (in Chrome on Windows) · mouse: pick an option.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.2.2 On Input, A</dd></div>
+        <div><dt>The right way</dt><dd>Choosing only changes the value. Anything bigger happens after an explicit action, such as a button.</dd></div>
+      </dl></li>
+    <li><h4>The Time zone suggestions are not exposed</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Editable combobox card: Time zone.</dd></div>
+        <div><dt>What is wrong</dt><dd>The suggestion list opens, but the arrows cannot reach it, Enter cannot pick and Escape does not close it. A screen reader does not know the list exists. Typing the whole value still works.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: type "eu", then Down Arrow, Enter, Escape · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A. The missing keys are a best practice (APG Combobox pattern).</dd></div>
+        <div><dt>The right way</dt><dd><code>role="combobox"</code> with <code>aria-expanded</code> and a listbox. The arrows move through the options, Enter accepts and Escape closes.</dd></div>
+      </dl></li>
+    <li><h4>The Publish agent dialog does not take the focus</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Modal dialog card: Publish agent.</dd></div>
+        <div><dt>What is wrong</dt><dd>When it opens, the focus stays behind on the button and Tab walks through the page under the backdrop. When it closes, the focus drops to the top of the page.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: open it, press Tab; close it, press Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>A native <code>&lt;dialog&gt;</code> opened with <code>showModal()</code>: the focus moves into it, the page behind is inert, and on close the focus returns to the button.</dd></div>
+      </dl></li>
+    <li><h4>The Publish agent dialog ignores Escape and Enter</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Modal dialog card.</dd></div>
+        <div><dt>What is wrong</dt><dd>Escape does not close it, Enter in the field does not publish, and a screen reader can still read the page behind.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Escape, then Enter in the field.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Dialog (Modal) pattern.</dd></div>
+        <div><dt>The right way</dt><dd>A native <code>&lt;dialog&gt;</code> closes on Escape, and a form inside it submits on Enter.</dd></div>
+      </dl></li>
+    <li><h4>The Delete agent alert starts on the destructive button</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Alert dialog card: Delete agent.</dd></div>
+        <div><dt>What is wrong</dt><dd>The focus lands on Delete agent, so a quick Enter deletes, and Escape does not close the alert.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: open it, press Escape.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Alert Dialog pattern (focus the least destructive action).</dd></div>
+        <div><dt>The right way</dt><dd>The focus starts on Cancel, and Escape closes without deleting.</dd></div>
+      </dl></li>
+    <li><h4>Closing the Delete agent alert loses the focus</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Alert dialog card, after Cancel or Delete agent.</dd></div>
+        <div><dt>What is wrong</dt><dd>The focus does not return to the button that opened it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: close it, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>On close, the focus returns to the Delete agent button on the card.</dd></div>
+      </dl></li>
+    <li><h4>The Share popover is at the end of the Tab order</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Non-modal popover card: Share.</dd></div>
+        <div><dt>What is wrong</dt><dd>Opening the popover leaves the focus on Share, and its Copy link and Done buttons come only after everything else on the page.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Enter on Share, then Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>The <code>popover</code> sits right after the Share button in the page, so Tab reaches it next.</dd></div>
+      </dl></li>
+    <li><h4>The Share popover ignores Escape</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Non-modal popover card.</dd></div>
+        <div><dt>What is wrong</dt><dd>Escape does not close it and Tabbing away leaves it open over the page. Share does not say whether it is open.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Escape.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Dialog pattern.</dd></div>
+        <div><dt>The right way</dt><dd>The native popover closes on Escape and returns the focus to Share.</dd></div>
+      </dl></li>
+    <li><h4>The calendar opens on focus and Escape does not close it</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Date picker card: Go-live date.</dd></div>
+        <div><dt>What is wrong</dt><dd>Tabbing into the field pops up a calendar over the page. Escape does not dismiss it and Tab does not close it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab into the field, press Escape.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.13 Content on Hover or Focus, AA</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;input type="date"&gt;</code>: the browser's calendar opens only on request and closes with Escape.</dd></div>
+      </dl></li>
+    <li><h4>The calendar is 33 Tab stops with no arrow keys</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Date picker card: the calendar.</dd></div>
+        <div><dt>What is wrong</dt><dd>Every day is a Tab stop named only "1", "2"… with no month, the arrows do nothing, and the selected day is shown only by colour. Tab and Enter still pick a day.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Date Picker Dialog example.</dd></div>
+        <div><dt>The right way</dt><dd>The native date field. A custom one has one Tab stop, the arrows move by day and week, and every day has its full date as its name.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>No keys of their own</h3>
+  <ol class="bugs" start="36">
+    <li><h4>The Published versions table cannot be sorted with the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Table card: the Version and Published headers.</dd></div>
+        <div><dt>What is wrong</dt><dd>The headers are clickable but contain no button, so Tab skips them and only a mouse can sort.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>A <code>&lt;button&gt;</code> inside each sortable header.</dd></div>
+      </dl></li>
+    <li><h4>The Published versions table does not say how it is sorted</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Table card: the column headers.</dd></div>
+        <div><dt>What is wrong</dt><dd>The direction is shown only by an arrow. There is no <code>aria-sort</code>, and nothing is announced after sorting.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-sort</code> on the sorted header, and a short announcement such as "Sorted by Version, newest first".</dd></div>
+      </dl></li>
+    <li><h4>The Custom CSS editor traps the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Editor that uses Tab card: Custom CSS.</dd></div>
+        <div><dt>What is wrong</dt><dd>Tab and Shift+Tab both insert spaces and Escape does nothing, so a keyboard user cannot leave the field. Nothing explains a way out.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab into it, then try Tab, Shift+Tab, Escape.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.2 No Keyboard Trap, A</dd></div>
+        <div><dt>The right way</dt><dd>Escape followed by Tab leaves the editor, and that way out is written next to it.</dd></div>
+      </dl></li>
+    <li><h4>The messages are not announced</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Status message card: Sync settings, and every other message on the page.</dd></div>
+        <div><dt>What is wrong</dt><dd>The message appears and disappears after a few seconds, but a screen reader says nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>Screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.3 Status Messages, AA</dd></div>
+        <div><dt>The right way</dt><dd>The message container has <code>role="status"</code> and stays in the page.</dd></div>
+      </dl></li>
+  </ol>
+  </section>
+</main>
+</body>
+</html>
