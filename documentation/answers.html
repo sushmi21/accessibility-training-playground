@@ -45,7 +45,7 @@ dd { margin: 0; }
 </header>
 <main id="main" aria-labelledby="page-title">
   <h1 id="page-title">Seeded bugs</h1>
-  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 81 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
+  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 71 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
   <p>For each bug you get where it is, what goes wrong for the user, how to find it, the WCAG 2.2 success criterion it fails (or that it is a best practice), and the right way to build it. The right way is what the <a href="../accessible/">accessible version</a> does, so you can inspect it there.</p>
   <p class="note">Automated tools find only some of these. Where a bug says axe DevTools, axe reports it; everything else you find with the keyboard, the accessibility tree, a screen reader or your eyes. A level A or AA criterion is a failure; a best practice is not, but users still notice it.</p>
   <p>Bugs on pages for sessions that have not happened yet, such as the New agent form, are not listed.</p>
@@ -54,7 +54,7 @@ dd { margin: 0; }
       <li><a href="#every-page">On every page</a> (6)</li>
       <li><a href="#session-2">Session 2: Agents page</a> (17)</li>
       <li><a href="#session-3">Session 3: Settings page</a> (10)</li>
-      <li><a href="#session-4">Session 4: Monitoring page</a> (32)</li>
+      <li><a href="#session-4">Session 4: Monitoring page</a> (22)</li>
       <li><a href="#session-5">Session 5: Components page</a> (16)</li>
     </ul>
   </nav>
@@ -434,24 +434,8 @@ dd { margin: 0; }
       </dl></li>
   </ol>
   <h3>After Load more panels</h3>
-  <p>The button at the bottom of the page adds a second batch of panels.</p>
+  <p>The button at the bottom of the page adds a second batch of panels. Every bug in it is a design decision a reviewer can see in the mockup or has to ask about.</p>
   <ol class="bugs" start="11">
-    <li><h4>Load more panels loses its name while loading</h4>
-      <dl>
-        <div><dt>Where</dt><dd>The Load more panels button, just after you press it.</dd></div>
-        <div><dt>What is wrong</dt><dd>The button text is replaced by an empty spinner, so for a moment the button has no name and nothing says that something is loading.</dd></div>
-        <div><dt>How to find it</dt><dd>axe DevTools right after the click (button-name) · screen reader.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A · 4.1.3 Status Messages, AA</dd></div>
-        <div><dt>The right way</dt><dd>The button says "Loading…" and the status region announces "Loading more panels".</dd></div>
-      </dl></li>
-    <li><h4>Focus is lost when the panels appear</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Right after the second batch has loaded.</dd></div>
-        <div><dt>What is wrong</dt><dd>The focused button is removed, so the focus falls back to the top of the page.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: press Enter on Load more panels, then Tab.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
-        <div><dt>The right way</dt><dd>The focus moves to the Incidents heading, and a status message says what was added.</dd></div>
-      </dl></li>
     <li><h4>The session expires with no way to extend it</h4>
       <dl>
         <div><dt>Where</dt><dd>The pink banner "Still there? Your session expires in 1:00".</dd></div>
@@ -460,21 +444,13 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>2.2.1 Timing Adjustable, A</dd></div>
         <div><dt>The right way</dt><dd>A Stay signed in button restarts the timer and announces "Session extended".</dd></div>
       </dl></li>
-    <li><h4>The Live dot blinks for ever</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Incidents: the red dot before Live.</dd></div>
-        <div><dt>What is wrong</dt><dd>The dot blinks once a second without end and cannot be stopped, which distracts people with attention difficulties.</dd></div>
-        <div><dt>How to find it</dt><dd>By eye.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.2.2 Pause, Stop, Hide, A</dd></div>
-        <div><dt>The right way</dt><dd>The dot is steady.</dd></div>
-      </dl></li>
-    <li><h4>The incidents refresh every 20 seconds and cannot be stopped</h4>
+    <li><h4>Incidents refresh every 20 seconds and cannot be stopped</h4>
       <dl>
         <div><dt>Where</dt><dd>Incidents: "Refreshes every 20 s".</dd></div>
-        <div><dt>What is wrong</dt><dd>Every 20 seconds the list resets: Show resolved is unticked, the table jumps back to page 1 and the keyboard focus is lost.</dd></div>
-        <div><dt>How to find it</dt><dd>Tick Show resolved or go to page 2, then wait 20 seconds.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.2.2 Pause, Stop, Hide, A · 2.4.3 Focus Order, A</dd></div>
-        <div><dt>The right way</dt><dd>An Auto-refresh checkbox turns it off, and a refresh keeps the user's page, filter and focus.</dd></div>
+        <div><dt>What is wrong</dt><dd>The list updates by itself every 20 seconds and the design gives no way to turn that off. Content that changes while you read or work is hard for people who read slowly or lose their place easily. Review decision: fix.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye: wait 20 seconds.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.2.2 Pause, Stop, Hide, A</dd></div>
+        <div><dt>The right way</dt><dd>An Auto-refresh checkbox next to the note, so users can turn the refresh off.</dd></div>
       </dl></li>
     <li><h4>The instructions rely on colour and position</h4>
       <dl>
@@ -500,45 +476,13 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>2.4.7 Focus Visible, AA</dd></div>
         <div><dt>The right way</dt><dd>Acknowledge is always visible.</dd></div>
       </dl></li>
-    <li><h4>Focus is lost after Acknowledge</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Incidents table, after pressing Acknowledge.</dd></div>
-        <div><dt>What is wrong</dt><dd>The row is redrawn without the button, so the focus drops to the top of the page, and the confirmation is not announced.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: press Enter on Acknowledge, then Tab.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A · 4.1.3 Status Messages, AA</dd></div>
-        <div><dt>The right way</dt><dd>The focus moves to a control in the same row, and the confirmation is announced.</dd></div>
-      </dl></li>
-    <li><h4>Edit and Details are not specific</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Incidents table: the pencil icon and the Details link in each row.</dd></div>
-        <div><dt>What is wrong</dt><dd>The pencil is named only by a mouse tooltip, and every row has the same "Edit" and "Details". In a list of links or buttons they all sound alike.</dd></div>
-        <div><dt>How to find it</dt><dd>Screen reader: links or buttons list · ANDI.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>Best practice (2.4.9, AAA). At AA the row gives the context.</dd></div>
-        <div><dt>The right way</dt><dd>Visible text with hidden extra words: "Edit incident #4821", "Details for incident #4821".</dd></div>
-      </dl></li>
-    <li><h4>The incident count is not announced</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Incidents: "Showing 1 to 3 of 4 open incidents".</dd></div>
-        <div><dt>What is wrong</dt><dd>Ticking Show resolved or changing the page updates the count silently.</dd></div>
-        <div><dt>How to find it</dt><dd>Screen reader.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>4.1.3 Status Messages, AA</dd></div>
-        <div><dt>The right way</dt><dd>The count has <code>role="status"</code>.</dd></div>
-      </dl></li>
-    <li><h4>The page buttons are tiny and the current page is shown only by colour</h4>
+    <li><h4>The page buttons are tiny</h4>
       <dl>
         <div><dt>Where</dt><dd>Incidents table: the page numbers under it.</dd></div>
-        <div><dt>What is wrong</dt><dd>The buttons are about 10 by 15 pixels, close together, hard to hit. The current page differs only in colour and is not exposed to screen readers.</dd></div>
-        <div><dt>How to find it</dt><dd>By eye · Accessibility pane.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.5.8 Target Size (Minimum), AA · 1.4.1 Use of Color, A · 1.3.1 Info and Relationships, A</dd></div>
-        <div><dt>The right way</dt><dd>Buttons at least 32 by 32 pixels with space between them, and <code>aria-current="page"</code> plus a border on the current one.</dd></div>
-      </dl></li>
-    <li><h4>Focus is lost after changing page</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Incidents: the page numbers.</dd></div>
-        <div><dt>What is wrong</dt><dd>Pressing a page number redraws the buttons, so the focus drops to the top of the page.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: press Enter on 2, then Tab.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
-        <div><dt>The right way</dt><dd>The focus stays on the same page button.</dd></div>
+        <div><dt>What is wrong</dt><dd>The buttons are about 13 by 16 pixels, close together, hard to hit for people with tremor or limited fine motor control and on touch screens. Review decision: fix.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye · axe DevTools (target-size).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.5.8 Target Size (Minimum), AA</dd></div>
+        <div><dt>The right way</dt><dd>Buttons at least 32 by 32 pixels, with space between them.</dd></div>
       </dl></li>
     <li><h4>The incident timeline is buried in nested sections</h4>
       <dl>
@@ -556,22 +500,6 @@ dd { margin: 0; }
         <div><dt>WCAG 2.2</dt><dd>1.4.11 Non-text Contrast, AA · 1.4.1 Use of Color, A</dd></div>
         <div><dt>The right way</dt><dd>Darker lines with different dash patterns, and a label at the end of each line.</dd></div>
       </dl></li>
-    <li><h4>The comparison chart has no text alternative</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Compare services: the chart.</dd></div>
-        <div><dt>What is wrong</dt><dd>It is named only "P95 comparison chart", so a screen reader user gets no values.</dd></div>
-        <div><dt>How to find it</dt><dd>Accessibility pane · screen reader.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>1.1.1 Non-text Content, A</dd></div>
-        <div><dt>The right way</dt><dd>A name that gives the content, for example the latest value of each service.</dd></div>
-      </dl></li>
-    <li><h4>Deploy notes are cut off</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Recent deploys: each deploy box.</dd></div>
-        <div><dt>What is wrong</dt><dd>The boxes have a fixed height. When the text wraps, at high zoom or with more text spacing, the end of the note is hidden.</dd></div>
-        <div><dt>How to find it</dt><dd>Zoom to 400% · a text spacing bookmarklet.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>1.4.4 Resize Text, AA · 1.4.12 Text Spacing, AA</dd></div>
-        <div><dt>The right way</dt><dd>A minimum height instead of a fixed one, so the box grows with its text.</dd></div>
-      </dl></li>
     <li><h4>The Silence alerts fields have only placeholders</h4>
       <dl>
         <div><dt>Where</dt><dd>Silence alerts: Duration and Reason.</dd></div>
@@ -583,10 +511,10 @@ dd { margin: 0; }
     <li><h4>Silence alerts errors are only a red border</h4>
       <dl>
         <div><dt>Where</dt><dd>Silence alerts, after submitting with empty fields.</dd></div>
-        <div><dt>What is wrong</dt><dd>The wrong fields only turn red. There is no message, nothing is announced and the focus does not move.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: submit the empty form · screen reader.</dd></div>
+        <div><dt>What is wrong</dt><dd>The wrong fields only turn red. There is no message saying what is wrong or how to fix it, so colour is the only sign of an error. Review decision: fix.</dd></div>
+        <div><dt>How to find it</dt><dd>Submit the empty form and look · screen reader.</dd></div>
         <div><dt>WCAG 2.2</dt><dd>3.3.1 Error Identification, A · 1.4.1 Use of Color, A</dd></div>
-        <div><dt>The right way</dt><dd>A text message under each wrong field, linked to it, and the focus on the first wrong field.</dd></div>
+        <div><dt>The right way</dt><dd>A text message under each wrong field that says how to fix it, linked to the field.</dd></div>
       </dl></li>
     <li><h4>Panels can only be reordered by dragging</h4>
       <dl>
@@ -595,14 +523,6 @@ dd { margin: 0; }
         <div><dt>How to find it</dt><dd>Keyboard: there is nothing to operate.</dd></div>
         <div><dt>WCAG 2.2</dt><dd>2.5.7 Dragging Movements, AA · 2.1.1 Keyboard, A</dd></div>
         <div><dt>The right way</dt><dd>Move up and Move down buttons on each panel, and an announcement of the new position.</dd></div>
-      </dl></li>
-    <li><h4>The Error budget info icon works only with a mouse</h4>
-      <dl>
-        <div><dt>Where</dt><dd>Arrange panels: the ⓘ next to Error budget.</dd></div>
-        <div><dt>What is wrong</dt><dd>The explanation is only in a mouse tooltip on an element you cannot Tab to.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab skips it · mouse: hover.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
-        <div><dt>The right way</dt><dd>A real button with a tooltip that also appears on focus.</dd></div>
       </dl></li>
     <li><h4>The SLA badge is an image of text</h4>
       <dl>

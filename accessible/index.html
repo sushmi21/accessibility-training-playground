@@ -2168,10 +2168,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         '<td>' + status + '</td>' +
         '<td class="row-actions">' +
         (canAck ? '<button type="button" class="btn mon-ghost" data-ack="' + i.id + '">Acknowledge</button>' : '') +
-        
         '<button type="button" class="btn mon-ghost" data-edit-incident="' + i.id + '">Edit<span class="visually-hidden"> incident #' + i.id + '</span></button>' +
         '<a href="#/monitoring/incidents/' + i.id + '">Details<span class="visually-hidden"> for incident #' + i.id + '</span></a>' +
-        
         '</td></tr>';
     }).join('');
     monEl('incidents-empty').hidden = listed.length > 0;
@@ -2183,14 +2181,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     var pages = monPageCount();
     var html = '<ul><li><button type="button" class="page" data-page="prev" aria-label="Previous page"' + (more.page === 1 ? ' disabled' : '') + '>‹</button></li>';
     for (var p = 1; p <= pages; p++) {
-      
       html += '<li><button type="button" class="page" data-page="' + p + '"' + (p === more.page ? ' aria-current="page"' : '') + '>' + p + '</button></li>';
     }
     html += '<li><button type="button" class="page" data-page="next" aria-label="Next page"' + (more.page === pages ? ' disabled' : '') + '>›</button></li></ul>';
     monEl('pages').innerHTML = html;
   }
   function monRefreshIncidents() {
-    
     monRenderIncidents();
     monEl('refresh-note').textContent = 'Updated ' + monClock();
   }
@@ -2199,7 +2195,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (!incident || incident.acked || incident.status !== 'open') return;
     incident.acked = true;
     monRenderIncidents();
-    
     var edit = viewEl.querySelector('[data-edit-incident="' + id + '"]');
     if (edit) edit.focus(); else monEl('incidents-heading').focus();
     monToast('Acknowledged #' + id + ', ' + incident.service);
@@ -2233,9 +2228,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       
       latest.push(s.name + ' ' + last + ' ms');
     });
-    
     var label = 'Line chart. P95 over the last 24 hours, latest values: ' + esc(latest.join(', ')) + '.';
-    
     monEl('compare').innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="' + label + '">' + g + '</svg>';
     monEl('compare-legend').innerHTML = legend;
   }
@@ -2248,10 +2241,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   function monWidgetInner(w) {
     if (w.id === 'budget') {
       return '<span class="wname">' + esc(w.name) +
-        
         '<span class="tip-wrap"><button type="button" class="icon-btn info" aria-label="What is the error budget?" aria-describedby="mon-budget-tip">ⓘ</button>' +
         '<span class="tip" role="tooltip" id="mon-budget-tip">The share of the monthly error allowance that is still unused.</span></span>' +
-        
         '</span><span class="wval">' + esc(w.value) + '</span>';
     }
     if (w.id === 'sla') {
@@ -2389,12 +2380,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (page) {
       var p = page.getAttribute('data-page');
       more.page = p === 'prev' ? more.page - 1 : p === 'next' ? more.page + 1 : parseInt(p, 10);
-      
       if (!monKeepFocus(monRenderIncidents)) {
         var current = viewEl.querySelector('[data-page][aria-current]');
         if (current) current.focus();
       }
-      
       return;
     }
     var move = e.target.closest('[data-move]');
@@ -2407,9 +2396,9 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (more.loading || more.loaded) return;
     more.loading = true;
     var button = monEl('load-more');
-    
     button.textContent = 'Loading…';
     button.setAttribute('aria-disabled', 'true');
+    
     announce('Loading more panels');
     
     more.loadTimer = setTimeout(monInsertMore, 1200);

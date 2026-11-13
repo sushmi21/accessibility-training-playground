@@ -260,7 +260,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .mon tr:hover .row-actions [data-ack] { opacity: 1; }
 .mon .mon-pages ul { display: flex; gap: 4px; list-style: none; margin: 10px 0 0; padding: 0; }
 .mon .page { padding: 0 2px; border: 0; background: none; color: var(--primary); font: inherit; font-size: 12px; line-height: 1.2; cursor: pointer; }
-.mon .page.current { color: var(--text); }
+.mon .page[aria-current="page"] { border: 1px solid var(--primary); border-radius: 4px; background: #e0e7ff; color: var(--primary-dark); }
 
 .mon .page:disabled { color: #9ca3af; cursor: default; }
 .mon details { margin: 12px 0 0; border: 1px solid var(--mon-line); border-radius: 8px; }
@@ -273,7 +273,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .mon .legend .sw { width: 14px; height: 14px; border-radius: 3px; }
 .mon .legend svg { width: 28px; height: 10px; }
 .mon .deploys { display: flex; flex-direction: column; gap: 10px; }
-.mon .deploy { padding: 8px 12px; border: 1px solid var(--mon-line); border-radius: 8px; font-size: 14px; height: 64px; overflow: hidden; }
+.mon .deploy { padding: 8px 12px; border: 1px solid var(--mon-line); border-radius: 8px; font-size: 14px; min-height: 64px; }
 .mon .deploy b { display: block; }
 .mon .widgets { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .mon .widget { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: var(--panel); border: 1px solid var(--mon-line); border-radius: 8px; }
@@ -986,7 +986,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       <div class="mon-head">
         <h2 id="mon-incidents-heading" tabindex="-1">Incidents</h2>
 
-        <span class="live"><i class="blink"></i>Live</span>
+        <span class="live"><i></i>Live</span>
         <span class="sp"></span>
         <span class="refresh-note" id="mon-refresh-note">Refreshes every 20 s</span>
       </div>
@@ -995,7 +995,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       <div class="mon-toolbar">
         <label class="mon-check"><input type="checkbox" id="mon-show-resolved">Show resolved</label>
       </div>
-      <p class="muted" id="mon-incidents-count"></p>
+      <p class="muted" id="mon-incidents-count" role="status"></p>
       <div class="tablewrap">
         <table id="mon-incidents-table">
           <thead><tr><th scope="col">Incident</th><th scope="col">Service</th><th scope="col">Severity</th><th scope="col">Opened</th><th scope="col">Status</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
@@ -2041,10 +2041,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
         '<td>' + status + '</td>' +
         '<td class="row-actions">' +
         (canAck ? '<button type="button" class="btn mon-ghost" data-ack="' + i.id + '">Acknowledge</button>' : '') +
-        
-        '<button type="button" class="icon-btn" data-edit-incident="' + i.id + '" title="Edit">' + ICON_PENCIL + '</button>' +
-        '<a href="#/monitoring/incidents/' + i.id + '">Details</a>' +
-        
+        '<button type="button" class="btn mon-ghost" data-edit-incident="' + i.id + '">Edit<span class="visually-hidden"> incident #' + i.id + '</span></button>' +
+        '<a href="#/monitoring/incidents/' + i.id + '">Details<span class="visually-hidden"> for incident #' + i.id + '</span></a>' +
         '</td></tr>';
     }).join('');
     monEl('incidents-empty').hidden = listed.length > 0;
@@ -2056,30 +2054,23 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     var pages = monPageCount();
     var html = '<ul><li><button type="button" class="page" data-page="prev" aria-label="Previous page"' + (more.page === 1 ? ' disabled' : '') + '>‹</button></li>';
     for (var p = 1; p <= pages; p++) {
-      
-      html += '<li><button type="button" class="page' + (p === more.page ? ' current' : '') + '" data-page="' + p + '">' + p + '</button></li>';
+      html += '<li><button type="button" class="page" data-page="' + p + '"' + (p === more.page ? ' aria-current="page"' : '') + '>' + p + '</button></li>';
     }
     html += '<li><button type="button" class="page" data-page="next" aria-label="Next page"' + (more.page === pages ? ' disabled' : '') + '>›</button></li></ul>';
     monEl('pages').innerHTML = html;
   }
   function monRefreshIncidents() {
-    
-    more.showResolved = false;
-    more.page = 1;
-    monEl('show-resolved').checked = false;
     monRenderIncidents();
-    var note = monEl('refresh-note');
-    note.textContent = 'Refreshing…';
-    clearTimeout(more.flashTimer);
-    more.flashTimer = setTimeout(function () { note.textContent = 'Refreshed ' + monClock() + ' \u00b7 Refreshes every 20 s'; }, 800);
+    monEl('refresh-note').textContent = 'Updated ' + monClock() + ' \u00b7 Refreshes every 20 s';
   }
   function monAcknowledge(id) {
     var incident = monIncident(id);
     if (!incident || incident.acked || incident.status !== 'open') return;
     incident.acked = true;
     monRenderIncidents();
-    
-    monToast('Acknowledged #' + id);
+    var edit = viewEl.querySelector('[data-edit-incident="' + id + '"]');
+    if (edit) edit.focus(); else monEl('incidents-heading').focus();
+    monToast('Acknowledged #' + id + ', ' + incident.service);
   }
   function monRenderCompare() {
     var W = 640, H = 230, L = 46, R = 16, T = 18, B = 34, max = 500;
@@ -2109,9 +2100,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
       
       latest.push(s.name + ' ' + last + ' ms');
     });
-    
-    var label = 'P95 comparison chart';
-    
+    var label = 'Line chart. P95 over the last 24 hours, latest values: ' + esc(latest.join(', ')) + '.';
     monEl('compare').innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="' + label + '">' + g + '</svg>';
     monEl('compare-legend').innerHTML = legend;
   }
@@ -2124,9 +2113,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
   function monWidgetInner(w) {
     if (w.id === 'budget') {
       return '<span class="wname">' + esc(w.name) +
-        
-        '<span class="info" title="The share of the monthly error allowance that is still unused.">ⓘ</span>' +
-        
+        '<span class="tip-wrap"><button type="button" class="icon-btn info" aria-label="What is the error budget?" aria-describedby="mon-budget-tip">ⓘ</button>' +
+        '<span class="tip" role="tooltip" id="mon-budget-tip">The share of the monthly error allowance that is still unused.</span></span>' +
         '</span><span class="wval">' + esc(w.value) + '</span>';
     }
     if (w.id === 'sla') {
@@ -2196,9 +2184,12 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     var duration = monEl('silence-duration'), reason = monEl('silence-reason');
     var minutes = parseInt(duration.value, 10), why = reason.value.trim();
     
-    duration.classList.toggle('invalid', isNaN(minutes) || minutes < 1);
-    reason.classList.toggle('invalid', !why);
-    if (isNaN(minutes) || minutes < 1 || !why) return;
+    var bad = [];
+    [[duration, isNaN(minutes) || minutes < 1], [reason, !why]].forEach(function (pair) {
+      pair[0].classList.toggle('invalid', pair[1]);
+      if (pair[1]) { pair[0].setAttribute('aria-invalid', 'true'); bad.push(pair[0]); } else pair[0].removeAttribute('aria-invalid');
+    });
+    if (bad.length) { bad[0].focus(); return; }
     
     duration.value = '';
     reason.value = '';
@@ -2238,9 +2229,10 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (page) {
       var p = page.getAttribute('data-page');
       more.page = p === 'prev' ? more.page - 1 : p === 'next' ? more.page + 1 : parseInt(p, 10);
-      
-      monRenderIncidents();
-      
+      if (!monKeepFocus(monRenderIncidents)) {
+        var current = viewEl.querySelector('[data-page][aria-current]');
+        if (current) current.focus();
+      }
       return;
     }
     var move = e.target.closest('[data-move]');
@@ -2253,8 +2245,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     if (more.loading || more.loaded) return;
     more.loading = true;
     var button = monEl('load-more');
-    
-    button.innerHTML = '<span class="spinner"></span>';
+    button.textContent = 'Loading…';
+    button.setAttribute('aria-disabled', 'true');
     
     more.loadTimer = setTimeout(monInsertMore, 1200);
   }
@@ -2282,7 +2274,8 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
     monEl('silence-form').addEventListener('submit', monSilenceSubmit);
     monWireDrag(monEl('widgets'));
     
-    more.refreshTimer = setInterval(monRefreshIncidents, 20000);
+    more.refreshTimer = setInterval(function () { monKeepFocus(monRefreshIncidents); }, 20000);
+    monEl('incidents-heading').focus();
   }
   function monTeardownMore() {
     clearTimeout(more.loadTimer);

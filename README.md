@@ -32,11 +32,12 @@ after design review. It covers text contrast (1.4.3), content that moves on its
 own (2.2.2), reflow (1.4.10), a text alternative for a chart (1.1.1), error
 identification and suggestion (3.3.1, 3.3.3) and status messages (4.1.3), plus
 the questions a reviewer has to ask when the design leaves states unspecified.
-A second batch of panels, loaded on demand from the same page, adds timing
-(2.2.1), use of colour (1.4.1), non-text contrast (1.4.11), text spacing
-(1.4.12), images of text (1.4.5), sensory characteristics (1.3.3), consistent
-identification (3.2.4), link purpose (2.4.4), target size (2.5.8), content on
-hover (1.4.13), labels and instructions (3.3.2) and dragging movements (2.5.7).
+A second batch of panels, loaded on demand from the same page, adds only
+design-level problems: timing (2.2.1), content that updates on its own (2.2.2),
+use of colour (1.4.1), non-text contrast (1.4.11), images of text (1.4.5),
+sensory characteristics (1.3.3), controls that appear only on hover (2.4.7),
+target size (2.5.8), labels and error messages (3.3.2, 3.3.1), dragging
+movements (2.5.7) and unnecessary complexity.
 
 The Components page shows every control pattern from the keyboard interaction
 cheat sheet, grouped the way the ARIA Authoring Practices Guide groups them,
