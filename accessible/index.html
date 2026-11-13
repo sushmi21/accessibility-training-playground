@@ -553,8 +553,20 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .fm .fm-server-error { display: flex; align-items: flex-start; gap: 10px; max-width: 560px; margin: 24px 0 0; padding: 14px 18px; border: 3px solid #b91c1c; border-radius: 8px; background: var(--panel); color: var(--text); }
 .fm .fm-server-error .icon { flex: none; margin-top: 3px; color: #b91c1c; }
 .fm .fm-server-error p { margin: 0; }
-.fm .fm-trainer { max-width: 560px; margin: 16px 0; padding: 10px 16px; border: 1px dashed #9ca3af; border-radius: 8px; background: #fffbeb; }
-.fm .fm-trainer p { margin: 0 0 4px; font-size: 15px; }
+.fm .fm-layout { display: grid; grid-template-columns: minmax(0, 560px) minmax(220px, 280px); column-gap: 40px; align-items: start; }
+.fm .fm-main { grid-column: 1; grid-row: 1; min-width: 0; }
+.fm .fm-trainer { grid-column: 2; grid-row: 1; position: sticky; top: 0; margin: 16px 0; padding: 12px 16px; border: 1px dashed #9ca3af; border-radius: 8px; background: #fffbeb; font-size: 15px; }
+.fm .fm-trainer p { margin: 0 0 6px; }
+.fm .fm-trainer .fm-trainer-title { font-weight: 700; }
+.fm .fm-trainer ul { margin: 0 0 10px; padding-left: 20px; }
+.fm .fm-trainer li { margin: 0 0 6px; }
+.fm .fm-trainer .fm-option { align-items: flex-start; min-height: 0; }
+.fm .fm-trainer .fm-option input { margin-top: 2px; }
+@media (max-width: 1180px) {
+  .fm .fm-layout { grid-template-columns: minmax(0, 560px); }
+  .fm .fm-trainer, .fm .fm-main { grid-column: auto; grid-row: auto; }
+  .fm .fm-trainer { position: static; }
+}
 .fm .fm-trainer code { padding: 1px 5px; border-radius: 4px; background: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .95em; }
 .fm .fm-label-row { position: relative; }
 .fm .fm-tip { position: static; }
@@ -584,7 +596,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .fm .fm-range::-moz-range-thumb { width: 16px; height: 16px; border: 3px solid #fff; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
 .fm .fm-range:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 6px; }
 .fm .fm-range-ends { display: flex; justify-content: space-between; margin-top: -2px; font-size: 14px; color: var(--muted); }
-.fm .fm-bar { position: sticky; bottom: -24px; z-index: 5; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin: 32px -32px -24px; padding: 14px 32px; background: var(--panel); border-top: 1px solid var(--border); box-shadow: 0 -4px 12px rgba(0, 0, 0, .06); }
+.fm .fm-bar { position: sticky; bottom: -24px; z-index: 5; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin: 32px -32px -24px; padding: 14px 32px; background: var(--panel); box-shadow: 0 0 0 100vmax var(--panel), 0 -1px 0 100vmax var(--border); clip-path: inset(-1px -100vmax 0 -100vmax); } /* background runs to the edges of main, past the form column */
 .fm .fm-bar p { margin: 0; font-size: 15px; color: var(--muted); }
 
 main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clear of the sticky bar (2.4.11) */
@@ -1483,10 +1495,17 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   <div class="fm">
     <div class="view-header"><h1>Register for a workshop</h1></div>
     <p class="lead">Agent Studio runs free workshops for teams who build chat agents. Choose a date, tell us how you will attend, and we send you the joining details. Nothing you enter here is saved or sent.</p>
+    <div class="fm-layout">
     <div class="fm-trainer">
-      <p><strong>Training controls.</strong> These stand in for the server. Register with <code>taken@example.com</code> to get the answer that the address is already registered.</p>
-      <label class="fm-option"><input type="checkbox" id="fm-sim-network">Simulate a network error on the next Register</label>
+      <p class="fm-trainer-title">Training controls</p>
+      <p>This form has no real server. Use these controls to see what happens when the server rejects a form that is already valid.</p>
+      <ul>
+        <li><strong>Already registered:</strong> fill in the form with <code>taken@example.com</code> as the email and select Register. The server answers that this address is already registered.</li>
+        <li><strong>Network error:</strong> fill in the form, tick the box below, and select Register. That attempt fails as if the connection had dropped. The box unticks itself afterwards, so the next attempt works.</li>
+      </ul>
+      <label class="fm-option"><input type="checkbox" id="fm-sim-network">Make the next Register fail with a network error</label>
     </div>
+    <div class="fm-main">
 
     <p>Fields marked with an asterisk (<span class="ast">*</span>) are required.</p>
     <div class="fm-done" id="fm-done" hidden>
@@ -1616,6 +1635,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <p id="fm-submit-reason"></p>
       </div>
     </form>
+    </div>
+    </div>
   </div>
 </template>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-text">
