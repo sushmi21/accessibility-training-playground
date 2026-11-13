@@ -31,6 +31,7 @@ ol li, ul li { margin: 4px 0; }
 .ext { width: 14px; height: 14px; margin-left: 3px; vertical-align: -1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 .tbd { color: #4b5563; }
+.held { margin: 8px 0 0; color: #4b5563; font-size: .95rem; }
 </style>
 </head>
 <body>
@@ -51,147 +52,161 @@ ol li, ul li { margin: 4px 0; }
 
   <h2 id="sessions">Sessions</h2>
 
-  <details id="session-2">
-    <summary><h3>Session 2: ARIA, the accessibility tree, and name, role, value</h3></summary>
+  <details id="session-1">
+    <summary><h3>Session 1: Kick-off – accessibility, WCAG 2.2, Level AA, resources and tools</h3></summary>
     <div class="session-body">
-      <p class="goal">Goal: see how the browser turns markup into what assistive technology reads, and learn three ways to check it.</p>
+      <p class="held">Held on 15 October 2026.</p>
+      <p class="goal">Goal: know who accessibility serves, how WCAG 2.2 is built and how to read a success criterion, and try a real task with the keyboard only.</p>
 
       <h4>Agenda</h4>
       <ol>
-        <li><strong>ARIA.</strong> What it is and what it is not. The first rule: no ARIA is better than bad ARIA. Native HTML first, ARIA only to fill the gaps.</li>
-        <li><strong>DOM versus accessibility tree.</strong> The browser builds a second tree from the DOM, the CSS and the ARIA attributes. Screen readers read that tree, not the DOM.</li>
-        <li><strong>Name, role, value.</strong> What each one is, where the name comes from, and how Chrome shows the computation in the Accessibility pane of the Elements panel.</li>
-        <li><strong>Demo: axe DevTools.</strong> Run it on the seeded version and read one result together: the rule, the element, the fix.</li>
-        <li><strong>Demo: bookmarklets.</strong> Two bookmarklets, one that outlines headings and landmarks and one that shows accessible names. Suggestions are in the links below.</li>
-        <li><strong>Mission.</strong> Participants find bugs on the Agents page, in this order: axe, then keyboard, then the trees.</li>
-        <li><strong>Debrief.</strong> What did each method find that the others missed? Decide what session 3 covers.</li>
+        <li><strong>What accessibility is.</strong> Making the product usable by people who perceive, operate or understand it differently: permanently, temporarily or in a situation. Who benefits from an accessible website.</li>
+        <li><strong>Assistive technologies.</strong> Screen readers, magnifiers and browser zoom, keyboard only, switch devices, voice control and braille displays, and what each one needs from the code. Demo: NVDA on a documentation site.</li>
+        <li><strong>WCAG 2.2.</strong> Four principles, 13 guidelines and 86 success criteria. Levels A, AA and AAA, and why the target is AA. How to read a success criterion and find its Understanding page.</li>
+        <li><strong>The champion role.</strong> What a champion does and does not do, and who owns a finding.</li>
+        <li><strong>Four criteria on a real screen.</strong> Bypass Blocks (2.4.1), Page Titled (2.4.2), Focus Order (2.4.3) and Focus Visible (2.4.7).</li>
+        <li><strong>Mission.</strong> Participants complete a task in the product with the keyboard only.</li>
+        <li><strong>Reflection.</strong> A poll on the biggest barrier, then three questions: where the focus got lost, whether it moved in a sensible order and came back, and how many Tab stops the task took.</li>
       </ol>
 
-      <h4>Mission: find the bugs on the Agents page</h4>
-      <p>Use the <a href="../broken/">seeded version</a>. Stay on the Agents page: the list in Card view and in List view, and the page you reach by opening one agent. Leave the New agent form alone. It belongs to a later session.</p>
-      <p>For each finding, write down where it is, what is wrong, how you found it, and the WCAG success criterion if you know it.</p>
-
-      <h5>Part 1: axe DevTools</h5>
+      <h4>Mission: complete a task with the keyboard only</h4>
+      <p>This session did not use the playground. Use the product you work on, or any site with a flow that opens a dialog and a form. Unplug the mouse or switch off the trackpad.</p>
       <ol>
-        <li>Open the Agents page and run a full scan. Note each issue, where it is, and what axe says about it.</li>
-        <li>Switch to List view and scan again. What is new?</li>
-        <li>Run the same two scans on the <a href="../accessible/">accessible version</a>. What remains, and why?</li>
+        <li>Load the page and press Tab once. What received focus first?</li>
+        <li>Reach the button that starts the task and press Enter. Where did the focus land?</li>
+        <li>In the dialog, Tab through it, then press Escape. Where does the focus return?</li>
+        <li>Open the dialog again and complete it. Where did the focus go after the page changed?</li>
+        <li>Fill in the required fields and Tab through the rest of the form to the Save button. Could you see the focus indicator at every Tab stop?</li>
+        <li>Save, then go back with Shift+Tab to the Back button and press Enter. Where did the focus land?</li>
+      </ol>
+      <p class="note">Before Session 2, set up the bookmarklets, axe DevTools and the Colour Contrast Analyser from the links below, and check that they work.</p>
+
+      <h4>Links for this session</h4>
+      <ul>
+        <li><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">WCAG 2.2 quick reference, filtered to Level A and AA<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/" target="_blank" rel="noopener">Understanding WCAG 2.2, one page per success criterion<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/" target="_blank" rel="noopener">What's new in WCAG 2.2<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" rel="noopener">ARIA Authoring Practices Guide: patterns<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://webaim.org/articles/" target="_blank" rel="noopener">WebAIM articles<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.nvaccess.org/download/" target="_blank" rel="noopener">NVDA screen reader<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://pauljadam.com/bookmarklets/" target="_blank" rel="noopener">Bookmarklets by Paul J. Adam<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.deque.com/axe/devtools/" target="_blank" rel="noopener">axe DevTools browser extension<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.tpgi.com/color-contrast-checker/" target="_blank" rel="noopener">Colour Contrast Analyser by TPGi<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+      </ul>
+    </div>
+  </details>
+  <details id="session-2">
+    <summary><h3>Session 2: ARIA, the accessibility tree and name, role, value</h3></summary>
+    <div class="session-body">
+      <p class="held">Held on 22 October 2026.</p>
+      <p class="goal">Goal: know what a screen reader needs from every control, a name, a role and a state, where each one comes from, and three ways to check it.</p>
+
+      <h4>Agenda</h4>
+      <ol>
+        <li><strong>Name, role, value.</strong> What each one is, and why every control has to expose all three (4.1.2).</li>
+        <li><strong>Semantic elements, and div and span.</strong> What a native element gives you for free, and what a div with a click handler does not.</li>
+        <li><strong>ARIA.</strong> It changes what is announced, never what the element does. The first rule: a native element first, ARIA only for the gaps. How aria-labelledby builds a name.</li>
+        <li><strong>The accessibility tree.</strong> The second tree the browser builds from the DOM, the CSS and ARIA. How to read name, role and state in the Accessibility pane of Chrome DevTools, and the order in which the name is computed.</li>
+        <li><strong>Demo: axe DevTools.</strong> A scan of the seeded Agents page, and why a suggested fix has to be read before it is applied.</li>
+        <li><strong>Mission.</strong> Participants test the Agents page in four passes: mouse, axe, keyboard, tree.</li>
+        <li><strong>Review together.</strong> What each pass found, and what automation misses.</li>
       </ol>
 
-      <h5>Part 2: keyboard</h5>
-      <ol start="4">
-        <li>Reload the seeded Agents page and press Tab until you reach the end of the page. Write down the order of the focus stops. Could you always see where the focus was?</li>
-        <li>Operate each control with the keyboard only: the Card and List toggle, the search box, a sort header and a row in List view, and the More actions menu on a card. Which ones work, which do not, and which work but tell you nothing about their state?</li>
-        <li>Open one agent with the keyboard. Where does focus land, what does the browser tab say, and how do you get back?</li>
-      </ol>
-
-      <h5>Part 3: DOM and accessibility tree</h5>
-      <ol start="7">
-        <li>In Chrome DevTools, select an element and open the Accessibility pane. Inspect the logo, every control in the top bar and in the toolbar, one card, and one table row. Read off the name, the role and the state of each.</li>
-        <li>Do the same on the accessible version and compare. Where does the tree differ from what you see on screen?</li>
-        <li>Pick two of those differences. Which markup is responsible, and how would you fix it?</li>
+      <h4>Mission: the Agents page in four passes</h4>
+      <p>Use the <a href="../broken/#/agents">Agents page of the seeded version</a> in Card view, reloaded before you start. List view and the New agent form are out of scope. Count the issues you find in each pass. For each one, write down where it is, what is wrong, how you found it, and the WCAG success criterion if you know it.</p>
+      <ol>
+        <li><strong>Mouse.</strong> Explore the page the way you normally would: click the view toggle, hover the buttons, open an agent, look at the browser tab.</li>
+        <li><strong>axe.</strong> Run axe DevTools on the Agents page and read each result: the rule, the element, the suggested fix.</li>
+        <li><strong>Keyboard.</strong> Hands off the mouse. Tab through everything you see, open and operate the More actions menu, type in the search box and Tab on, open an agent and come back.</li>
+        <li><strong>Tree.</strong> In the Accessibility pane, inspect four elements: the Card and List view selector, the search input, the disabled New agent button, and one agent card with its button and menu. Read off the name, the role and the state of each.</li>
       </ol>
       <p class="note">You may get stuck without a mouse. That is a finding, not a fault of the playground: note where it happened, use the mouse to continue, and carry on.</p>
+      <p>Afterwards, pick one control, for example the More actions menu on a card. Inspect it in the Accessibility pane on the seeded version, then on the <a href="../accessible/#/agents">accessible version</a>. Compare the name, the role and the state, and find the markup that changed.</p>
 
       <h4>Links for this session</h4>
       <ul>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html" target="_blank" rel="noopener">Understanding 4.1.2 Name, Role, Value<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html" target="_blank" rel="noopener">Understanding 2.5.3 Label in Name<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/TR/accname-1.2/" target="_blank" rel="noopener">Accessible Name and Description Computation 1.2<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/" target="_blank" rel="noopener">ARIA Authoring Practices Guide: Read me first<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" target="_blank" rel="noopener">MDN: ARIA<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://developer.chrome.com/docs/devtools/accessibility/reference" target="_blank" rel="noopener">Chrome DevTools: accessibility features reference<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.deque.com/axe/devtools/" target="_blank" rel="noopener">axe DevTools browser extension<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://pauljadam.com/bookmarklets/" target="_blank" rel="noopener">Bookmarklets by Paul J. Adam, including headings and landmarks<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.ssa.gov/accessibility/andi/help/install.html" target="_blank" rel="noopener">ANDI, the accessible name and description inspector<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/" target="_blank" rel="noopener">ARIA Authoring Practices Guide: Read me first<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://dequeuniversity.com/rules/axe/" target="_blank" rel="noopener">axe rule descriptions<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
       </ul>
     </div>
   </details>
-
   <details id="session-3">
-    <summary><h3>Session 3: Where am I? Page title, headings, landmarks and language</h3></summary>
+    <summary><h3>Session 3: Landmarks, headings and language</h3></summary>
     <div class="session-body">
-      <p class="goal">Goal: give a screen reader user and a keyboard user the same skim you get from the layout, through the page title, the landmarks, the headings, the skip link and the declared language.</p>
+      <p class="held">Held on 29 October 2026.</p>
+      <p class="goal">Goal: make the structure a screen reader user skims by, the landmarks, the headings and the declared language, match the structure you see.</p>
 
       <h4>Agenda</h4>
       <ol>
-        <li><strong>Skimming.</strong> How a sighted user skims a screen by its layout and then by the headings, and what a screen reader uses instead: the page title, the landmarks and the heading outline. A keyboard user skims with the skip link. The declared language picks the voice.</li>
-        <li><strong>Demo: the home page.</strong> The accessible home page with NVDA: the title, the elements list, and the H, D and K keys. Then the same page through the bookmarklets and ANDI.</li>
-        <li><strong>Mission.</strong> Participants examine the Settings page in four passes: eyes, accessibility tree, tools, findings.</li>
-        <li><strong>Walkthrough and discussion.</strong> We go through the Settings page together: what each pass showed, what only a screen reader showed, and what nothing found.</li>
-        <li><strong>The criteria so far.</strong> The success criteria touched in Sessions 1 to 3.</li>
+        <li><strong>Why page structure matters.</strong> A sighted user skims a page by its layout and its headings. A screen reader user skims it by the landmarks, the headings and the declared language in the code.</li>
+        <li><strong>Landmarks.</strong> The landmark roles and their native elements, which ones appear once per page, which ones need a name, and when a section or a form becomes a landmark.</li>
+        <li><strong>Headings.</strong> One h1 that says what the page is, no level skipped, nothing styled as a heading without being one, and no heading used for its looks.</li>
+        <li><strong>Language.</strong> The lang attribute on the page and on every part in another language, with a language code, and what a language switcher has to change.</li>
+        <li><strong>Demo: the home page.</strong> The accessible home page with NVDA: the D and H keys and the elements list. Then the same page through the bookmarklets and ANDI.</li>
+        <li><strong>Mission.</strong> Participants examine the Settings page in four steps: look, tree, tools, findings.</li>
+        <li><strong>Walkthrough together.</strong> The Settings page step by step, and what each tool showed.</li>
       </ol>
 
-      <h4>Mission: find the structure bugs on the Settings page</h4>
-      <p>Use the <a href="../broken/#/settings">seeded version</a>. Stay on the Settings page. It only displays information, so you are looking at how the page is put together, not at what it says.</p>
-
-      <h5>Pass 1: skim with your eyes</h5>
+      <h4>Mission: the Settings page in four steps</h4>
+      <p>Use the <a href="../broken/#/settings">Settings page of the seeded version</a>. It only displays information, so you are looking at how the page is built, not at what it says.</p>
       <ol>
-        <li>Open the Settings page of the seeded version and look at it for ten seconds.</li>
-        <li>Write down the outline you expect: the page heading and its sections, in order.</li>
+        <li><strong>Look.</strong> Look at the page for ten seconds. Write down the heading outline you expect, the page heading and its sections in order, and the landmarks you expect: which content would sit in a banner, a navigation, main, an aside, a footer.</li>
+        <li><strong>Tree.</strong> Open DevTools, select an element, open the Accessibility pane and switch on the full-page accessibility tree. Walk it from the top and expand what is collapsed. Check every landmark and its name, and every heading and its level, against step 1.</li>
+        <li><strong>Tools.</strong> Run axe DevTools with Best practices switched on and read each result: the rule, the element, the fix. Then run the Structures module of ANDI. Then, if you have time, the Headings, Landmarks and Lang bookmarklets.</li>
+        <li><strong>Findings.</strong> For each issue, write down where it is, what is wrong, how you found it, and the WCAG success criterion you think it fails.</li>
       </ol>
-
-      <h5>Pass 2: the accessibility tree</h5>
-      <ol start="3">
-        <li>Open DevTools, go to the Elements panel and open the Accessibility pane. Switch on the full-page accessibility tree.</li>
-        <li>Walk the tree from the top. Write down every landmark you meet, with its name, and every heading, with its level.</li>
-        <li>Compare the tree with the outline from Pass 1.</li>
-      </ol>
-
-      <h5>Pass 3: the tools</h5>
-      <ol start="6">
-        <li>Run axe DevTools with "Best practices" switched on. For each result, read the rule, the element and the fix.</li>
-        <li>Run ANDI's Structures module, then its Links module. Note the landmarks, headings and link names it lists.</li>
-        <li>Run the Page Title, Headings, Landmarks and Lang bookmarklets.</li>
-        <li>For each tool, write down what it showed that the others did not, and where it disagrees with the tree.</li>
-      </ol>
-
-      <h5>Pass 4: your findings</h5>
-      <ol start="10">
-        <li>From the passes so far, write down how many landmarks the Settings page has and what they are called.</li>
-        <li>List the issues. For each one, write down where it is, what is wrong, how you found it, and the WCAG success criterion you think it fails.</li>
-      </ol>
-      <p class="note">When everyone is done, we go through the page together and discuss what each pass showed.</p>
+      <p class="note">Afterwards, run the same tools on the <a href="../accessible/#/settings">Settings page of the accessible version</a> and compare the landmarks and the heading outline.</p>
 
       <h4>Links for this session</h4>
       <ul>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html" target="_blank" rel="noopener">Understanding 2.4.2 Page Titled<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html" target="_blank" rel="noopener">Understanding 2.4.1 Bypass Blocks<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html" target="_blank" rel="noopener">Understanding 1.3.1 Info and Relationships<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html" target="_blank" rel="noopener">Understanding 2.4.6 Headings and Labels<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html" target="_blank" rel="noopener">Understanding 2.4.4 Link Purpose (In Context)<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html" target="_blank" rel="noopener">Understanding 3.1.1 Language of Page<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html" target="_blank" rel="noopener">Understanding 3.1.2 Language of Parts<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/tutorials/page-structure/" target="_blank" rel="noopener">WAI tutorial: Page structure<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.nvaccess.org/files/nvda/documentation/userGuide.html#BrowseMode" target="_blank" rel="noopener">NVDA user guide: browse mode and single-letter navigation<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://pauljadam.com/bookmarklets/" target="_blank" rel="noopener">Bookmarklets by Paul J. Adam: Page Title, Headings, Landmarks, Lang, Lists and Iframes<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.ssa.gov/accessibility/andi/help/install.html" target="_blank" rel="noopener">ANDI, the accessible name and description inspector<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/" target="_blank" rel="noopener">ARIA Authoring Practices Guide: Landmark regions<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://r12a.github.io/app-subtags/" target="_blank" rel="noopener">Language subtag lookup, for the right value of a lang attribute<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.nvaccess.org/files/nvda/documentation/userGuide.html#BrowseMode" target="_blank" rel="noopener">NVDA user guide: browse mode and single-letter navigation<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.nvaccess.org/files/nvda/documentation/keyCommands.html" target="_blank" rel="noopener">NVDA key commands<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.ssa.gov/accessibility/andi/help/install.html" target="_blank" rel="noopener">ANDI, the accessible name and description inspector<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://pauljadam.com/bookmarklets/" target="_blank" rel="noopener">Bookmarklets by Paul J. Adam: Headings, Landmarks, Lang and Page Title<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://developer.chrome.com/docs/devtools/accessibility/reference" target="_blank" rel="noopener">Chrome DevTools: accessibility features reference<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
       </ul>
     </div>
   </details>
   <details id="session-4">
     <summary><h3>Session 4: Accessibility design review</h3></summary>
     <div class="session-body">
+      <p class="held">Held on 5 November 2026.</p>
       <p class="goal">Goal: review a design before it is built. Find what has to change, what has to be clarified, and what has to be implemented even though the mockup does not show it.</p>
 
       <h4>Agenda</h4>
       <ol>
+        <li><strong>Why universal design.</strong> Success criteria are the minimum. The seven principles of universal design ask whether everyone can reach the same goal with the product.</li>
         <li><strong>The review process.</strong> Five steps, every time you receive a design: understand the journey, identify problems, identify missing information, plan invisible accessibility, decide what happens next.</li>
-        <li><strong>Identify problems.</strong> What could make this design inaccessible or unnecessarily difficult to use? Contrast, content that moves on its own, accessible components that still make an inaccessible experience, unnecessary complexity.</li>
+        <li><strong>Identify problems.</strong> What could make this design inaccessible or unnecessarily difficult to use? Text contrast, non-text contrast, content that moves on its own, unnecessary complexity.</li>
         <li><strong>Identify missing information.</strong> What do you need to clarify before implementing? A desktop frame says nothing about other widths and zoom; a happy path says nothing about invalid values, failed saves, loading and empty states; a chart says nothing about how someone gets the values without seeing it.</li>
-        <li><strong>Plan invisible accessibility.</strong> What has to be built although the mockup does not show it: a way to bypass blocks, status announcements, accessible names, semantic structure, focus management, errors that are announced and not only shown. Check what the app shell and the component library already provide first.</li>
+        <li><strong>Plan invisible accessibility.</strong> What has to be built although the mockup does not show it: a way to bypass blocks, semantic structure, accessible names, status announcements, focus management, errors that are announced and not only shown. Check what the app shell and the component library already provide first.</li>
         <li><strong>Decide what happens next.</strong> Every finding ends in one of three actions: fix, clarify or implement.</li>
+        <li><strong>Demo: how to check.</strong> Text contrast with a contrast checker, non-text contrast with the DevTools colour picker, and reflow at 320 CSS pixels with browser zoom rather than the device toolbar.</li>
         <li><strong>Mission.</strong> Participants review the Monitoring page of the seeded version on their own, as the design they have just received.</li>
-        <li><strong>Review together.</strong> A poll on where the concerns were, then the dashboard reviewed together, and two minutes of reflection: what was missing to complete the review?</li>
+        <li><strong>Review together.</strong> A poll on where the concerns were, then the page reviewed together.</li>
       </ol>
 
       <h4>Mission: is this design ready for development?</h4>
       <p>Use the <a href="../broken/#/monitoring">Monitoring page of the seeded version</a>. Treat it as a design handed over for implementation, not as a finished screen: the handoff brief at the top says what the designer provided and what was left unspecified. Private notes are enough; there is nothing to submit.</p>
       <ol>
-        <li>Follow the user journey: review the system metrics, filter the services, edit an alert threshold, save the change.</li>
-        <li>Write down the potential problems you can identify. What could make this design inaccessible or unnecessarily difficult to use?</li>
-        <li>Write down what you would need to clarify with the designer or the product manager before implementing it.</li>
-        <li>Write down what must be implemented that the design does not show.</li>
-        <li>For each note, decide what happens next: fix, clarify or implement.</li>
+        <li><strong>Journey.</strong> Review the system metrics, filter the services, edit an alert threshold, save the change.</li>
+        <li><strong>Problems.</strong> Write down what could make this design inaccessible or unnecessarily difficult to use.</li>
+        <li><strong>Missing information.</strong> Write down what you would need to clarify with the designer or the product manager before implementing it.</li>
+        <li><strong>Invisible accessibility.</strong> Write down what must be implemented that the design does not show.</li>
+        <li><strong>Next step.</strong> For each note, decide: fix, clarify or implement.</li>
       </ol>
       <p>Afterwards, open the <a href="../accessible/#/monitoring">Monitoring page of the accessible version</a>, the revised proposal after design review. Compare it with your notes: what changed, and which of your points it answers.</p>
       <p class="note">Some findings are WCAG failures. Others are usability concerns that still create barriers. Learn to tell them apart.</p>
@@ -210,53 +225,62 @@ ol li, ul li { margin: 4px 0; }
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html" target="_blank" rel="noopener">Understanding 3.3.3 Error Suggestion<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html" target="_blank" rel="noopener">Understanding 2.4.1 Bypass Blocks<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html" target="_blank" rel="noopener">Understanding 4.1.3 Status Messages<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html" target="_blank" rel="noopener">Understanding 2.5.7 Dragging Movements<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.tpgi.com/color-contrast-checker/" target="_blank" rel="noopener">Colour Contrast Analyser by TPGi<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health" target="_blank" rel="noopener">WHO fact sheet: Disability and health<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
       </ul>
     </div>
   </details>
   <details open id="session-5">
     <summary><h3>Session 5: Keyboard interaction patterns</h3></summary>
     <div class="session-body">
-      <p class="goal">Goal: know the keys each widget pattern answers to, from the ARIA Authoring Practices Guide, and check them on a real control: the Tab stops, the arrow keys, Enter and Space, Escape, Home and End, and where the focus goes.</p>
+      <p class="held">Held on 12 November 2026.</p>
+      <p class="goal">Goal: know the keys each control answers to, from the ARIA Authoring Practices Guide, and tell a WCAG failure from a missing convention key.</p>
 
       <h4>Agenda</h4>
       <ol>
-        <li><strong>One rule.</strong> Tab moves between components, arrow keys move inside a component, Enter or Space activates, Escape dismisses. What WCAG requires (2.1.1, 2.1.2, 2.4.3, 2.4.7, 3.2.1, 3.2.2) and what the APG adds as convention.</li>
-        <li><strong>The cheat sheet.</strong> How to read a pattern row: the native element, the Tab stops, the keys that move focus, activate and dismiss, and Home, End and type-ahead.</li>
-        <li><strong>The APG.</strong> What the ARIA Authoring Practices Guide is and how a pattern page is built: the keyboard interaction, the roles, states and properties, and the examples.</li>
+        <li><strong>The keys users expect.</strong> Tab and Shift+Tab between components, the arrow keys inside one, Enter and Space to activate, Escape to close and return the focus, Home, End, Page Up and Page Down to jump.</li>
+        <li><strong>A WCAG failure or a best practice.</strong> WCAG asks that everything works with the keyboard (2.1.1, 2.1.2, 2.4.3, 2.4.7, 3.2.1, 3.2.2). The APG says which keys.</li>
+        <li><strong>Native first.</strong> Which controls get their keys from the browser, and which have no native element and need every key in script: tabs, toolbar, tree, grid, menubar, menu button, combobox.</li>
+        <li><strong>The APG.</strong> What the ARIA Authoring Practices Guide is: patterns, working examples, and the practices behind them.</li>
+        <li><strong>Custom keyboard shortcuts.</strong> Why single-key shortcuts clash with screen reader keys, and what 2.1.4 asks for.</li>
+        <li><strong>The cheat sheet in five groups.</strong> One Tab stop each, arrow keys that change a value, composites, popups, and controls with no keys of their own.</li>
         <li><strong>Mission.</strong> Participants explore the Components page of the accessible version with the keyboard only: they try each control first, then read its keys.</li>
-        <li><strong>Debrief.</strong> Which keys surprised you, which controls you could not work out before reading the info button, and which keys WCAG requires rather than the APG.</li>
+        <li><strong>Debrief.</strong> Which keys surprised you, and when to use a grid rather than a table.</li>
       </ol>
 
       <h4>Mission: try every control, then read its keys</h4>
-      <p>You work on the <a href="../accessible/#/components">Components page of the accessible version</a>. It shows every control pattern from the keyboard cheat sheet, grouped the way the cheat sheet groups them. The info button at the bottom right of each card lists the keys the control answers to. It comes after the control in the Tab order, so you reach the control first. Put the mouse away, try the control, then Tab on to the info button.</p>
+      <p>Use the <a href="../accessible/#/components">Components page of the accessible version</a>. It shows every control pattern from the keyboard cheat sheet, grouped the same way and built the right way. The info button at the bottom right of each card lists the keys the control answers to. It comes after the control in the Tab order, so you reach the control first. Put the mouse away.</p>
       <ol>
-        <li>Tab to the control and try to operate it with the keys you expect: the arrows, Home and End, Enter and Space, Escape. A composite widget such as the radio cards, the tabs, the toolbar, the tree, the grid or the menubar is one Tab stop, however many items it holds.</li>
-        <li>Then Tab to the info button at the bottom right of the card and compare its list with what you tried. Note every key you did not expect, and every key you expected that is not there.</li>
-        <li>For each popup (the menu button, the menubar, the two dialogs, the popover and the date field) press Escape and look where the focus went.</li>
-        <li>Try the editor that uses Tab. Follow the way out that is written next to it.</li>
-        <li>Repeat for every card, group by group, in the order of the page.</li>
+        <li><strong>Try.</strong> Tab to the control and operate it with the keys you expect: Enter, Space, Escape, the arrow keys, Home, End, Page Up and Page Down. Check a checkbox, expand a section, open a popup and close it again.</li>
+        <li><strong>Read.</strong> Tab on to the info button and compare its list with what you tried.</li>
+        <li><strong>Repeat.</strong> Every card, group by group, in the order of the page.</li>
       </ol>
-      <p class="note">A key that does nothing is a WCAG finding when it leaves something unreachable or inoperable (2.1.1), traps the focus (2.1.2), or moves it somewhere surprising (2.4.3, 3.2.1, 3.2.2). A missing convention key is a best practice: log it with the link to the APG pattern. The <a href="../broken/#/components">seeded version</a> has the same page with keyboard bugs; it is not part of this mission, but you can use it afterwards to practise finding what is missing.</p>
+      <p>Note every key or control that surprised you.</p>
+      <p class="note">A key that does nothing is a WCAG finding when it leaves something unreachable or inoperable (2.1.1), traps the focus (2.1.2), or moves it somewhere surprising (2.4.3, 3.2.1, 3.2.2). A missing convention key fails the APG pattern. For more practice, the <a href="../broken/#/components">same page in the seeded version</a> has the controls built the way they often are: try them with the same keys and decide for each gap whether it fails WCAG or only the pattern.</p>
 
       <h4>Links for this session</h4>
       <ul>
-        <li><a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/" target="_blank" rel="noopener">ARIA Authoring Practices Guide: Developing a Keyboard Interface<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" rel="noopener">ARIA Authoring Practices Guide: patterns, each with its Keyboard Interaction section<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/" target="_blank" rel="noopener">ARIA Authoring Practices Guide: Developing a Keyboard Interface<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/" target="_blank" rel="noopener">APG Toolbar pattern<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener">APG Tabs pattern<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/treeview/" target="_blank" rel="noopener">APG Tree View pattern<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" target="_blank" rel="noopener">APG Accordion pattern<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/" target="_blank" rel="noopener">APG Grid pattern<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html" target="_blank" rel="noopener">Understanding 2.1.1 Keyboard<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html" target="_blank" rel="noopener">Understanding 2.1.2 No Keyboard Trap<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/character-key-shortcuts.html" target="_blank" rel="noopener">Understanding 2.1.4 Character Key Shortcuts<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html" target="_blank" rel="noopener">Understanding 2.4.3 Focus Order<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html" target="_blank" rel="noopener">Understanding 2.4.7 Focus Visible<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/on-focus.html" target="_blank" rel="noopener">Understanding 3.2.1 On Focus<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/on-input.html" target="_blank" rel="noopener">Understanding 3.2.2 On Input<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html" target="_blank" rel="noopener">Understanding 1.4.13 Content on Hover or Focus<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/TR/html-aria/" target="_blank" rel="noopener">ARIA in HTML: which roles and attributes are allowed on which elements<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
       </ul>
     </div>
   </details>
   <details id="session-6">
-    <summary><h3>Session 6: to be planned</h3></summary>
-    <div class="session-body"><p class="tbd">To be decided.</p></div>
+    <summary><h3>Session 6: Accessible forms</h3></summary>
+    <div class="session-body"><p class="tbd">Planned for 19 November 2026. The agenda and the mission are added before the session.</p></div>
   </details>
   <details id="session-7">
     <summary><h3>Session 7: to be planned</h3></summary>
@@ -271,5 +295,17 @@ ol li, ul li { margin: 4px 0; }
   <p>Open both versions side by side and compare what the developer tools show for the same control: its name, its role and its state. Then compare what a screen reader says about it.</p>
   <p>The source is on <a href="https://github.com/sushmi21/accessibility-training-playground">GitHub</a>. The list of seeded bugs is deliberately not in the repository.</p>
 </main>
+<script>
+// A link such as #session-3 from a playground page opens that session.
+function openTargetSession() {
+  var target = location.hash && document.getElementById(location.hash.slice(1));
+  if (target && target.tagName === 'DETAILS') {
+    target.open = true;
+    target.scrollIntoView();
+  }
+}
+openTargetSession();
+window.addEventListener('hashchange', openTargetSession);
+</script>
 </body>
 </html>
