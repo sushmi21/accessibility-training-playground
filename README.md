@@ -74,6 +74,15 @@ labels or instructions (3.3.2), error identification and suggestion (3.3.1,
 3.3.3), use of colour (1.4.1), on input (3.2.2), focus not obscured (2.4.11)
 and redundant entry (3.3.7).
 
+The New agent form (`#/agents/new`, reached by URL because the New agent
+button stays disabled) is checked on submit only and shows an error summary,
+built the same way in both versions as the Session 6 example: a box headed
+"There is a problem" takes the focus and lists every error as a link that moves
+the focus to its field (the first radio button for the Yes/No group in a
+`fieldset`), each field shows its own error with `aria-invalid`, and
+the accessible version adds "Error:" to the page title. Its older seeds (the
+Agent name label, the switch and the submit button) are unchanged.
+
 `documentation/answers.html` lists the seeded bugs of the pages whose sessions
 have been held, with the WCAG criterion and the right way for each, so people
 can check their own findings. Pages for sessions still to come are left out

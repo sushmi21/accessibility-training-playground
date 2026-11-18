@@ -162,6 +162,21 @@ a.row-title:hover { text-decoration: underline; }
 .req { font-weight: 400; color: var(--muted); }
 input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #6b7280; border-radius: 6px; background: #fff; color: var(--text); }
 .field-switch { flex-direction: row; align-items: center; justify-content: space-between; }
+.na-summary { max-width: 520px; margin: 16px 0 24px; padding: 16px 20px; border: 3px solid #b91c1c; border-radius: 6px; }
+.na-summary:focus { outline: 3px solid var(--primary); outline-offset: 3px; }
+.na-summary h2 { margin: 0 0 8px; font-size: 20px; }
+.na-summary ul { margin: 0; padding-left: 20px; }
+.na-summary a { color: #b91c1c; font-weight: 600; }
+.na-hint { margin: 0; font-size: 15px; color: var(--muted); }
+.na-group { min-width: 0; padding: 0; border: 0; }
+.na-group legend { padding: 0; margin-bottom: 6px; font-weight: 600; }
+.na-options { display: flex; gap: 24px; }
+.na-option { display: inline-flex; align-items: center; gap: 8px; }
+.na-option input { width: 20px; height: 20px; margin: 0; accent-color: var(--primary); }
+.na-option label { font-weight: 400; }
+.na-err { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: 15px; font-weight: 600; color: #b91c1c; }
+.na-err .icon { flex: none; width: 18px; height: 18px; margin-top: 2px; }
+#new-agent-form [aria-invalid="true"]:not([type="radio"]) { border-color: #b91c1c; box-shadow: 0 0 0 1px #b91c1c; }
 .switch { position: relative; display: inline-block; width: 44px; height: 24px; padding: 0; border: 0; border-radius: 12px; background: #6b7280; cursor: pointer; vertical-align: middle; }
 .switch.on { background: var(--primary); }
 .switch-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: left .15s; }
@@ -1689,6 +1704,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   };
 
   var ICON_BACK = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"/></svg>';
+  var ICON_ERROR = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="7" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
   var ICON_PLUS = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
   var ICON_REFRESH = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>';
   var ICON_GRID = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
@@ -3420,7 +3436,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   }
   
   var FM_KEYS = ['name', 'email', 'date', 'attend', 'topics', 'support-type', 'phone', 'agree'];
-  var ICON_ERROR = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="7" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
   function fmField(key) { return viewEl.querySelector('[data-field="' + key + '"]'); }
   function fmControls(key) { return fmField(key).querySelectorAll('input, select, textarea'); }
   function fmKeyOf(el) {
@@ -3621,17 +3636,33 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       return { title: 'New agent', html:
         backButton('#/agents') +
         '<div class="view-header"><h1>New agent</h1></div>' +
-        '<form id="new-agent-form">' +
+        // The error summary is the Session 6 example for a form checked on submit. It is built the same,
+        // and correctly, in both versions: a heading, one link per error, and focus moved to it.
+        '<form id="new-agent-form" novalidate>' +
+        '<div class="na-summary" id="na-summary" tabindex="-1" hidden></div>' +
         '<div class="field">' +
         
         '<label for="agent-name">Agent name <span class="req">(required)</span></label>' +
+        '<p class="na-err" id="agent-name-err" hidden></p>' +
         '<input id="agent-name" name="agent-name" type="text" required autocomplete="off">' +
         
         '</div>' +
         '<div class="field"><label for="agent-description">Description</label>' +
         '<textarea id="agent-description" name="agent-description" rows="3"></textarea></div>' +
-        '<div class="field"><label for="agent-language">Language</label>' +
-        '<select id="agent-language" name="agent-language"><option>English</option><option>German</option><option>French</option><option>Spanish</option></select></div>' +
+        '<div class="field"><label for="agent-language">Language <span class="req">(required)</span></label>' +
+        '<p class="na-err" id="agent-language-err" hidden></p>' +
+        '<select id="agent-language" name="agent-language" required><option value="">Choose a language</option><option>English</option><option>German</option><option>French</option><option>Spanish</option></select></div>' +
+        '<fieldset class="field na-group" id="agent-human">' +
+        '<legend>Can visitors ask to talk to a person? <span class="req">(required)</span></legend>' +
+        '<p class="na-err" id="agent-human-err" hidden></p>' +
+        '<div class="na-options">' +
+        '<span class="na-option"><input type="radio" id="agent-human-yes" name="agent-human" value="yes" required><label for="agent-human-yes">Yes</label></span>' +
+        '<span class="na-option"><input type="radio" id="agent-human-no" name="agent-human" value="no"><label for="agent-human-no">No</label></span>' +
+        '</div></fieldset>' +
+        '<div class="field"><label for="agent-handover">Handover email <span class="req">(required)</span></label>' +
+        '<p class="na-hint" id="agent-handover-hint">The team that takes over when the agent cannot help.</p>' +
+        '<p class="na-err" id="agent-handover-err" hidden></p>' +
+        '<input id="agent-handover" name="agent-handover" type="email" required aria-describedby="agent-handover-hint"></div>' +
         '<div class="field field-switch">' +
         
         '<label for="enable-agent">Enable agent</label>' +
@@ -4020,10 +4051,65 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (e.target.name === 'view') setView(e.target.value);
   });
 
+  // New agent form: checked on submit only. Each error is shown above its field and listed in the
+  // summary, whose links move focus to the field without changing the route.
+  var NA_FIELDS = ['agent-name', 'agent-language', 'agent-human', 'agent-handover'];
+  function naProblems(form) {
+    var name = form.elements['agent-name'].value.trim();
+    var email = form.elements['agent-handover'].value.trim();
+    var list = [];
+    if (!name) list.push({ id: 'agent-name', message: 'Enter a name for the agent' });
+    if (!form.elements['agent-language'].value) list.push({ id: 'agent-language', message: 'Choose a language' });
+    if (!form.querySelector('input[name="agent-human"]:checked')) list.push({ id: 'agent-human', message: 'Choose whether visitors can ask to talk to a person' });
+    if (!email) list.push({ id: 'agent-handover', message: 'Enter the handover email address' });
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) list.push({ id: 'agent-handover', message: 'Enter an email address in the correct format, like support@example.com' });
+    return list;
+  }
+  function naShow(form, problems) {
+    NA_FIELDS.forEach(function (id) {
+      // A radio group takes the error id on its fieldset, so it is read with the legend, and aria-invalid on its radios.
+      var control = document.getElementById(id), err = document.getElementById(id + '-err');
+      var inputs = control.tagName === 'FIELDSET' ? [].slice.call(control.querySelectorAll('input')) : [control];
+      var problem = problems.filter(function (p) { return p.id === id; })[0];
+      var ids = (control.getAttribute('aria-describedby') || '').split(' ').filter(function (x) { return x && x !== err.id; });
+      err.hidden = !problem;
+      err.innerHTML = problem ? ICON_ERROR + '<span><span class="visually-hidden">Error: </span>' + esc(problem.message) + '</span>' : '';
+      inputs.forEach(function (input) {
+        if (problem) input.setAttribute('aria-invalid', 'true');
+        else input.removeAttribute('aria-invalid');
+      });
+      if (problem) ids.unshift(err.id);
+      if (ids.length) control.setAttribute('aria-describedby', ids.join(' '));
+      else control.removeAttribute('aria-describedby');
+    });
+    var summary = document.getElementById('na-summary');
+    summary.hidden = !problems.length;
+    summary.innerHTML = problems.length ? '<h2>There is a problem</h2><ul>' +
+      problems.map(function (p) { return '<li><a href="#' + p.id + '" data-field="' + p.id + '">' + esc(p.message) + '</a></li>'; }).join('') + '</ul>' : '';
+  }
+  viewEl.addEventListener('click', function (e) {
+    var link = e.target.closest('#na-summary a[data-field]');
+    if (!link) return;
+    e.preventDefault();
+    var field = document.getElementById(link.getAttribute('data-field'));
+    var target = field.tagName === 'FIELDSET' ? field.querySelector('input') : field;
+    field.closest('.field').scrollIntoView({ block: 'start' });
+    target.focus({ preventScroll: true });
+  });
+
   viewEl.addEventListener('submit', function (e) {
     if (e.target.id !== 'new-agent-form') return;
     e.preventDefault();
     var form = e.target;
+    var problems = naProblems(form);
+    naShow(form, problems);
+    if (problems.length) {
+      
+      document.title = 'Error: New agent – ' + APP_NAME;
+      
+      document.getElementById('na-summary').focus();
+      return;
+    }
     var project = {
       id: state.nextProjectId++,
       name: form.elements['agent-name'].value.trim(),
