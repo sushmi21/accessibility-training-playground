@@ -57,6 +57,23 @@ node, and multi-select (accessible version only, `aria-multiselectable`),
 where Space adds a node to the selection or removes it and Enter only opens or
 closes it, following the APG's recommended selection model.
 
+The Forms page is a workshop registration form, used in Session 6. Both
+versions follow the same pattern as the product: Register stays disabled until
+the form is valid, errors appear when a changed field loses focus, and the
+server can still reject a valid form (a "Training controls" box beside the form
+simulates an email that is already registered and a network error). The
+accessible version is the reference: visible labels, `fieldset` and `legend`
+for the groups and for the phone number in two parts, `required`, hints and
+errors linked with `aria-describedby`, `aria-invalid`, `autocomplete`, an
+`aria-disabled` Register button with a visible reason that shows every error
+and moves the focus to the first one when pressed, server errors at the field
+or in a message that takes the focus while the form keeps its data, and a
+confirmation that takes the focus after a successful submit. It covers info and
+relationships (1.3.1), identify input purpose (1.3.5), label in name (2.5.3),
+labels or instructions (3.3.2), error identification and suggestion (3.3.1,
+3.3.3), use of colour (1.4.1), on input (3.2.2), focus not obscured (2.4.11)
+and redundant entry (3.3.7).
+
 `documentation/answers.html` lists the seeded bugs of the pages whose sessions
 have been held, with the WCAG criterion and the right way for each, so people
 can check their own findings. Pages for sessions still to come are left out
