@@ -167,6 +167,7 @@ input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #6
 .na-summary ul { margin: 0; padding-left: 20px; }
 .na-summary a { color: #b91c1c; font-weight: 600; }
 .na-hint { margin: 0; font-size: 15px; color: var(--muted); }
+.na-note { margin: 0 0 8px; }
 .na-group { min-width: 0; padding: 0; border: 0; }
 .na-group legend { padding: 0; margin-bottom: 6px; font-weight: 600; }
 .na-options { display: flex; gap: 24px; }
@@ -565,7 +566,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .fm .field > p { margin: 0; }
 .fm .field > input, .fm .field > select, .fm .field > textarea { width: 100%; }
 .fm .hint { margin: 0; font-size: 15px; font-weight: 400; color: var(--muted); }
-.fm .ast { color: #b91c1c; font-weight: 700; }
+.ast { color: #b91c1c; font-weight: 700; }
 .fm .fm-group { min-width: 0; max-width: 480px; margin: 16px 0; padding: 0; border: 0; }
 .fm .fm-group legend { margin: 0 0 6px; padding: 0; font-weight: 600; }
 .fm .fm-group > .hint, .fm .fm-group > .fm-err { margin: 0 0 6px; }
@@ -4157,32 +4158,33 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         '<div class="view-header"><h1>New agent</h1></div>' +
         // The error summary is the Session 6 example for a form checked on submit. It is built the same,
         // and correctly, in both versions: a heading, one link per error, and focus moved to it.
+        '<p class="na-note">Fields marked with an asterisk (<span class="ast">*</span>) are required.</p>' +
         '<form id="new-agent-form" novalidate>' +
         '<div class="na-summary" id="na-summary" tabindex="-1" hidden></div>' +
         '<div class="field">' +
         /*IF BROKEN*/
-        '<span class="label">Agent name <span class="req">(required)</span></span>' +
+        '<span class="label">Agent name <span class="ast" aria-hidden="true">*</span></span>' +
         '<p class="na-err" id="agent-name-err" hidden></p>' +
         '<input id="agent-name" name="agent-name" type="text" required autocomplete="off">' +
         /*ELSE*/
-        '<label for="agent-name">Agent name <span class="req">(required)</span></label>' +
+        '<label for="agent-name">Agent name <span class="ast" aria-hidden="true">*</span></label>' +
         '<p class="na-err" id="agent-name-err" hidden></p>' +
         '<input id="agent-name" name="agent-name" type="text" required autocomplete="off">' +
         /*ENDIF*/
         '</div>' +
         '<div class="field"><label for="agent-description">Description</label>' +
         '<textarea id="agent-description" name="agent-description" rows="3"></textarea></div>' +
-        '<div class="field"><label for="agent-language">Language <span class="req">(required)</span></label>' +
+        '<div class="field"><label for="agent-language">Language <span class="ast" aria-hidden="true">*</span></label>' +
         '<p class="na-err" id="agent-language-err" hidden></p>' +
         '<select id="agent-language" name="agent-language" required><option value="">Choose a language</option><option>English</option><option>German</option><option>French</option><option>Spanish</option></select></div>' +
         '<fieldset class="field na-group" id="agent-human">' +
-        '<legend>Can visitors ask to talk to a person? <span class="req">(required)</span></legend>' +
+        '<legend>Can visitors ask to talk to a person? <span class="ast" aria-hidden="true">*</span></legend>' +
         '<p class="na-err" id="agent-human-err" hidden></p>' +
         '<div class="na-options">' +
         '<span class="na-option"><input type="radio" id="agent-human-yes" name="agent-human" value="yes" required><label for="agent-human-yes">Yes</label></span>' +
-        '<span class="na-option"><input type="radio" id="agent-human-no" name="agent-human" value="no"><label for="agent-human-no">No</label></span>' +
+        '<span class="na-option"><input type="radio" id="agent-human-no" name="agent-human" value="no" required><label for="agent-human-no">No</label></span>' +
         '</div></fieldset>' +
-        '<div class="field"><label for="agent-handover">Handover email <span class="req">(required)</span></label>' +
+        '<div class="field"><label for="agent-handover">Handover email <span class="ast" aria-hidden="true">*</span></label>' +
         '<p class="na-hint" id="agent-handover-hint">The team that takes over when the agent cannot help.</p>' +
         '<p class="na-err" id="agent-handover-err" hidden></p>' +
         '<input id="agent-handover" name="agent-handover" type="email" required aria-describedby="agent-handover-hint"></div>' +

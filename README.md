@@ -80,7 +80,9 @@ built the same way in both versions as the Session 6 example: a box headed
 "There is a problem" takes the focus and lists every error as a link that moves
 the focus to its field (the first radio button for the Yes/No group in a
 `fieldset`), each field shows its own error with `aria-invalid`, and
-the accessible version adds "Error:" to the page title. Its older seeds (the
+the accessible version adds "Error:" to the page title. Required fields carry a
+red asterisk, hidden from screen readers because the fields have `required`,
+and a line above the form explains it. Its older seeds (the
 Agent name label, the switch and the submit button) are unchanged.
 
 `documentation/answers.html` lists the seeded bugs of the pages whose sessions
