@@ -628,7 +628,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
 @media (max-width: 720px) {
   .fm .fm-bar { bottom: -16px; margin: 24px -16px -16px; padding: 12px 16px; }
   .fm .fm-range-wrap .fm-value { min-width: 0; }
-  .fm .fm-bar .fm-bar-note { display: none; } /* the lead says it already; keeps the sticky bar short */
 }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -3433,6 +3432,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (!f['agree'].checked) out.push({ key: 'agree', message: 'Agree to the code of conduct to register' });
     return out;
   }
+  // The line beside Register that says why it is unavailable. The seeded version shows it but does not link it
+  // to the button, and its disabled button cannot be reached by Tab, so a screen reader user never hears it.
+  function fmReasonText(n) {
+    return !n ? 'All required fields are complete.'
+      : n === 1 ? '1 required field is missing or needs a fix.' : n + ' required fields are missing or need a fix.';
+  }
   // The pretend server: answers after a short delay, like a real request.
   function fmServerAnswer(form) {
     var network = fmEl('sim-network');
@@ -3479,8 +3484,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     var n = fmProblems(form).length, button = fmEl('submit');
     if (n) button.setAttribute('aria-disabled', 'true');
     else button.removeAttribute('aria-disabled');
-    fmEl('submit-reason').textContent = !n ? 'All required fields are complete.'
-      : n === 1 ? '1 required field is missing or needs a fix.' : n + ' required fields are missing or need a fix.';
+    fmEl('submit-reason').textContent = fmReasonText(n);
   }
   function fmGoTo(key, parts) {
     var controls = fmControls(key), target = controls[0];

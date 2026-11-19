@@ -655,7 +655,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
 @media (max-width: 720px) {
   .fm .fm-bar { bottom: -16px; margin: 24px -16px -16px; padding: 12px 16px; }
   .fm .fm-range-wrap .fm-value { min-width: 0; }
-  .fm .fm-bar .fm-bar-note { display: none; } /* the lead says it already; keeps the sticky bar short */
 }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
@@ -1739,7 +1738,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <input id="fm-name" name="name" type="text" placeholder="Full name *" autocomplete="off">
         </div>
         <div class="field">
-          <span class="label">Email <span class="ast">*</span></span>
+          <label for="fm-email">Email <span class="ast">*</span></label>
           <p class="hint">We send the joining details to this address.</p>
           <input id="fm-email" name="email" type="text" autocomplete="off" placeholder="name@example.com">
           <p class="fm-err" id="fm-email-err" hidden>Invalid</p>
@@ -1911,7 +1910,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
 <!--IF BROKEN-->
       <div class="fm-bar">
         <button type="submit" class="btn btn-primary" id="fm-submit" disabled>Register</button>
-        <p class="fm-bar-note">Nothing is saved or sent.</p>
+        <p id="fm-submit-reason"></p>
       </div>
 <!--ELSE-->
       <div class="fm-server-error" id="fm-server-error" tabindex="-1" hidden></div>
@@ -3899,6 +3898,12 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (!f['agree'].checked) out.push({ key: 'agree', message: 'Agree to the code of conduct to register' });
     return out;
   }
+  // The line beside Register that says why it is unavailable. The seeded version shows it but does not link it
+  // to the button, and its disabled button cannot be reached by Tab, so a screen reader user never hears it.
+  function fmReasonText(n) {
+    return !n ? 'All required fields are complete.'
+      : n === 1 ? '1 required field is missing or needs a fix.' : n + ' required fields are missing or need a fix.';
+  }
   // The pretend server: answers after a short delay, like a real request.
   function fmServerAnswer(form) {
     var network = fmEl('sim-network');
@@ -3938,7 +3943,11 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   }
   function initForms() {
     var form = fmEl('form'), submit = fmEl('submit'), fields = fmEl('support-fields');
-    function sync() { submit.disabled = fmProblems(form).length > 0; }
+    function sync() {
+      var n = fmProblems(form).length;
+      submit.disabled = n > 0;
+      fmEl('submit-reason').textContent = fmReasonText(n);
+    }
     function clear() {
       form.reset();
       fmRangeSync();
@@ -3951,6 +3960,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       sync();
     }
     fmRangeSync();
+    sync();
     fmEl('exp').addEventListener('input', fmRangeSync);
     fmEl('email2').addEventListener('paste', function (e) { e.preventDefault(); });
     fmEl('phone-cc').addEventListener('input', function () { if (this.value.length >= 3) fmEl('phone-number').focus(); });
@@ -4009,8 +4019,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     var n = fmProblems(form).length, button = fmEl('submit');
     if (n) button.setAttribute('aria-disabled', 'true');
     else button.removeAttribute('aria-disabled');
-    fmEl('submit-reason').textContent = !n ? 'All required fields are complete.'
-      : n === 1 ? '1 required field is missing or needs a fix.' : n + ' required fields are missing or need a fix.';
+    fmEl('submit-reason').textContent = fmReasonText(n);
   }
   function fmGoTo(key, parts) {
     var controls = fmControls(key), target = controls[0];
