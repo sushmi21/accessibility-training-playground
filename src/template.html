@@ -1747,6 +1747,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="field">
           <span class="label">Confirm email <span class="ast">*</span></span>
           <input id="fm-email2" name="email2" type="text" autocomplete="off">
+          <p class="fm-err" id="fm-email2-err" hidden></p>
         </div>
 <!--ELSE-->
         <div class="field" data-field="name">
@@ -1872,6 +1873,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
               <input id="fm-phone-cc" name="phone-cc" type="text" class="fm-phone-cc" autocomplete="off" maxlength="5">
               <input id="fm-phone-number" name="phone-number" type="text" class="fm-phone-number" autocomplete="off">
             </div>
+            <p class="fm-err" id="fm-phone-err" hidden></p>
           </div>
 <!--ELSE-->
           <fieldset class="fm-group" id="fm-phone" data-field="phone" aria-describedby="fm-phone-hint">
@@ -3877,7 +3879,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (!email) out.push({ key: 'email', message: 'Enter your email address' });
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) out.push({ key: 'email', message: 'Enter an email address in the format name@example.com' });
     /*IF BROKEN*/
-    if (f['email2'].value.trim() !== email || !email) out.push({ key: 'email2', message: 'Emails do not match' });
+    if (f['email2'].value.trim() !== email || !email) out.push({ key: 'email2', message: 'Email addresses do not match' });
     /*ENDIF*/
     if (!f['date'].value) out.push({ key: 'date', message: 'Choose a workshop date' });
     if (!form.querySelector('input[name="attend"]:checked')) out.push({ key: 'attend', message: 'Choose how you will attend' });
@@ -3912,12 +3914,27 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     clearTimeout(fm.toastTimer);
     fm.toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 3000);
   }
+  // Checked when a field loses focus. Most fields show a linked message and aria-invalid; three carry one seed each:
+  // Full name has aria-invalid but no error text, Email shows "Invalid" without linking it,
+  // and Confirm email shows a linked message but never sets aria-invalid.
+  var FM_LINKED = ['email2', 'date', 'support-type', 'phone-cc', 'phone-number'];
   function fmMark(form, control) {
     if (!control.name || control.type === 'radio' || control.type === 'checkbox') return;
     var key = control.name.indexOf('phone') === 0 ? 'phone' : control.name;
-    var bad = fmProblems(form).some(function (p) { return p.key === key; });
+    var problem = fmProblems(form).filter(function (p) { return p.key === key; })[0];
+    var bad = !!problem && (!problem.parts || problem.parts.indexOf(control.id) !== -1);
     control.classList.toggle('invalid', bad);
-    if (control.name === 'email') fmEl('email-err').hidden = !(bad && control.value.trim());
+    if (key !== 'email2') {
+      if (bad) control.setAttribute('aria-invalid', 'true');
+      else control.removeAttribute('aria-invalid');
+    }
+    if (key === 'name') return;
+    var err = fmEl(key + '-err');
+    err.hidden = !problem;
+    if (key === 'email') return;
+    err.innerHTML = problem ? ICON_ERROR + '<span>' + esc(problem.message) + '</span>' : '';
+    if (problem) control.setAttribute('aria-describedby', err.id);
+    else control.removeAttribute('aria-describedby');
   }
   function initForms() {
     var form = fmEl('form'), submit = fmEl('submit'), fields = fmEl('support-fields');
@@ -3926,9 +3943,11 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       form.reset();
       fmRangeSync();
       fields.classList.add('closed');
-      var marked = form.querySelectorAll('.invalid');
-      for (var i = 0; i < marked.length; i++) marked[i].classList.remove('invalid');
-      fmEl('email-err').hidden = true;
+      var marked = form.querySelectorAll('.invalid, [aria-invalid]');
+      for (var i = 0; i < marked.length; i++) { marked[i].classList.remove('invalid'); marked[i].removeAttribute('aria-invalid'); }
+      var errs = form.querySelectorAll('.fm-err');
+      for (i = 0; i < errs.length; i++) errs[i].hidden = true;
+      FM_LINKED.forEach(function (id) { fmEl(id).removeAttribute('aria-describedby'); });
       sync();
     }
     fmRangeSync();
