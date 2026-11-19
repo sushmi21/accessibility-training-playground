@@ -3649,12 +3649,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         '<form id="new-agent-form" novalidate>' +
         '<div class="na-summary" id="na-summary" tabindex="-1" hidden></div>' +
         '<div class="field">' +
-        
         '<label for="agent-name">Agent name <span class="ast" aria-hidden="true">*</span></label>' +
         '<p class="na-hint" id="agent-name-hint">Agent name should be a minimum of 3 characters.</p>' +
         '<p class="na-err" id="agent-name-err" hidden></p>' +
         '<input id="agent-name" name="agent-name" type="text" required autocomplete="off" placeholder="For example, Billing assistant" aria-describedby="agent-name-hint">' +
-        
         '</div>' +
         '<div class="field"><label for="agent-description">Description</label>' +
         '<textarea id="agent-description" name="agent-description" rows="3"></textarea></div>' +
@@ -3672,10 +3670,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         '<p class="na-err" id="agent-handover-err" hidden></p>' +
         '<input id="agent-handover" name="agent-handover" type="email" required aria-describedby="agent-handover-hint"></div>' +
         '<div class="field field-switch">' +
-        
         '<label for="enable-agent">Enable agent</label>' +
         '<button type="button" id="enable-agent" class="switch" role="switch" aria-checked="false"><span class="switch-thumb"></span></button>' +
-        
         '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn" data-route="#/agents">Cancel</button>' +
@@ -3802,7 +3798,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
   function toggleSwitch(sw) {
     var on = !sw.classList.contains('on');
     sw.classList.toggle('on', on);
-    
     sw.setAttribute('aria-checked', on ? 'true' : 'false');
   }
   function closePopover(returnFocus) {

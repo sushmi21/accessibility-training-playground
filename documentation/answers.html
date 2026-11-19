@@ -45,7 +45,7 @@ dd { margin: 0; }
 </header>
 <main id="main" aria-labelledby="page-title">
   <h1 id="page-title">Seeded bugs</h1>
-  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 93 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
+  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 88 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
   <p>For each bug you get where it is, what goes wrong for the user, how to find it, the WCAG 2.2 success criterion it fails (or that it is a best practice), and the right way to build it. The right way is what the <a href="../accessible/">accessible version</a> does, so you can inspect it there.</p>
   <p class="note">Automated tools find only some of these. Where a bug says axe DevTools, axe reports it; everything else you find with the keyboard, the accessibility tree, a screen reader or your eyes. A level A or AA criterion is a failure; a best practice is not, but users still notice it.</p>
   <p>Bugs on pages for sessions that have not happened yet are not listed.</p>
@@ -56,7 +56,7 @@ dd { margin: 0; }
       <li><a href="#session-3">Session 3: Settings page</a> (10)</li>
       <li><a href="#session-4">Session 4: Monitoring page</a> (22)</li>
       <li><a href="#session-5">Session 5: Components page</a> (16)</li>
-      <li><a href="#session-6">Session 6: Forms page and New agent form</a> (22)</li>
+      <li><a href="#session-6">Session 6: Forms page</a> (17)</li>
     </ul>
   </nav>
 
@@ -117,7 +117,7 @@ dd { margin: 0; }
 
   <section aria-labelledby="session-2">
   <h2 id="session-2">Session 2: Agents page</h2>
-  <p>The Agents page in Card view and List view, the More actions menu, the Rename and Delete dialogs, and an agent page opened from the list. The New agent form is listed under <a href="#session-6">Session 6</a>.</p>
+  <p>The Agents page in Card view and List view, the More actions menu, the Rename and Delete dialogs, and an agent page opened from the list. The New agent form is not listed: it was the Session 6 example, built the right way in both versions.</p>
   <p class="try">The page: <a href="../broken/#/agents">seeded version</a> · <a href="../accessible/#/agents">accessible version</a></p>
   <ol class="bugs" start="1">
     <li><h3>The Refresh button has no name</h3>
@@ -685,8 +685,8 @@ dd { margin: 0; }
   </ol>
   </section>
   <section aria-labelledby="session-6">
-  <h2 id="session-6">Session 6: Forms page and New agent form</h2>
-  <p>The Forms page, a registration form for a workshop, with "I need accessibility support at the workshop" turned on so that every field shows. The New agent form, the example used for the ideas in the session, comes last.</p>
+  <h2 id="session-6">Session 6: Forms page</h2>
+  <p>The Forms page, a registration form for a workshop, with "I need accessibility support at the workshop" turned on so that every field shows.</p>
   <p class="try">The page: <a href="../broken/#/forms">seeded version</a> · <a href="../accessible/#/forms">accessible version</a></p>
   <h3>About you</h3>
   <ol class="bugs" start="1">
@@ -834,50 +834,6 @@ dd { margin: 0; }
         <div><dt>How to find it</dt><dd>Keyboard: register, then press Tab · screen reader.</dd></div>
         <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A · 4.1.3 Status Messages, AA (Session 7)</dd></div>
         <div><dt>The right way</dt><dd>Show a confirmation, such as "You are registered", and move the focus to it.</dd></div>
-      </dl></li>
-  </ol>
-  <h3>New agent form</h3>
-  <p class="try">The page: <a href="../broken/#/agents/new">seeded version</a> · <a href="../accessible/#/agents/new">accessible version</a>. Open it by its address: the New agent button stays unavailable, which is a Session 2 bug. The error summary and the success banner are built correctly in both versions.</p>
-  <ol class="bugs" start="18">
-    <li><h4>Agent name has no label</h4>
-      <dl>
-        <div><dt>Where</dt><dd>The Agent name field.</dd></div>
-        <div><dt>What is wrong</dt><dd>The visible "Agent name" is a <code>span</code>, not tied to the input. The field takes its name from the placeholder, "For example, Billing assistant", which is an example, not what the field asks for.</dd></div>
-        <div><dt>How to find it</dt><dd>axe DevTools (label-title-only, a best practice) · Accessibility pane: the name comes from the placeholder.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A · 2.5.3 Label in Name, A</dd></div>
-        <div><dt>The right way</dt><dd><code>&lt;label for="agent-name"&gt;</code>.</dd></div>
-      </dl></li>
-    <li><h4>The Enable agent switch does not work with the keyboard</h4>
-      <dl>
-        <div><dt>Where</dt><dd>The Enable agent switch.</dd></div>
-        <div><dt>What is wrong</dt><dd>It gets focus, but Enter and Space do nothing. Only a click switches it.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: Tab to it and press Space.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
-        <div><dt>The right way</dt><dd>A native <code>&lt;button role="switch"&gt;</code>, or a checkbox with <code>role="switch"</code>: the browser gives it the keys.</dd></div>
-      </dl></li>
-    <li><h4>The Enable agent switch does not say whether it is on</h4>
-      <dl>
-        <div><dt>Where</dt><dd>The Enable agent switch.</dd></div>
-        <div><dt>What is wrong</dt><dd>It has <code>role="switch"</code> but no <code>aria-checked</code>, so only the colour shows the state. A screen reader says "switch" without on or off.</dd></div>
-        <div><dt>How to find it</dt><dd>axe DevTools (aria-required-attr) · Accessibility pane: no checked state.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
-        <div><dt>The right way</dt><dd><code>aria-checked="true"</code> or <code>"false"</code>, updated on every change.</dd></div>
-      </dl></li>
-    <li><h4>Create agent is called "Close"</h4>
-      <dl>
-        <div><dt>Where</dt><dd>The Create agent button.</dd></div>
-        <div><dt>What is wrong</dt><dd><code>aria-label="Close"</code> replaces the visible text. A screen reader says "Close, button", and a voice control user who says "Click Create agent" gets nothing.</dd></div>
-        <div><dt>How to find it</dt><dd>Accessibility pane: the name.</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.5.3 Label in Name, A</dd></div>
-        <div><dt>The right way</dt><dd>No <code>aria-label</code>: the visible text is the name.</dd></div>
-      </dl></li>
-    <li><h4>Create agent jumps the Tab order</h4>
-      <dl>
-        <div><dt>Where</dt><dd>The Create agent button.</dd></div>
-        <div><dt>What is wrong</dt><dd><code>tabindex="1"</code> makes it the first stop on the page, before the top bar and every field above it.</dd></div>
-        <div><dt>How to find it</dt><dd>Keyboard: press Tab once after the page loads · axe DevTools (tabindex).</dd></div>
-        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
-        <div><dt>The right way</dt><dd>No positive <code>tabindex</code>: the order follows the page.</dd></div>
       </dl></li>
   </ol>
   </section>

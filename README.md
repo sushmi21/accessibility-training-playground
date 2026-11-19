@@ -90,9 +90,8 @@ error. A successful submit stays on the page: a green "Agent created" banner
 with a link to the new agent takes the focus and the form is hidden, as on the
 Forms page; its Create another agent button brings back an empty form and
 moves the focus to Agent name. The accessible version starts the page title
-with "Success: Agent created". Its
-older seeds (the
-Agent name label, the switch and the submit button) are unchanged.
+with "Success: Agent created". The fields, the switch and Create agent are
+built the same, correct way in both versions.
 
 `documentation/answers.html` lists the seeded bugs of the pages whose sessions
 have been held, with the WCAG criterion and the right way for each, so people
