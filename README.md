@@ -62,7 +62,8 @@ versions follow the same pattern as the product: Register stays disabled until
 the form is valid, errors appear when a changed field loses focus, and the
 server can still reject a valid form (a "Training controls" box beside the form
 simulates an email that is already registered and a network error; the box is
-hidden for now, and `taken@example.com` still triggers the first). The
+hidden for now; in the accessible version `taken@example.com` still triggers
+the first, while the seeded version simply registers it). The
 accessible version is the reference: visible labels, `fieldset` and `legend`
 for the groups and for the phone number in two parts, `required`, hints and
 errors linked with `aria-describedby`, `aria-invalid`, `autocomplete`, an

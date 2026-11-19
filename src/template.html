@@ -631,9 +631,6 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .fm .fm-phone-row input { min-width: 0; }
 .fm .fm-phone-cc { flex: 0 0 6.5em; }
 .fm .fm-phone-number { flex: 1 1 auto; }
-/*IF BROKEN*/
-.fm .fm-reveal.closed { height: 0; margin: 0; padding: 0; border: 0; overflow: hidden; opacity: 0; }
-/*ENDIF*/
 .fm .fm-range-wrap { display: flex; align-items: center; gap: 12px; }
 .fm .fm-range-wrap .fm-value { min-width: 9.5em; font-weight: 700; }
 .fm input[type="range"].fm-range { flex: 1; width: 100%; min-width: 0; height: 28px; margin: 0; padding: 0; border: 0; background: transparent; appearance: none; -webkit-appearance: none; cursor: pointer; }
@@ -646,10 +643,7 @@ dialog::backdrop, .dialog-backdrop { background: rgba(17, 24, 39, .5); }
 .fm .fm-range-ends { display: flex; justify-content: space-between; margin-top: -2px; font-size: 14px; color: var(--muted); }
 .fm .fm-bar { position: sticky; bottom: -24px; z-index: 5; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin: 32px -32px -24px; padding: 14px 32px; background: var(--panel); box-shadow: 0 0 0 100vmax var(--panel), 0 -1px 0 100vmax var(--border); clip-path: inset(-1px -100vmax 0 -100vmax); } /* background runs to the edges of main, past the form column */
 .fm .fm-bar p { margin: 0; font-size: 15px; color: var(--muted); }
-/*IF BROKEN*/
-/*ELSE*/
 main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clear of the sticky bar (2.4.11) */
-/*ENDIF*/
 .fm-toast { position: fixed; right: 24px; bottom: 96px; z-index: 60; padding: 12px 16px; background: #0f3d2e; color: #fff; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); font-weight: 600; opacity: 0; pointer-events: none; }
 .fm-toast.show { opacity: 1; }
 @media (max-width: 720px) {
@@ -1769,11 +1763,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="field" data-field="date">
           <div class="fm-label-row">
             <label for="fm-date">Workshop date <span class="ast" {{broken:|accessible:aria-hidden="true"}}>*</span></label>
-<!--IF BROKEN-->
-            <span class="tip-wrap fm-tip"><span class="icon-btn info" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8.01"/></svg></span><span class="tip">Every workshop runs from 13:30 to 15:30 CET.</span></span>
-<!--ELSE-->
             <span class="tip-wrap fm-tip"><button type="button" class="icon-btn info" aria-label="More about the workshop dates" aria-describedby="fm-date-tip"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12" y2="8.01"/></svg></button><span class="tip" role="tooltip" id="fm-date-tip">Every workshop runs from 13:30 to 15:30 CET.</span></span>
-<!--ENDIF-->
           </div>
           <p class="fm-err" id="fm-date-err" hidden></p>
           <select id="fm-date" name="date" {{broken:|accessible:required}}>
@@ -1833,7 +1823,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <div class="field">
           <label for="fm-questions">Questions for the trainer</label>
           <p class="hint" id="fm-questions-hint">Optional. Up to 500 characters.</p>
-          <textarea id="fm-questions" name="questions" rows="3" maxlength="500" {{broken:|accessible:aria-describedby="fm-questions-hint"}}></textarea>
+          <textarea id="fm-questions" name="questions" rows="3" maxlength="500" aria-describedby="fm-questions-hint"></textarea>
         </div>
       </div>
 
@@ -1841,14 +1831,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         <h2>Accessibility support</h2>
         <div class="fm-switch-row">
           <label for="fm-support">I need accessibility support at the workshop</label>
-          <input type="checkbox" role="switch" id="fm-support" name="support" class="fm-switch" {{broken:|accessible:aria-describedby="fm-support-hint"}}>
+          <input type="checkbox" role="switch" id="fm-support" name="support" class="fm-switch" aria-describedby="fm-support-hint">
         </div>
-<!--IF BROKEN-->
-        <div class="fm-reveal closed" id="fm-support-fields">
-<!--ELSE-->
         <p class="hint" id="fm-support-hint">Turning this on shows three more questions below it.</p>
         <div class="fm-reveal" id="fm-support-fields" hidden>
-<!--ENDIF-->
           <div class="field" data-field="support-type">
             <label for="fm-support-type">Type of support <span class="ast" {{broken:|accessible:aria-hidden="true"}}>*</span></label>
             <p class="fm-err" id="fm-support-type-err" hidden></p>
@@ -1864,7 +1850,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
           <div class="field">
             <label for="fm-support-details">Tell us more</label>
             <p class="hint" id="fm-support-details-hint">Optional. For example, which sign language you use.</p>
-            <textarea id="fm-support-details" name="support-details" rows="3" {{broken:|accessible:aria-describedby="fm-support-details-hint"}}></textarea>
+            <textarea id="fm-support-details" name="support-details" rows="3" aria-describedby="fm-support-details-hint"></textarea>
           </div>
 <!--IF BROKEN-->
           <div class="field">
@@ -3952,7 +3938,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     function clear() {
       form.reset();
       fmRangeSync();
-      fields.classList.add('closed');
+      fields.hidden = true;
       var marked = form.querySelectorAll('.invalid, [aria-invalid]');
       for (var i = 0; i < marked.length; i++) { marked[i].classList.remove('invalid'); marked[i].removeAttribute('aria-invalid'); }
       var errs = form.querySelectorAll('.fm-err');
@@ -3965,7 +3951,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     fmEl('exp').addEventListener('input', fmRangeSync);
     fmEl('email2').addEventListener('paste', function (e) { e.preventDefault(); });
     fmEl('phone-cc').addEventListener('input', function () { if (this.value.length >= 3) fmEl('phone-number').focus(); });
-    fmEl('support').addEventListener('change', function () { fields.classList.toggle('closed', !this.checked); });
+    fmEl('support').addEventListener('change', function () { fields.hidden = !this.checked; });
     form.addEventListener('focusout', function (e) { fmMark(form, e.target); });
     form.addEventListener('input', sync);
     form.addEventListener('change', sync);
@@ -3976,7 +3962,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       fm.sendTimer = setTimeout(function () {
         var answer = fmServerAnswer(form);
         if (answer === 'network') { clear(); fmToast('Something went wrong'); }
-        else if (answer === 'taken') fmToast('Error 409');
         else { clear(); fmToast('Registration saved'); }
       }, FM_SERVER_DELAY);
     });
