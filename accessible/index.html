@@ -170,7 +170,7 @@ input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #6
 .na-done { max-width: 520px; margin: 16px 0 24px; padding: 16px 20px; border: 1px solid #86efac; border-left: 6px solid #15803d; border-radius: 6px; background: #f0fdf4; color: #14532d; }
 .na-done:focus { outline: 3px solid var(--primary); outline-offset: 3px; }
 .na-done h2 { margin: 0 0 4px; font-size: 20px; }
-.na-done p { margin: 0; }
+.na-done p { margin: 0 0 12px; }
 .na-done a { color: #14532d; font-weight: 600; }
 .na-hint { margin: 0; font-size: 15px; color: var(--muted); }
 .na-note { margin: 0 0 8px; }
@@ -4131,18 +4131,27 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       editedDaysAgo: 0, editedAgo: 'just now', editedBy: 'You'
     };
     state.projects.push(project);
-    // Success stays on this page: a green banner with a link to the new agent takes the focus, and
-    // the form is emptied so that another agent can be created.
+    // Success stays on this page, as on the Forms page: the form is hidden and a green banner with a
+    // link to the new agent and a Create another agent button takes the focus.
     done.innerHTML = '<h2>Agent created</h2><p><a href="#/agents/' + project.id + '">' + esc(project.name) +
-      '</a> is ready. You can create another agent below.</p>';
+      '</a> is ready.</p><button type="button" class="btn" id="na-again">Create another agent</button>';
     done.hidden = false;
+    form.hidden = true;
+    
+    document.title = 'Success: Agent created – New agent – ' + APP_NAME;
+    
+    done.focus();
+  });
+  viewEl.addEventListener('click', function (e) {
+    if (!e.target.closest('#na-again')) return;
+    var form = document.getElementById('new-agent-form');
     form.reset();
     var sw = form.querySelector('.switch');
     if (sw.classList.contains('on')) toggleSwitch(sw);
-    
-    document.title = 'Agent created – New agent – ' + APP_NAME;
-    
-    done.focus();
+    document.getElementById('na-done').hidden = true;
+    form.hidden = false;
+    document.title = 'New agent – ' + APP_NAME;
+    document.getElementById('agent-name').focus();
   });
 
   document.getElementById('skip-link').addEventListener('click', function (e) {

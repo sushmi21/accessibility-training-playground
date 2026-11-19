@@ -86,8 +86,10 @@ and a line above the form explains it. Agent name has a placeholder and the
 hint "Agent name should be a minimum of 3 characters." (linked with
 `aria-describedby`), and a name shorter than 3 characters after trimming is an
 error. A successful submit stays on the page: a green "Agent created" banner
-with a link to the new agent takes the focus, the form is emptied for the next
-agent, and the accessible version puts "Agent created" in the page title. Its
+with a link to the new agent takes the focus and the form is hidden, as on the
+Forms page; its Create another agent button brings back an empty form and
+moves the focus to Agent name. The accessible version starts the page title
+with "Success: Agent created". Its
 older seeds (the
 Agent name label, the switch and the submit button) are unchanged.
 
