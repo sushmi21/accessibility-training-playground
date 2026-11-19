@@ -3645,8 +3645,9 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         '<div class="field">' +
         
         '<label for="agent-name">Agent name <span class="ast" aria-hidden="true">*</span></label>' +
+        '<p class="na-hint" id="agent-name-hint">Agent name should be a minimum of 3 characters.</p>' +
         '<p class="na-err" id="agent-name-err" hidden></p>' +
-        '<input id="agent-name" name="agent-name" type="text" required autocomplete="off">' +
+        '<input id="agent-name" name="agent-name" type="text" required autocomplete="off" placeholder="For example, Billing assistant" aria-describedby="agent-name-hint">' +
         
         '</div>' +
         '<div class="field"><label for="agent-description">Description</label>' +
@@ -4061,6 +4062,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     var email = form.elements['agent-handover'].value.trim();
     var list = [];
     if (!name) list.push({ id: 'agent-name', message: 'Enter a name for the agent' });
+    else if (name.length < 3) list.push({ id: 'agent-name', message: 'Enter an agent name of at least 3 characters' });
     if (!form.elements['agent-language'].value) list.push({ id: 'agent-language', message: 'Choose a language' });
     if (!form.querySelector('input[name="agent-human"]:checked')) list.push({ id: 'agent-human', message: 'Choose whether visitors can ask to talk to a person' });
     if (!email) list.push({ id: 'agent-handover', message: 'Enter the handover email address' });

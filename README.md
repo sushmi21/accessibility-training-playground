@@ -82,7 +82,10 @@ the focus to its field (the first radio button for the Yes/No group in a
 `fieldset`), each field shows its own error with `aria-invalid`, and
 the accessible version adds "Error:" to the page title. Required fields carry a
 red asterisk, hidden from screen readers because the fields have `required`,
-and a line above the form explains it. Its older seeds (the
+and a line above the form explains it. Agent name has a placeholder and the
+hint "Agent name should be a minimum of 3 characters." (linked with
+`aria-describedby`), and a name shorter than 3 characters after trimming is an
+error. Its older seeds (the
 Agent name label, the switch and the submit button) are unchanged.
 
 `documentation/answers.html` lists the seeded bugs of the pages whose sessions
