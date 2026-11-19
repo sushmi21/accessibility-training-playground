@@ -45,10 +45,10 @@ dd { margin: 0; }
 </header>
 <main id="main" aria-labelledby="page-title">
   <h1 id="page-title">Seeded bugs</h1>
-  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 71 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
+  <p>The answer key for the missions: every deliberate bug in the <a href="../broken/">seeded version</a> of the pages used so far, 99 in all. Do the mission for a session first, on your own, with the steps in the <a href="./">documentation</a>. Then come here to see whether your findings are right and complete.</p>
   <p>For each bug you get where it is, what goes wrong for the user, how to find it, the WCAG 2.2 success criterion it fails (or that it is a best practice), and the right way to build it. The right way is what the <a href="../accessible/">accessible version</a> does, so you can inspect it there.</p>
   <p class="note">Automated tools find only some of these. Where a bug says axe DevTools, axe reports it; everything else you find with the keyboard, the accessibility tree, a screen reader or your eyes. A level A or AA criterion is a failure; a best practice is not, but users still notice it.</p>
-  <p>Bugs on pages for sessions that have not happened yet, such as the New agent form, are not listed.</p>
+  <p>Bugs on pages for sessions that have not happened yet are not listed.</p>
   <nav aria-label="On this page">
     <ul>
       <li><a href="#every-page">On every page</a> (6)</li>
@@ -56,6 +56,7 @@ dd { margin: 0; }
       <li><a href="#session-3">Session 3: Settings page</a> (10)</li>
       <li><a href="#session-4">Session 4: Monitoring page</a> (22)</li>
       <li><a href="#session-5">Session 5: Components page</a> (16)</li>
+      <li><a href="#session-6">Session 6: Forms page and New agent form</a> (28)</li>
     </ul>
   </nav>
 
@@ -116,7 +117,7 @@ dd { margin: 0; }
 
   <section aria-labelledby="session-2">
   <h2 id="session-2">Session 2: Agents page</h2>
-  <p>The Agents page in Card view and List view, the More actions menu, the Rename and Delete dialogs, and an agent page opened from the list. The New agent form belongs to a later session and is not listed.</p>
+  <p>The Agents page in Card view and List view, the More actions menu, the Rename and Delete dialogs, and an agent page opened from the list. The New agent form is listed under <a href="#session-6">Session 6</a>.</p>
   <p class="try">The page: <a href="../broken/#/agents">seeded version</a> · <a href="../accessible/#/agents">accessible version</a></p>
   <ol class="bugs" start="1">
     <li><h3>The Refresh button has no name</h3>
@@ -680,6 +681,251 @@ dd { margin: 0; }
         <div><dt>How to find it</dt><dd>Screen reader.</dd></div>
         <div><dt>WCAG 2.2</dt><dd>4.1.3 Status Messages, AA</dd></div>
         <div><dt>The right way</dt><dd>The message container has <code>role="status"</code> and stays in the page.</dd></div>
+      </dl></li>
+  </ol>
+  </section>
+  <section aria-labelledby="session-6">
+  <h2 id="session-6">Session 6: Forms page and New agent form</h2>
+  <p>The Forms page, a registration form for a workshop, with "I need accessibility support at the workshop" turned on so that every field shows. The New agent form, the example used for the ideas in the session, comes last.</p>
+  <p class="try">The page: <a href="../broken/#/forms">seeded version</a> · <a href="../accessible/#/forms">accessible version</a></p>
+  <h3>About you</h3>
+  <ol class="bugs" start="1">
+    <li><h4>Full name has no label, only a placeholder</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The first field, which shows "Full name *" in grey.</dd></div>
+        <div><dt>What is wrong</dt><dd>The only name is the placeholder. It disappears as soon as you type, so a sighted user no longer sees what the field was, and screen readers announce a placeholder inconsistently.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye: type in the field. axe does not report it, because it accepts a placeholder as a name.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.2 Labels or Instructions, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>A visible <code>&lt;label for="fm-name"&gt;Full name&lt;/label&gt;</code> above the field.</dd></div>
+      </dl></li>
+    <li><h4>The placeholder text is too light</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The placeholders "Full name *" and "name@example.com".</dd></div>
+        <div><dt>What is wrong</dt><dd>Light grey #b8b8b8 on white is about 2:1. For Full name, the placeholder is the only label, so people with low vision cannot read what the field asks for.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye · Colour Contrast Analyser or the colour picker in DevTools.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.4.3 Contrast (Minimum), AA</dd></div>
+        <div><dt>The right way</dt><dd>A real label, and a placeholder used only as an example, in a grey with at least 4.5:1 (#6b7280 is 4.8:1).</dd></div>
+      </dl></li>
+    <li><h4>Required fields are marked only by an unexplained asterisk</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Every field with a red asterisk, from Full name to the code of conduct.</dd></div>
+        <div><dt>What is wrong</dt><dd>No line says what the asterisk means, and no field has <code>required</code>. The Accessibility pane shows "required: false", and a screen reader reads "star" or nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>By eye: look above the form · Accessibility pane: the required state.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.2 Labels or Instructions, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>"Fields marked with an asterisk (*) are required" before the form, <code>required</code> on every required control, and the asterisk hidden with <code>aria-hidden="true"</code>.</dd></div>
+      </dl></li>
+    <li><h4>Autofill is switched off for your own data</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Full name, Email and the two Phone number inputs.</dd></div>
+        <div><dt>What is wrong</dt><dd>They ask for the user's own name, email and phone, but have <code>autocomplete="off"</code>, so the browser cannot fill them in. That costs people with motor and memory difficulties the most.</dd></div>
+        <div><dt>How to find it</dt><dd>Elements panel: the <code>autocomplete</code> attribute.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.5 Identify Input Purpose, AA</dd></div>
+        <div><dt>The right way</dt><dd><code>autocomplete="name"</code>, <code>"email"</code>, <code>"tel-country-code"</code> and <code>"tel-national"</code>.</dd></div>
+      </dl></li>
+    <li><h4>Full name turns red with no error text</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Full name, after you leave it empty.</dd></div>
+        <div><dt>What is wrong</dt><dd>The field gets a red border and <code>aria-invalid="true"</code>, but no text says what is wrong. A screen reader user hears "invalid entry" and nothing more; a sighted user has only the colour.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab into Full name and out again · Accessibility pane: no description.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.1 Error Identification, A · 1.4.1 Use of Color, A</dd></div>
+        <div><dt>The right way</dt><dd>An error text at the field, "Enter your full name", tied with <code>aria-describedby</code>.</dd></div>
+      </dl></li>
+    <li><h4>The email error says only "Invalid"</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Email, after you leave it empty or type a wrong address.</dd></div>
+        <div><dt>What is wrong</dt><dd>The text does not say how to fix the address, and it is not tied to the field, so a screen reader user who comes back to the field hears "invalid entry" without the reason.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: type "abc" and Tab out · Accessibility pane: no description from the error.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.3 Error Suggestion, AA</dd></div>
+        <div><dt>The right way</dt><dd>"Enter an email address in the format name@example.com", tied with <code>aria-describedby</code> next to the hint.</dd></div>
+      </dl></li>
+    <li><h4>Confirm email has no name</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Confirm email field.</dd></div>
+        <div><dt>What is wrong</dt><dd>The visible text is a <code>span</code>, not a label tied to the input, so the computed name is empty. A screen reader says only "edit".</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (label) · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>Ask for the email once, as the accessible version does. If a confirm field stays, give it a <code>label</code> with <code>for</code>.</dd></div>
+      </dl></li>
+    <li><h4>Confirm email blocks paste</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Confirm email field.</dd></div>
+        <div><dt>What is wrong</dt><dd>Pasting does nothing, so the address must be typed a second time. That is hard for people who type slowly, use a switch or voice input, or rely on a password manager.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: copy the email and press Ctrl+V or Cmd+V in Confirm email.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice / usability: unnecessary effort.</dd></div>
+        <div><dt>The right way</dt><dd>Ask for the email once and show it back in the confirmation. Never block paste.</dd></div>
+      </dl></li>
+    <li><h4>Confirm email shows its error but not its invalid state</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Confirm email, after you type a different address and leave it.</dd></div>
+        <div><dt>What is wrong</dt><dd>"Email addresses do not match" is shown and tied with <code>aria-describedby</code>, but <code>aria-invalid</code> is never set. The pane shows "Invalid user entry: false", so the field itself does not say it is wrong.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: the invalid state.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: the text meets 3.3.1, but the state is missing.</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-invalid="true"</code> on every invalid field, removed as soon as the value is fixed.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>Your workshop</h3>
+  <ol class="bugs" start="10">
+    <li><h4>The workshop times are shown on hover only</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The info icon next to Workshop date.</dd></div>
+        <div><dt>What is wrong</dt><dd>"Every workshop runs from 13:30 to 15:30 CET" appears only when the mouse is over the icon. The icon is not focusable and is hidden from screen readers, so keyboard and screen reader users never get the times.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab past Workshop date · Accessibility pane: the icon is hidden.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>A <code>button</code> with a name, such as "More about the workshop dates", and the text in a tooltip tied with <code>aria-describedby</code> that opens on focus and closes on Escape. Or show the times as a hint.</dd></div>
+      </dl></li>
+    <li><h4>"How will you attend?" is not tied to its radio buttons</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The two radio buttons In person and Online.</dd></div>
+        <div><dt>What is wrong</dt><dd>The question is a plain paragraph. Each radio button has its own label, so a screen reader user hears "In person, at the Berlin office" without the question.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: no group · screen reader. axe does not report it, because every radio button has a name.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>A <code>fieldset</code> with the question as its <code>legend</code>.</dd></div>
+      </dl></li>
+    <li><h4>The topic checkboxes have no names</h4>
+      <dl>
+        <div><dt>Where</dt><dd>"Which topics interest you?" and its four checkboxes.</dd></div>
+        <div><dt>What is wrong</dt><dd>Each checkbox text is a <code>span</code> next to the input, not a label, so every checkbox is just "checkbox". The question and the hint "Choose at least one" are not tied to the group either.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (label), one finding per checkbox · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>A <code>label</code> around each checkbox and its text, and a <code>fieldset</code> with the question as its <code>legend</code> and the hint tied with <code>aria-describedby</code>.</dd></div>
+      </dl></li>
+    <li><h4>The experience slider reads a number</h4>
+      <dl>
+        <div><dt>Where</dt><dd>"Your experience with accessibility".</dd></div>
+        <div><dt>What is wrong</dt><dd>The screen shows "Some experience", but a screen reader reads the raw value, "2".</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: the value · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: APG Slider pattern (aria-valuetext).</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-valuetext</code> set to the visible text each time the value changes.</dd></div>
+      </dl></li>
+    <li><h4>Hints are not tied to their fields</h4>
+      <dl>
+        <div><dt>Where</dt><dd>"Optional. Up to 500 characters." under Questions for the trainer, and the hint under Tell us more.</dd></div>
+        <div><dt>What is wrong</dt><dd>The hints are visible but not tied to the field, so a screen reader user who Tabs into the field does not hear them.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: the field has no description.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice: W3C Forms tutorial, instructions.</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-describedby</code> with the id of the hint.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>Accessibility support</h3>
+  <ol class="bugs" start="15">
+    <li><h4>The hidden support questions are still in the Tab order</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Type of support, Tell us more and Phone number, while "I need accessibility support at the workshop" is off.</dd></div>
+        <div><dt>What is wrong</dt><dd>They are made invisible but are still in the page, so Tab moves the focus into fields nobody can see, and a screen reader still reads them.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: leave the switch off and Tab on from it.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.7 Focus Visible, AA · 2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>The <code>hidden</code> attribute while the switch is off, and a hint next to the switch that says it shows more questions.</dd></div>
+      </dl></li>
+    <li><h4>The second phone input has no name</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Phone number: the country code and the number.</dd></div>
+        <div><dt>What is wrong</dt><dd>One label for two inputs. It points to the country code only, so the number input is unnamed, and nothing groups the two.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (label), on the second input · Accessibility pane.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A · 1.3.1 Info and Relationships, A</dd></div>
+        <div><dt>The right way</dt><dd>A <code>fieldset</code> with "Phone number" as its <code>legend</code>, and a visually hidden label for each input: "Country code" and "Number".</dd></div>
+      </dl></li>
+    <li><h4>The phone instructions are only in a tooltip</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The info icon next to Phone number.</dd></div>
+        <div><dt>What is wrong</dt><dd>The format, "+49 and 30 1234 5678", is only in a <code>title</code> on an icon that cannot get focus. Keyboard, touch and screen reader users never see it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: there is no Tab stop on the icon · Elements panel: the <code>title</code>.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.2 Labels or Instructions, A</dd></div>
+        <div><dt>The right way</dt><dd>A visible hint under the legend, tied to the group with <code>aria-describedby</code>.</dd></div>
+      </dl></li>
+    <li><h4>The focus jumps on after three characters</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The country code input.</dd></div>
+        <div><dt>What is wrong</dt><dd>After three characters the focus moves to the number on its own. A four-digit code such as +358 cannot be typed, and a screen reader user is moved without warning.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: type "+358".</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.2.2 On Input, A</dd></div>
+        <div><dt>The right way</dt><dd>No auto-advance: the user moves on with Tab.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>Register and after</h3>
+  <ol class="bugs" start="19">
+    <li><h4>Every field you leave is marked as wrong</h4>
+      <dl>
+        <div><dt>Where</dt><dd>All text fields and lists.</dd></div>
+        <div><dt>What is wrong</dt><dd>A field is checked as soon as it loses focus, even if you did not change it. Many screen reader users Tab through a form first to see what it asks, and find every field "invalid" before they have typed anything.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab through the empty form.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice / usability.</dd></div>
+        <div><dt>The right way</dt><dd>Check a field on blur only after the user has changed it, and every field when Register is pressed. Clear an error as soon as the value is fixed.</dd></div>
+      </dl></li>
+    <li><h4>The focused field can hide under the Register bar</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The sticky bar with Register at the bottom of the screen.</dd></div>
+        <div><dt>What is wrong</dt><dd>When you Tab down the form, the field with the focus can end up behind the bar, so you cannot see where you are.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab down the form in a short browser window.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.11 Focus Not Obscured (Minimum), AA</dd></div>
+        <div><dt>The right way</dt><dd><code>scroll-padding-bottom</code> on the scrolling container, at least the height of the bar.</dd></div>
+      </dl></li>
+    <li><h4>Register is disabled and its reason never reaches a screen reader</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Register button and the text next to it, such as "7 required fields are missing or need a fix".</dd></div>
+        <div><dt>What is wrong</dt><dd>The button has the native <code>disabled</code> attribute until the form is valid, so it cannot get focus, and the reason is not tied to it. A keyboard or screen reader user never hears why they cannot register, and has to go back through every field.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab to the end of the form.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>Best practice / usability (disabled controls are allowed to be skipped, but the reason must reach everyone).</dd></div>
+        <div><dt>The right way</dt><dd>Keep Register enabled, or use <code>aria-disabled="true"</code> with the reason tied by <code>aria-describedby</code>. When it is pressed, show every error and move the focus to the first one.</dd></div>
+      </dl></li>
+    <li><h4>After Register the focus is lost</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Register, with every field filled in correctly.</dd></div>
+        <div><dt>What is wrong</dt><dd>The form is cleared, "Registration saved" appears for three seconds in a corner, and the focus falls back to the top of the page. A screen reader says nothing, and a keyboard user starts again from the top.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: register, then press Tab · screen reader.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A · 4.1.3 Status Messages, AA (Session 7)</dd></div>
+        <div><dt>The right way</dt><dd>Show a confirmation, such as "You are registered", and move the focus to it.</dd></div>
+      </dl></li>
+    <li><h4>An email already registered gives "Error 409"</h4>
+      <dl>
+        <div><dt>Where</dt><dd>Register with <code>taken@example.com</code> as the email.</dd></div>
+        <div><dt>What is wrong</dt><dd>The server's answer is a code in a toast that disappears. It does not say what is wrong or which field to fix, and nothing marks the email field.</dd></div>
+        <div><dt>How to find it</dt><dd>Fill in the form with <code>taken@example.com</code> and press Register.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>3.3.1 Error Identification, A · 3.3.3 Error Suggestion, AA</dd></div>
+        <div><dt>The right way</dt><dd>Show the server's error at the email field, like any other error, with <code>aria-invalid</code>, and move the focus to the field.</dd></div>
+      </dl></li>
+  </ol>
+  <h3>New agent form</h3>
+  <p class="try">The page: <a href="../broken/#/agents/new">seeded version</a> · <a href="../accessible/#/agents/new">accessible version</a>. Open it by its address: the New agent button stays unavailable, which is a Session 2 bug. The error summary and the success banner are built correctly in both versions.</p>
+  <ol class="bugs" start="24">
+    <li><h4>Agent name has no label</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Agent name field.</dd></div>
+        <div><dt>What is wrong</dt><dd>The visible "Agent name" is a <code>span</code>, not tied to the input. The field takes its name from the placeholder, "For example, Billing assistant", which is an example, not what the field asks for.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (label-title-only, a best practice) · Accessibility pane: the name comes from the placeholder.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>1.3.1 Info and Relationships, A · 2.5.3 Label in Name, A</dd></div>
+        <div><dt>The right way</dt><dd><code>&lt;label for="agent-name"&gt;</code>.</dd></div>
+      </dl></li>
+    <li><h4>The Enable agent switch does not work with the keyboard</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Enable agent switch.</dd></div>
+        <div><dt>What is wrong</dt><dd>It gets focus, but Enter and Space do nothing. Only a click switches it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: Tab to it and press Space.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.1.1 Keyboard, A</dd></div>
+        <div><dt>The right way</dt><dd>A native <code>&lt;button role="switch"&gt;</code>, or a checkbox with <code>role="switch"</code>: the browser gives it the keys.</dd></div>
+      </dl></li>
+    <li><h4>The Enable agent switch does not say whether it is on</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Enable agent switch.</dd></div>
+        <div><dt>What is wrong</dt><dd>It has <code>role="switch"</code> but no <code>aria-checked</code>, so only the colour shows the state. A screen reader says "switch" without on or off.</dd></div>
+        <div><dt>How to find it</dt><dd>axe DevTools (aria-required-attr) · Accessibility pane: no checked state.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>4.1.2 Name, Role, Value, A</dd></div>
+        <div><dt>The right way</dt><dd><code>aria-checked="true"</code> or <code>"false"</code>, updated on every change.</dd></div>
+      </dl></li>
+    <li><h4>Create agent is called "Close"</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Create agent button.</dd></div>
+        <div><dt>What is wrong</dt><dd><code>aria-label="Close"</code> replaces the visible text. A screen reader says "Close, button", and a voice control user who says "Click Create agent" gets nothing.</dd></div>
+        <div><dt>How to find it</dt><dd>Accessibility pane: the name.</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.5.3 Label in Name, A</dd></div>
+        <div><dt>The right way</dt><dd>No <code>aria-label</code>: the visible text is the name.</dd></div>
+      </dl></li>
+    <li><h4>Create agent jumps the Tab order</h4>
+      <dl>
+        <div><dt>Where</dt><dd>The Create agent button.</dd></div>
+        <div><dt>What is wrong</dt><dd><code>tabindex="1"</code> makes it the first stop on the page, before the top bar and every field above it.</dd></div>
+        <div><dt>How to find it</dt><dd>Keyboard: press Tab once after the page loads · axe DevTools (tabindex).</dd></div>
+        <div><dt>WCAG 2.2</dt><dd>2.4.3 Focus Order, A</dd></div>
+        <div><dt>The right way</dt><dd>No positive <code>tabindex</code>: the order follows the page.</dd></div>
       </dl></li>
   </ol>
   </section>

@@ -289,47 +289,51 @@ ol li, ul li { margin: 4px 0; }
   <details open id="session-6">
     <summary><h3>Session 6: Accessible forms</h3></summary>
     <div class="session-body">
-      <p class="held">Planned for 19 November 2026.</p>
-      <p class="goal">Goal: know what every form field needs, and test a form with axe DevTools, the Forms bookmarklet and the keyboard, knowing what each one can and cannot find.</p>
+      <p class="held">Held on 19 November 2026.</p>
+      <p class="goal">Goal: know the five things every form field needs, and test a form with axe DevTools, the keyboard and the DevTools Accessibility pane, knowing what axe cannot find.</p>
 
       <h4>Agenda</h4>
       <ol>
-        <li><strong>What every form field needs.</strong> A visible label, a hint, a required state, an error and, for personal data, its purpose, each tied to the field in the code (1.3.1, 1.3.5, 3.3.2, 4.1.2).</li>
-        <li><strong>Labels.</strong> Why a placeholder is not a label, and why the visible words start the accessible name (2.5.3).</li>
-        <li><strong>Groups.</strong> <code>fieldset</code> and <code>legend</code> for radio buttons, checkboxes and fields that belong together, such as a phone number in two parts.</li>
-        <li><strong>Errors.</strong> When to show them, where, what they say, and what happens after submit: focus on the first error, and the data kept after a server error (3.3.1, 3.3.3, 1.4.1, 3.3.7).</li>
-        <li><strong>Disabled submit buttons.</strong> Why they leave people stuck, and what to do if the design keeps one.</li>
-        <li><strong>Three ways to test a form.</strong> axe DevTools, the Forms bookmarklet, and the keyboard with wrong input.</li>
-        <li><strong>Live demo.</strong> A form with NVDA.</li>
-        <li><strong>Mission.</strong> Participants find the bugs on the Forms page of the seeded version.</li>
+        <li><strong>What every form field needs.</strong> A label, a hint, a required state, a purpose for personal data, and an error, each visible on screen and in the code (1.3.1, 3.3.2, 4.1.2).</li>
+        <li><strong>Label.</strong> A <code>label</code> tied with <code>for</code> and <code>id</code>. A placeholder is not a label. A question over several fields is a group: <code>fieldset</code> and <code>legend</code>.</li>
+        <li><strong>Hint.</strong> Instructions next to the field, tied with <code>aria-describedby</code>.</li>
+        <li><strong>Required.</strong> An asterisk, a line that explains it, and the <code>required</code> attribute, with the asterisk hidden from screen readers.</li>
+        <li><strong>Purpose.</strong> <code>autocomplete</code> on fields that ask for the user's own data (1.3.5).</li>
+        <li><strong>Error.</strong> Text at the field that says how to fix it, with <code>aria-invalid="true"</code> and <code>aria-describedby</code>, and when to check a field (1.4.1, 3.3.1, 3.3.3).</li>
+        <li><strong>The submit button.</strong> Keep it enabled, or use <code>aria-disabled</code> with the reason next to it. Never the native <code>disabled</code> alone.</li>
+        <li><strong>After submit.</strong> An error summary, or the focus on the first error; on success, the focus on a confirmation (2.4.3).</li>
+        <li><strong>Mission.</strong> Participants find the bugs on the Forms page of the seeded version in four steps: Look, axe, Keyboard, Inspect.</li>
+        <li><strong>Quiz and debrief.</strong> How to tell a screen reader user that a field is required, and what each step found.</li>
       </ol>
+      <p>Every idea was shown live on the <a href="../accessible/#/agents/new">New agent form</a> in the DevTools Accessibility pane: what the pane shows as the name, the description and the states is what a screen reader reads.</p>
 
-      <h4>Mission: the Forms page in three steps</h4>
-      <p>Use the <a href="../broken/#/forms">Forms page of the seeded version</a>: a registration form for an Agent Studio workshop. Turn on "I need accessibility support" to see every field.</p>
+      <h4>Mission: the Forms page in four steps</h4>
+      <p>Use the <a href="../broken/#/forms">Forms page of the seeded version</a>: a registration form for an Agent Studio workshop. Turn on "I need accessibility support at the workshop" to see every field.</p>
       <ol>
-        <li><strong>axe.</strong> Run axe DevTools. Note what it finds.</li>
-        <li><strong>Bookmarklet.</strong> Run the Forms bookmarklet. Check the name of every field.</li>
-        <li><strong>Keyboard.</strong> Fill in the form without the mouse. Leave fields empty, type a wrong email and press Register.</li>
+        <li><strong>Look.</strong> Skim through the form before you test it.</li>
+        <li><strong>axe.</strong> Run axe DevTools and note what it finds. axe checks only the current state: run it again after you have caused some errors.</li>
+        <li><strong>Keyboard.</strong> Fill in the form without the mouse. Leave fields empty, type a wrong email, and press Register. Then fill it in correctly and register.</li>
+        <li><strong>Inspect.</strong> In the DOM and the Accessibility pane, check the Confirm email input, the "How will you attend?" radio group, the "Which topics interest you?" checkbox group and the Phone number inputs.</li>
       </ol>
-      <p>Note down which step found each issue. Afterwards, do the keyboard step on the <a href="../accessible/#/forms">Forms page of the accessible version</a> and compare.</p>
+      <p>Note down which step found each issue. Then do the same on the <a href="../accessible/#/forms">Forms page of the accessible version</a> and compare.</p>
       <p>For a form checked only on submit, the <a href="../accessible/#/agents/new">New agent form</a> shows an error summary: press Create agent with the fields empty. A box headed "There is a problem" lists every error as a link, takes the focus, and each link moves the focus to its field. It is built the same way in both versions, so use it as an example, not as part of the mission.</p>
       <p class="note">A message that appears without the focus moving to it, such as a toast, needs a status message to be announced. That is the topic of Session 7: for now, log it as a finding and note what a screen reader user would miss.</p>
+
+      <p><strong>Check your findings:</strong> when you are done, compare your notes with the <a href="answers.html#session-6">seeded bugs on the Forms page and the New agent form</a> and the ones <a href="answers.html#every-page">on every page</a>.</p>
 
       <h4>Links for this session</h4>
       <ul>
         <li><a href="https://www.w3.org/WAI/tutorials/forms/" target="_blank" rel="noopener">W3C WAI: Forms tutorial<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://design-system.service.gov.uk/components/error-summary/" target="_blank" rel="noopener">GOV.UK Design System: Error summary<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html" target="_blank" rel="noopener">Understanding 1.3.1 Info and Relationships, for labels and groups<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html" target="_blank" rel="noopener">Understanding 1.3.5 Identify Input Purpose, for autocomplete<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html" target="_blank" rel="noopener">Understanding 2.5.3 Label in Name<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html" target="_blank" rel="noopener">Understanding 3.3.2 Labels or Instructions<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://design-system.service.gov.uk/components/error-summary/" target="_blank" rel="noopener">GOV.UK Design System: Error summary<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noopener">Understanding 3.3.1 Error Identification<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html" target="_blank" rel="noopener">Understanding 3.3.3 Error Suggestion<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/TR/WCAG22/#input-purposes" target="_blank" rel="noopener">WCAG 2.2 section 7: Input purposes, the autocomplete values<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
         <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" target="_blank" rel="noopener">Understanding 1.4.1 Use of Color<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html" target="_blank" rel="noopener">Understanding 3.3.7 Redundant Entry<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html" target="_blank" rel="noopener">Understanding 2.4.11 Focus Not Obscured (Minimum)<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/on-input.html" target="_blank" rel="noopener">Understanding 3.2.2 On Input<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
-        <li><a href="https://pauljadam.com/bookmarklets/" target="_blank" rel="noopener">Paul J. Adam's accessibility bookmarklets, including Forms<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html" target="_blank" rel="noopener">Understanding 2.4.3 Focus Order, for the focus after submit<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html" target="_blank" rel="noopener">Understanding 3.3.1 Error Identification<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html" target="_blank" rel="noopener">Understanding 3.3.2 Labels or Instructions<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/error-suggestion.html" target="_blank" rel="noopener">Understanding 3.3.3 Error Suggestion<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html" target="_blank" rel="noopener">Understanding 4.1.2 Name, Role, Value<span class="visually-hidden"> (opens in a new tab)</span><svg class="ext" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a></li>
       </ul>
     </div>
   </details>
