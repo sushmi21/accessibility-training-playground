@@ -167,6 +167,11 @@ input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #6
 .na-summary h2 { margin: 0 0 8px; font-size: 20px; }
 .na-summary ul { margin: 0; padding-left: 20px; }
 .na-summary a { color: #b91c1c; font-weight: 600; }
+.na-done { max-width: 520px; margin: 16px 0 24px; padding: 16px 20px; border: 1px solid #86efac; border-left: 6px solid #15803d; border-radius: 6px; background: #f0fdf4; color: #14532d; }
+.na-done:focus { outline: 3px solid var(--primary); outline-offset: 3px; }
+.na-done h2 { margin: 0 0 4px; font-size: 20px; }
+.na-done p { margin: 0; }
+.na-done a { color: #14532d; font-weight: 600; }
 .na-hint { margin: 0; font-size: 15px; color: var(--muted); }
 .na-note { margin: 0 0 8px; }
 .na-group { min-width: 0; padding: 0; border: 0; }
@@ -3640,6 +3645,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         // The error summary is the Session 6 example for a form checked on submit. It is built the same,
         // and correctly, in both versions: a heading, one link per error, and focus moved to it.
         '<p class="na-note">Fields marked with an asterisk (<span class="ast">*</span>) are required.</p>' +
+        '<div class="na-done" id="na-done" tabindex="-1" hidden></div>' +
         '<form id="new-agent-form" novalidate>' +
         '<div class="na-summary" id="na-summary" tabindex="-1" hidden></div>' +
         '<div class="field">' +
@@ -4107,6 +4113,8 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     var form = e.target;
     var problems = naProblems(form);
     naShow(form, problems);
+    var done = document.getElementById('na-done');
+    done.hidden = true;
     if (problems.length) {
       
       document.title = 'Error: New agent – ' + APP_NAME;
@@ -4123,7 +4131,18 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
       editedDaysAgo: 0, editedAgo: 'just now', editedBy: 'You'
     };
     state.projects.push(project);
-    location.hash = '#/agents/' + project.id;
+    // Success stays on this page: a green banner with a link to the new agent takes the focus, and
+    // the form is emptied so that another agent can be created.
+    done.innerHTML = '<h2>Agent created</h2><p><a href="#/agents/' + project.id + '">' + esc(project.name) +
+      '</a> is ready. You can create another agent below.</p>';
+    done.hidden = false;
+    form.reset();
+    var sw = form.querySelector('.switch');
+    if (sw.classList.contains('on')) toggleSwitch(sw);
+    
+    document.title = 'Agent created – New agent – ' + APP_NAME;
+    
+    done.focus();
   });
 
   document.getElementById('skip-link').addEventListener('click', function (e) {

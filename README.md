@@ -85,7 +85,10 @@ red asterisk, hidden from screen readers because the fields have `required`,
 and a line above the form explains it. Agent name has a placeholder and the
 hint "Agent name should be a minimum of 3 characters." (linked with
 `aria-describedby`), and a name shorter than 3 characters after trimming is an
-error. Its older seeds (the
+error. A successful submit stays on the page: a green "Agent created" banner
+with a link to the new agent takes the focus, the form is emptied for the next
+agent, and the accessible version puts "Agent created" in the page title. Its
+older seeds (the
 Agent name label, the switch and the submit button) are unchanged.
 
 `documentation/answers.html` lists the seeded bugs of the pages whose sessions
