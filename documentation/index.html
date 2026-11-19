@@ -304,15 +304,14 @@ ol li, ul li { margin: 4px 0; }
         <li><strong>Mission.</strong> Participants find the bugs on the Forms page of the seeded version.</li>
       </ol>
 
-      <h4>Mission: the Forms page in four steps</h4>
-      <p>Use the <a href="../broken/#/forms">Forms page of the seeded version</a>: a registration form for an Agent Studio workshop. Turn on "I need accessibility support" to see every field. The form has no real server: the Training controls beside it make the server reject a form that is already valid.</p>
+      <h4>Mission: the Forms page in three steps</h4>
+      <p>Use the <a href="../broken/#/forms">Forms page of the seeded version</a>: a registration form for an Agent Studio workshop. Turn on "I need accessibility support" to see every field.</p>
       <ol>
         <li><strong>axe.</strong> Run axe DevTools. Note what it finds.</li>
         <li><strong>Bookmarklet.</strong> Run the Forms bookmarklet. Check the name of every field.</li>
         <li><strong>Keyboard.</strong> Fill in the form without the mouse. Leave fields empty, type a wrong email and press Register.</li>
-        <li><strong>Server.</strong> Use the Training controls to get both server errors: an email that is already registered, and a network error.</li>
       </ol>
-      <p>Note down which step found each issue. Afterwards, do the keyboard and server steps on the <a href="../accessible/#/forms">Forms page of the accessible version</a> and compare.</p>
+      <p>Note down which step found each issue. Afterwards, do the keyboard step on the <a href="../accessible/#/forms">Forms page of the accessible version</a> and compare.</p>
       <p>For a form checked only on submit, the <a href="../accessible/#/agents/new">New agent form</a> shows an error summary: press Create agent with the fields empty. A box headed "There is a problem" lists every error as a link, takes the focus, and each link moves the focus to its field. It is built the same way in both versions, so use it as an example, not as part of the mission.</p>
       <p class="note">A message that appears without the focus moving to it, such as a toast, needs a status message to be announced. That is the topic of Session 7: for now, log it as a finding and note what a screen reader user would miss.</p>
 
