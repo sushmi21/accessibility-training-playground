@@ -3662,11 +3662,10 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
         '<p class="na-err" id="agent-language-err" hidden></p>' +
         '<select id="agent-language" name="agent-language" required><option value="">Choose a language</option><option>English</option><option>German</option><option>French</option><option>Spanish</option></select></div>' +
         '<fieldset class="field na-group" id="agent-human">' +
-        '<legend>Can visitors ask to talk to a person? <span class="ast" aria-hidden="true">*</span></legend>' +
-        '<p class="na-err" id="agent-human-err" hidden></p>' +
+        '<legend>Can visitors ask to talk to a person?</legend>' +
         '<div class="na-options">' +
-        '<span class="na-option"><input type="radio" id="agent-human-yes" name="agent-human" value="yes" required><label for="agent-human-yes">Yes</label></span>' +
-        '<span class="na-option"><input type="radio" id="agent-human-no" name="agent-human" value="no" required><label for="agent-human-no">No</label></span>' +
+        '<span class="na-option"><input type="radio" id="agent-human-yes" name="agent-human" value="yes"><label for="agent-human-yes">Yes</label></span>' +
+        '<span class="na-option"><input type="radio" id="agent-human-no" name="agent-human" value="no"><label for="agent-human-no">No</label></span>' +
         '</div></fieldset>' +
         '<div class="field"><label for="agent-handover">Handover email <span class="ast" aria-hidden="true">*</span></label>' +
         '<p class="na-hint" id="agent-handover-hint">The team that takes over when the agent cannot help.</p>' +
@@ -4062,7 +4061,7 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
 
   // New agent form: checked on submit only. Each error is shown above its field and listed in the
   // summary, whose links move focus to the field without changing the route.
-  var NA_FIELDS = ['agent-name', 'agent-language', 'agent-human', 'agent-handover'];
+  var NA_FIELDS = ['agent-name', 'agent-language', 'agent-handover'];
   function naProblems(form) {
     var name = form.elements['agent-name'].value.trim();
     var email = form.elements['agent-handover'].value.trim();
@@ -4070,7 +4069,6 @@ main:has(.fm-bar) { scroll-padding-bottom: 96px; } /* keeps a focused field clea
     if (!name) list.push({ id: 'agent-name', message: 'Enter a name for the agent' });
     else if (name.length < 3) list.push({ id: 'agent-name', message: 'Enter an agent name of at least 3 characters' });
     if (!form.elements['agent-language'].value) list.push({ id: 'agent-language', message: 'Choose a language' });
-    if (!form.querySelector('input[name="agent-human"]:checked')) list.push({ id: 'agent-human', message: 'Choose whether visitors can ask to talk to a person' });
     if (!email) list.push({ id: 'agent-handover', message: 'Enter the handover email address' });
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) list.push({ id: 'agent-handover', message: 'Enter an email address in the correct format, like support@example.com' });
     return list;
